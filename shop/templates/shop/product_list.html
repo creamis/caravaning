@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Tienda Caravaning - Accesorios Recomendados{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold text-dark mb-2">Accesorios Imprescindibles</h1>
+        <p class="text-muted">Seleccionamos los mejores productos de Amazon para tu próxima aventura.</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        {% for product in products %}
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden product-card transition-all">
+                    <!-- Slider de Imágenes del Producto -->
+                    <div class="position-relative product-image-container">
+                        <div id="carouselProduct{{ product.id }}" class="carousel slide" data-bs-interval="false">
+                            <div class="carousel-inner">
+                                {% for pi in product.images.all %}
+                                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                        <img src="{{ pi.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: contain; padding: 1.5rem; background: #fff;">
+                                    </div>
+                                {% empty %}
+                                    {% if product.image %}
+                                        <div class="carousel-item active">
+                                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: contain; padding: 1.5rem; background: #fff;">
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% if product.images.all|length > 1 %}
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselProduct{{ product.id }}" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon custom-carousel-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Anterior</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselProduct{{ product.id }}" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon custom-carousel-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Siguiente</span>
+                                </button>
+                            {% endif %}
+                        </div>
+                        <span class="position-absolute top-0 start-0 m-3 badge bg-light text-dark border small fw-bold">
+                            {{ product.category.name }}
+                        </span>
+                    </div>
+                    
+                    <!-- Contenido -->
+                    <div class="card-body d-flex flex-column p-4">
+                        {% if product.brand %}
+                            <span class="text-uppercase text-primary fw-bold mb-1" style="font-size: 0.7rem; letter-spacing: 1px;">
+                                {{ product.brand }}
+                            </span>
+                        {% endif %}
+                        <h5 class="card-title text-dark fw-bold mb-2 h6" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.5rem;">
+                            {{ product.name }}
+                        </h5>
+                        
+                        <p class="card-text text-muted small mb-4" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                            {{ product.description }}
+                        </p>
+
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted small">Precio ref.</span>
+                                <span class="h5 fw-bold text-dark mb-0 price-element" data-price="{{ product.price }}">€{{ product.price }}</span>
+                            </div>
+                            <a href="{{ product.affiliate_url }}" 
+                               target="_blank" 
+                               rel="nofollow" 
+                               class="btn btn-warning w-100 rounded-pill fw-bold shadow-sm py-2">
+                                <i class="bi bi-cart3 me-2"></i>{{ product.button_text }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .product-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid rgba(0,0,0,0.05) !important;
+    }
+    .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+    }
+    .btn-warning {
+        background-color: #FF9900; /* Color característico de Amazon */
+        border-color: #FF9900;
+        color: #000;
+    }
+    .btn-warning:hover {
+        background-color: #e68a00;
+        border-color: #e68a00;
+    }
+    /* Estilos para los controles del carrusel */
+    .custom-carousel-icon {
+        background-color: rgba(0,0,0,0.2);
+        border-radius: 50%;
+        background-size: 60%;
+        width: 2rem;
+        height: 2rem;
+    }
+    .product-image-container:hover .custom-carousel-icon {
+        background-color: rgba(0,0,0,0.5);
+    }
+</style>
+
+<script>
+    // Reutilizamos tu función de formateo de precios
+    document.addEventListener('DOMContentLoaded', function() {
+        const priceElements = document.querySelectorAll('.price-element');
+        priceElements.forEach(function(element) {
+            const priceValue = element.getAttribute('data-price');
+            if (priceValue) {
+                element.textContent = new Intl.NumberFormat('es-ES', {
+                    style: 'currency',
+                    currency: 'EUR'
+                }).format(priceValue);
+            }
+        });
+    });
+</script>
+{% endblock %}

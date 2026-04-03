@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Confirmar Eliminación{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card text-center shadow-sm ">
+                <div class="card-header bg-danger text-white">
+                    <h2 class="mb-0">Confirmar Eliminación</h2>
+                </div>
+                <div class="card-body">
+                    <p class="lead">¿Estás seguro de que quieres eliminar el anuncio "<strong>{{ object.title }}</strong>"?</p>
+                    <p class="text-danger"><strong>Esta acción no se puede deshacer.</strong></p>
+                    <form method="post" class="mt-4">
+                        {% csrf_token %}
+                        <a href="{% url 'listings:listing_detail' object.pk %}" class="btn btn-secondary btn-lg">Cancelar</a>
+                        <button type="submit" class="btn btn-danger btn-lg">Sí, eliminar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

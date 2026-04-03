@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}{% if form.instance.pk %}Editar Anuncio{% else %}Publicar Anuncio{% endif %}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Header HivePress Style -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb small">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-decoration-none text-muted">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'listings:listing_list' %}" class="text-decoration-none text-muted">Anuncios</a></li>
+                    <li class="breadcrumb-item active text-primary fw-medium" aria-current="page">{% if form.instance.pk %}Editar{% else %}Publicar{% endif %}</li>
+                </ol>
+            </nav>
+            <div class="hp-detail-header">
+                <h1 class="display-6 fw-bold text-dark mb-2">{% if form.instance.pk %}Editar Anuncio{% else %}Publicar nuevo anuncio{% endif %}</h1>
+                <p class="text-muted lead">Completa los detalles para que tu anuncio llegue a más personas.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <form method="post" enctype="multipart/form-data" class="hp-form">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+
+                <!-- Bloque: Información Básica -->
+                <div class="hp-content-block bg-white p-4 p-md-5 rounded-4 shadow-sm border mb-4">
+                    <h4 class="fw-bold mb-4 text-dark border-bottom pb-3">Información Básica</h4>
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold text-dark small">¿Eres particular o profesional?</label>
+                            {% render_field form.seller_type class="form-select rounded-3" %}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold text-dark small">Tipo de anuncio</label>
+                            {% render_field form.listing_type class="form-select rounded-3" %}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold text-dark small">Categoría</label>
+                            {% render_field form.category class="form-select rounded-3" %}
+                            <div class="form-text x-small">Opciones: Caravana, Autocaravana o Camper.</div>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-bold text-dark small">Título del anuncio</label>
+                            {% render_field form.title class="form-control form-control-lg rounded-3" placeholder="Ej: Autocaravana Perfilada 4 plazas..." %}
+                            {{ form.title.errors }}
+                        </div>
+                        
+                        <div class="col-12">
+                            <label class="form-label fw-bold text-dark small">Descripción detallada</label>
+                            {% render_field form.description class="form-control rounded-3" rows="5" placeholder="Cuéntanos más sobre el estado, extras y detalles..." %}
+                            {{ form.description.errors }}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small">Precio (€)</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0 rounded-start-3 text-muted">€</span>
+                                {% render_field form.price class="form-control border-start-0 rounded-end-3" placeholder="0.00" %}
+                            </div>
+                            {{ form.price.errors }}
+                            <div id="price_per_day_info" class="form-text text-info mt-1" style="display: none;">
+                                <i class="bi bi-info-circle me-1"></i>
+                                En caso de alquiler el precio indicado será por día.
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small">Ubicación</label>
+                            {% render_field form.location class="form-control rounded-3" placeholder="Ciudad, Provincia..." %}
+                            {{ form.location.errors }}
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-check form-switch hp-custom-switch mt-md-4">
+                                {% render_field form.is_available class="form-check-input" %}
+                                <label class="form-check-label fw-bold text-dark small" for="{{ form.is_available.id_for_label }}">Anuncio visible y disponible</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloque: Características -->
+                <div class="hp-content-block bg-white p-4 p-md-5 rounded-4 shadow-sm border mb-4">
+                    <h4 class="fw-bold mb-4 text-dark border-bottom pb-3">Características del Vehículo</h4>
+                    <div class="row g-4">
+                        <div class="col-md-4"><label class="form-label fw-bold text-dark small">Año</label>{% render_field form.year class="form-control rounded-3" %}</div>
+                        <div class="col-md-4"><label class="form-label fw-bold text-dark small">Plazas</label>{% render_field form.seats class="form-control rounded-3" %}</div>
+                        <div class="col-md-4"><label class="form-label fw-bold text-dark small">Plazas para dormir</label>{% render_field form.berths class="form-control rounded-3" %}</div>
+                        <div class="col-md-6"><label class="form-label fw-bold text-dark small">Kilometraje (km)</label>{% render_field form.mileage class="form-control rounded-3" %}</div>
+                        <div class="col-md-6"><label class="form-label fw-bold text-dark small">Motor / Combustible</label>{% render_field form.fuel_type class="form-select rounded-3" %}</div>
+                        <div class="col-md-6"><label class="form-label fw-bold text-dark small">Transmisión</label>{% render_field form.transmission class="form-select rounded-3" %}</div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small">Longitud (m)</label>
+                            {% render_field form.length class="form-control rounded-3" placeholder="Ej: 6.50" %}
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-dark small">Peso (MMA kg)</label>
+                            {% render_field form.weight class="form-control rounded-3" placeholder="Ej: 3500" %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloque: Equipamiento -->
+                <div class="hp-content-block bg-white p-4 p-md-5 rounded-4 shadow-sm border mb-4">
+                    <h4 class="fw-bold mb-4 text-dark border-bottom pb-3">Equipamiento y Extras</h4>
+                    <div class="row g-3">
+                        {% for field in form %}
+                            {% if field.name in "has_kitchen has_bathroom has_shower has_heating has_air_conditioning pets_allowed has_solar_panels" %}
+                                <div class="col-md-4">
+                                    <div class="form-check form-switch hp-custom-switch">
+                                        {% render_field field class="form-check-input" %}
+                                        <label class="form-check-label fw-medium text-secondary" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Bloque: Imágenes -->
+                <div class="hp-content-block bg-white p-4 p-md-5 rounded-4 shadow-sm border mb-5">
+                    <h4 class="fw-bold mb-4 text-dark border-bottom pb-3">Imágenes del Anuncio</h4>
+                    <div class="mb-3">
+                        <div class="hp-upload-zone border-dashed rounded-4 p-5 text-center bg-light">
+                            <i class="bi bi-cloud-arrow-up display-4 text-primary mb-3"></i>
+                            <label for="{{ form.images.id_for_label }}" class="form-label d-block fw-bold text-dark">Selecciona tus mejores fotos</label>
+                            {% render_field form.images class="form-control" %}
+                            <div class="form-text mt-2 text-muted">Puedes seleccionar varias imágenes manteniendo presionada la tecla Ctrl.</div>
+                        </div>
+                        {{ form.images.errors }}
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm py-3">
+                        {% if form.instance.pk %}<i class="bi bi-check-circle me-2"></i>Guardar Cambios{% else %}<i class="bi bi-plus-circle me-2"></i>Publicar Anuncio{% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* HivePress Form Core */
+    .hp-content-block { border-color: rgba(0,0,0,0.05) !important; }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.08);
+    }
+
+    .hp-custom-switch .form-check-input {
+        width: 3em;
+        height: 1.5em;
+        cursor: pointer;
+    }
+
+    .hp-upload-zone {
+        border: 2px dashed rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+
+    .hp-upload-zone:hover {
+        border-color: #0d6efd;
+        background-color: #f8fbff !important;
+    }
+
+    .border-dashed { border-style: dashed !important; }
+    
+    .x-small { font-size: 0.75rem; }
+
+    legend {
+        float: none;
+        width: auto;
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    /* Estilo para el icono de información */
+    .text-info .bi-info-circle {
+        color: #0dcaf0; /* Color azul claro de Bootstrap para información */
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const listingTypeSelect = document.getElementById('id_listing_type');
+        const pricePerDayInfo = document.getElementById('price_per_day_info');
+
+        function togglePriceInfo() {
+            if (listingTypeSelect.value === 'RENT') {
+                pricePerDayInfo.style.display = 'block';
+            } else {
+                pricePerDayInfo.style.display = 'none';
+            }
+        }
+
+        // Ejecutar al cargar la página
+        togglePriceInfo();
+
+        // Ejecutar cada vez que cambie el tipo de anuncio
+        listingTypeSelect.addEventListener('change', togglePriceInfo);
+    });
+</script>
+{% endblock %}

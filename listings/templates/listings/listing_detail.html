@@ -1,0 +1,449 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ listing.title }}{% endblock %}
+
+{% block head %}
+{{ super }}
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Header HivePress: Título y Ubicación -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb small">
+                    <li class="breadcrumb-item"><a href="{% url 'listings:listing_list' %}" class="text-decoration-none text-muted">Anuncios</a></li>
+                    <li class="breadcrumb-item active text-primary fw-medium" aria-current="page">{{ listing.get_category_display }}</li>
+                </ol>
+            </nav>
+            <div class="hp-detail-header">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="badge {% if listing.listing_type == 'SALE' %}bg-danger{% else %}bg-primary{% endif %} rounded-pill text-uppercase" style="font-size: 0.8rem;">
+                        {{ listing.get_listing_type_display }}
+                    </span>
+                    <h1 class="display-6 fw-bold text-dark mb-0">{{ listing.title }}</h1>
+                </div>
+                <p class="text-muted d-flex align-items-center">
+                    <i class="bi bi-geo-alt me-2 text-primary"></i>{{ listing.location }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <!-- Carrusel de imágenes elegante con nuevas flechas -->
+            {% if listing.images.all %}
+                <div id="listingImageCarousel" class="carousel slide mb-4 rounded-4 overflow-hidden shadow-sm border" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        {% for image in listing.images.all %}
+                            <button type="button" data-bs-target="#listingImageCarousel" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
+                        {% endfor %}
+                    </div>
+                    <div class="carousel-inner">
+                        {% for image in listing.images.all %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <img src="{{ image.image.url }}" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="{{ listing.title }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <!-- Nuevas flechas de navegación -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#listingImageCarousel" data-bs-slide="prev">
+                        <span class="hp-carousel-btn" aria-hidden="true">
+                            <i class="bi bi-chevron-left text-dark"></i>
+                        </span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#listingImageCarousel" data-bs-slide="next">
+                        <span class="hp-carousel-btn" aria-hidden="true">
+                            <i class="bi bi-chevron-right text-dark"></i>
+                        </span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+            {% else %}
+                <div class="bg-light rounded-4 shadow-sm mb-4 d-flex align-items-center justify-content-center border" style="height: 400px;">
+                    <div class="text-center p-4">
+                        <i class="bi bi-image display-1 text-secondary opacity-25"></i>
+                        <p class="mt-3 h5 text-secondary">Sin imágenes disponibles</p>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- Descripción con diseño moderno -->
+            <div class="hp-content-block bg-white p-4 rounded-4 shadow-sm border mb-4">
+                <h4 class="fw-bold mb-3 text-dark border-bottom pb-2">Descripción</h4>
+                <div class="hp-description text-secondary" style="line-height: 1.7;">
+                        {{ listing.description|linebreaks }}
+                </div>
+            </div>
+
+            <!-- Especificaciones HivePress Style -->
+            <div class="hp-content-block bg-white p-4 rounded-4 shadow-sm border mb-4">
+                <h4 class="fw-bold mb-4 text-dark border-bottom pb-2">Especificaciones</h4>
+                <div class="row g-3">
+                    {% if listing.seats %}
+                    <div class="col-6 col-md-4">
+                        <div class="hp-spec-item d-flex align-items-center gap-2">
+                            <div class="hp-spec-icon"><i class="bi bi-people"></i></div>
+                            <div class="hp-spec-text">
+                                <span class="d-block small text-muted">Plazas</span>
+                                <span class="fw-bold text-dark">{{ listing.seats }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if listing.berths %}
+                    <div class="col-6 col-md-4">
+                        <div class="hp-spec-item d-flex align-items-center gap-2">
+                            <div class="hp-spec-icon"><i class="bi bi-moon-stars"></i></div>
+                            <div class="hp-spec-text">
+                                <span class="d-block small text-muted">Camas</span>
+                                <span class="fw-bold text-dark">{{ listing.berths }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if listing.year %}
+                    <div class="col-6 col-md-4">
+                        <div class="hp-spec-item d-flex align-items-center gap-2">
+                            <div class="hp-spec-icon"><i class="bi bi-calendar3"></i></div>
+                            <div class="hp-spec-text">
+                                <span class="d-block small text-muted">Año</span>
+                                <span class="fw-bold text-dark">{{ listing.year }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if listing.mileage %}
+                    <div class="col-6 col-md-4">
+                        <div class="hp-spec-item d-flex align-items-center gap-2">
+                            <div class="hp-spec-icon"><i class="bi bi-speedometer2"></i></div>
+                            <div class="hp-spec-text">
+                                <span class="d-block small text-muted">Kilometraje</span>
+                                <span class="fw-bold text-dark">{{ listing.mileage|floatformat:0 }} km</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if listing.transmission %}
+                    <div class="col-6 col-md-4">
+                        <div class="hp-spec-item d-flex align-items-center gap-2">
+                            <div class="hp-spec-icon"><i class="bi bi-gear"></i></div>
+                            <div class="hp-spec-text">
+                                <span class="d-block small text-muted">Transmisión</span>
+                                <span class="fw-bold text-dark">{{ listing.get_transmission_display }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if listing.fuel_type %}
+                    <div class="col-6 col-md-4">
+                        <div class="hp-spec-item d-flex align-items-center gap-2">
+                            <div class="hp-spec-icon"><i class="bi bi-fuel-pump"></i></div>
+                            <div class="hp-spec-text">
+                                <span class="d-block small text-muted">Motor</span>
+                                <span class="fw-bold text-dark">{{ listing.get_fuel_type_display }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Equipamiento con diseño moderno -->
+            <div class="hp-content-block bg-white p-4 rounded-4 shadow-sm border mb-4">
+                <h4 class="fw-bold mb-3 text-dark border-bottom pb-2">Equipamiento</h4>
+                    <div class="row g-3">
+                        {% if listing.has_kitchen %}
+                        <div class="col-6 col-md-4">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-fire text-primary fs-5"></i>
+                                <span class="text-dark">Cocina</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if listing.has_bathroom %}
+                        <div class="col-6 col-md-4">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-droplet text-primary fs-5"></i>
+                                <span class="text-dark">Baño</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if listing.has_shower %}
+                        <div class="col-6 col-md-4">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-moisture text-primary fs-5"></i>
+                                <span class="text-dark">Ducha</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if listing.has_heating %}
+                        <div class="col-6 col-md-4">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-thermometer-sun text-primary fs-5"></i>
+                                <span class="text-dark">Calefacción</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if listing.has_air_conditioning %}
+                        <div class="col-6 col-md-4">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-snow text-primary fs-5"></i>
+                                <span class="text-dark">Aire Acondicionado</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if listing.pets_allowed %}
+                        <div class="col-6 col-md-4">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-paw text-primary fs-5"></i>
+                                <span class="text-dark">Mascotas</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if listing.has_solar_panels %}
+                        <div class="col-6 col-md-4">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-sun text-primary fs-5"></i>
+                                <span class="text-dark">Energía Solar</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+            </div>
+
+            <!-- Sección de Opiniones -->
+            <div class="hp-content-block bg-white p-4 rounded-4 shadow-sm border mb-4">
+                <h4 class="fw-bold mb-4 text-dark border-bottom pb-2">Opiniones de la comunidad</h4>
+                
+                {% if listing.reviews.all %}
+                    {% for review in listing.reviews.all %}
+                        <div class="mb-4 pb-3 border-bottom">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="fw-bold text-dark">{{ review.author.username }}</span>
+                                    <div class="text-warning small">
+                                        {% for i in "12345" %}
+                                            <i class="bi bi-star{% if forloop.counter <= review.rating %}-fill{% endif %}"></i>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <span class="text-muted small">{{ review.created_at|date:"d M Y" }}</span>
+                            </div>
+                            <p class="text-secondary mb-0">{{ review.content }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted italic">Aún no hay opiniones. ¡Sé el primero en dejar una!</p>
+                {% endif %}
+
+                <!-- Formulario para dejar reseña -->
+                {% if user.is_authenticated %}
+                    {% if user != listing.owner %}
+                        <div class="mt-4 p-3 bg-light rounded-4">
+                            <h5 class="fw-bold mb-3">Deja tu opinión</h5>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label small fw-bold">Puntuación</label>
+                                        {{ review_form.rating }}
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label small fw-bold">Tu comentario</label>
+                                        {{ review_form.content }}
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary rounded-pill px-4">Publicar opinión</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="alert alert-info rounded-4 mb-0 mt-3">
+                        Para dejar una opinión debes <a href="{% url 'users:login' %}" class="alert-link">iniciar sesión</a>.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Sidebar fija con información de contacto -->
+            <div class="sticky-top" style="top: 2rem; z-index: 10;">
+                <!-- Bloque de Precio y Contacto -->
+                <div class="bg-white p-4 rounded-4 shadow-sm border mb-4 text-center">
+                    <h5 class="text-muted small fw-bold text-uppercase mb-2">Precio</h5>
+                    <h2 class="display-5 fw-bold text-primary mb-4 price-element" data-price="{{ listing.price }}">€{{ listing.price }}</h2>
+                    {% if user.is_authenticated %}
+                        {% if user != listing.owner %}
+                            <div class="d-grid gap-2">
+                                <a href="{% url 'messaging:contact_seller' listing.pk %}" class="btn btn-primary btn-lg rounded-pill fw-bold py-3">
+                                    <i class="bi bi-envelope-fill me-2"></i>Contactar con el vendedor
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'messaging:contact_seller' listing.pk %}" class="btn btn-outline-primary btn-lg rounded-pill fw-bold py-3">
+                                <i class="bi bi-lock-fill me-2"></i>Inicia sesión para contactar
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Bloque del Vendedor -->
+                <div class="bg-white p-4 rounded-4 shadow-sm border mb-4">
+                    <h5 class="text-muted small fw-bold text-uppercase mb-3">Vendedor</h5>
+                    <a href="{% url 'listings:user_listings' listing.owner.username %}" class="text-decoration-none">
+                        <div class="d-flex align-items-center">
+                            {% if listing.owner.profile.profile_picture %}
+                                <img src="{{ listing.owner.profile.profile_picture.url }}" alt="{{ listing.owner.username }}" class="flex-shrink-0 rounded-circle me-3 border" style="width: 50px; height: 50px; object-fit: cover;">
+                            {% else %}
+                                <div class="hp-avatar-fallback me-3">{{ listing.owner.username|first|upper }}</div>
+                            {% endif %}
+                            <div>
+                                <span class="fw-bold d-block text-dark">{{ listing.owner.username }}</span>
+                                <span class="badge bg-light text-muted border py-1 px-2 mb-1" style="font-size: 0.7rem;">{{ listing.get_seller_type_display }}</span>
+                                <span class="text-primary d-block small">Ver otros anuncios</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Acciones rápidas (Si es dueño) -->
+                {% if user.is_authenticated and user == listing.owner %}
+                <div class="bg-light p-3 rounded-4 border text-center">
+                    <p class="small text-muted mb-2">Este es tu anuncio</p>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'listings:listing_update' listing.pk %}" class="btn btn-sm btn-white border w-100 fw-bold">Editar</a>
+                        <a href="{% url 'listings:listing_delete' listing.pk %}" class="btn btn-sm btn-outline-danger w-100 fw-bold">Borrar</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* HivePress Design Language Core */
+    .hp-content-block { border-color: rgba(0,0,0,0.05) !important; }
+    
+    .hp-carousel-btn {
+        background: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        font-size: 1.2rem;
+    }
+
+    .hp-spec-icon {
+        width: 32px;
+        height: 32px;
+        background: #f3f4f6;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3b82f6;
+    }
+
+    .hp-avatar-fallback {
+        width: 50px;
+        height: 50px;
+        background: #e5e7eb;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: #6b7280;
+    }
+
+    .btn-white { background: white; color: #374151; }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 60px;
+        height: 60px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+        margin: 0 15px;
+        transition: all 0.3s ease;
+    }
+    
+    .carousel-control-prev:hover,
+    .carousel-control-next:hover {
+        background: rgba(0, 0, 0, 0.5);
+        transform: translateY(-50%) scale(1.1);
+    }
+    
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .carousel-control-prev {
+        left: 0;
+    }
+    
+    .carousel-control-next {
+        right: 0;
+    }
+    
+    /* Indicadores del carrusel */
+    .carousel-indicators {
+        bottom: 20px;
+    }
+    
+    .carousel-indicators [data-bs-target] {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+    }
+</style>
+
+<script>
+    // Función para formatear precios con separadores de miles y decimales
+    function formatPrice(price) {
+        const num = parseFloat(price);
+        if (isNaN(num)) {
+            return '€0,00';
+        }
+        
+        return new Intl.NumberFormat('es-ES', {
+            style: 'currency',
+            currency: 'EUR',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(num);
+    }
+    
+    // Formatear todos los precios en la página cuando se carga
+    document.addEventListener('DOMContentLoaded', function() {
+        const priceElements = document.querySelectorAll('.price-element');
+        priceElements.forEach(function(element) {
+            const priceValue = element.getAttribute('data-price');
+            if (priceValue) {
+                element.textContent = formatPrice(priceValue);
+            }
+        });
+    });
+</script>
+{% endblock %}

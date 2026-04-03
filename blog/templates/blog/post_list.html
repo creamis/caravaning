@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% block title %}Blog{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Header HivePress Style -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb small">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-decoration-none text-muted">Inicio</a></li>
+                    <li class="breadcrumb-item active text-primary fw-medium" aria-current="page">Blog</li>
+                </ol>
+            </nav>
+            <div class="hp-detail-header">
+                <h1 class="display-6 fw-bold text-dark mb-2">Nuestro Blog</h1>
+                <p class="text-muted lead">Descubre las últimas novedades, consejos y experiencias del mundo del caravaning.</p>
+            </div>
+        </div>
+    </div>
+
+    {% if posts %}
+        <!-- Grid moderno con Bootstrap -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for post in posts %}
+                <div class="col">
+                    <div class="hp-post-card bg-white h-100 rounded-4 shadow-sm border overflow-hidden d-flex flex-column">
+                        <!-- Imagen -->
+                        <a href="{% url 'blog:post_detail' post.slug %}" class="overflow-hidden">
+                            {% if post.images.all %}
+                                <img src="{{ post.images.all.0.image.url }}" 
+                                     class="hp-post-img w-100" 
+                                     style="height: 200px; object-fit: cover;"
+                                     alt="{{ post.title }}">
+                            {% else %}
+                                <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                    <i class="bi bi-image display-1 text-secondary opacity-25"></i>
+                                </div>
+                            {% endif %}
+                        </a>
+                        
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <!-- Meta info: Autor y Fecha -->
+                            <div class="d-flex align-items-center mb-3">
+                                {% if post.author.profile.profile_picture %}
+                                    <img src="{{ post.author.profile.profile_picture.url }}" alt="{{ post.author.username }}" class="rounded-circle me-2 border" style="width: 30px; height: 30px; object-fit: cover;">
+                                {% else %}
+                                    <div class="hp-avatar-fallback-sm me-2">{{ post.author.username|first|upper }}</div>
+                                {% endif %}
+                                <div class="small">
+                                    <span class="fw-bold text-dark">{% if post.author.is_superuser %}Admin{% else %}{{ post.author.username }}{% endif %}</span>
+                                    <span class="text-muted mx-1">•</span>
+                                    <span class="text-muted">{{ post.created_at|date:"d M Y" }}</span>
+                                </div>
+                            </div>
+                            
+                            <h5 class="fw-bold mb-3">
+                                <a href="{% url 'blog:post_detail' post.slug %}" class="text-decoration-none text-dark hp-title-hover">{{ post.title }}</a>
+                            </h5>
+                            
+                            <p class="text-secondary small mb-4 flex-grow-1">
+                                {{ post.content|truncatechars:110 }}
+                            </p>
+                            
+                            <div class="mt-auto">
+                                <a href="{% url 'blog:post_detail' post.slug %}" class="btn btn-sm btn-white border rounded-pill px-3 fw-bold">
+                                    Leer más <i class="bi bi-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Paginación HivePress Style -->
+        {% if page_obj %}
+            <div class="mt-5 d-flex justify-content-center">
+                <nav aria-label="Blog pagination">
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link border-0 text-dark" href="?page={{ page_obj.previous_page_number }}">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                        
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item">
+                                    <span class="page-link border-0 fw-bold text-primary bg-transparent">{{ num }}</span>
+                                </li>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link border-0 text-muted" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link border-0 text-dark" href="?page={{ page_obj.next_page_number }}">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        {% endif %}
+    {% else %}
+        <!-- Estado vacío elegante -->
+        <div class="text-center py-5">
+            <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 120px; height: 120px;">
+                <i class="bi bi-journal-text display-1 text-secondary opacity-50"></i>
+            </div>
+            <h3 class="display-6 fw-bold text-dark mb-3">No hay publicaciones aún</h3>
+            <p class="text-muted mb-4">Estamos trabajando en contenido emocionante para ti.</p>
+            <a href="{% url 'home' %}" class="btn btn-primary rounded-pill px-4 fw-bold">
+                <i class="bi bi-house-door me-2"></i>Volver al inicio
+            </a>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+    /* HivePress Design Language for Blog */
+    .hp-post-card { 
+        border-color: rgba(0,0,0,0.05) !important;
+        transition: all 0.3s ease;
+    }
+
+    .hp-post-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08) !important;
+    }
+
+    .hp-post-img {
+        transition: transform 0.5s ease;
+    }
+
+    .hp-post-card:hover .hp-post-img {
+        transform: scale(1.05);
+    }
+
+    .hp-title-hover:hover {
+        color: #0d6efd !important;
+    }
+
+    .hp-avatar-fallback-sm {
+        width: 30px;
+        height: 30px;
+        background: #f3f4f6;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 0.75rem;
+        color: #6b7280;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .btn-white { background: white; color: #374151; }
+    .btn-white:hover { background: #f9fafb; color: #0d6efd; border-color: #0d6efd !important; }
+
+    .pagination .page-link:focus { box-shadow: none; }
+</style>
+{% endblock %}

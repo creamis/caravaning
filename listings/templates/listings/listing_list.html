@@ -1,0 +1,389 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Caravanas en Venta{% endblock %}
+
+{% block head %}
+{{ block.super }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header elegante -->
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold text-dark mb-2">
+            <i class="bi bi-compass me-2 text-primary"></i>Explorar Anuncios
+        </h1>
+        <p class="text-muted max-w-75 mx-auto mb-4">
+            Descubre la caravana perfecta para tus aventuras. Calidad garantizada y vendedores verificados.
+        </p>
+    </div>
+
+    <!-- Barra de Filtros Estilo HivePress -->
+    <div class="hp-filter-bar mb-5">
+        <form method="get" action="{% url 'listings:listing_list' %}" class="bg-white shadow-sm rounded-4 p-3 p-lg-2 border border-light-subtle">
+            <div class="row g-2 align-items-center">
+                <!-- Ubicación -->
+                <div class="col-12 col-lg-2">
+                    <div class="input-group input-group-merge border-0 bg-light rounded-3 overflow-hidden">
+                        <span class="input-group-text bg-transparent border-0 text-muted">
+                            <i class="bi bi-geo-alt"></i>
+                        </span>
+                        <input type="text" name="location" class="form-control bg-transparent border-0 py-2 ps-0 shadow-none" 
+                               placeholder="¿Ubicación? (ej. Madrid)" value="{{ request.GET.location|default:'' }}">
+                    </div>
+                </div>
+
+                <!-- Operación (Venta/Alquiler) -->
+                <div class="col-12 col-md-6 col-lg-2">
+                    <div class="input-group input-group-merge border-0 bg-light rounded-3 overflow-hidden">
+                        <span class="input-group-text bg-transparent border-0 text-muted">
+                            <i class="bi bi-tag"></i>
+                        </span>
+                        <select name="listing_type" class="form-select bg-transparent border-0 py-2 ps-0 shadow-none">
+                            <option value="">Operación</option>
+                            <option value="SALE" {% if request.GET.listing_type == 'SALE' %}selected{% endif %}>Venta</option>
+                            <option value="RENT" {% if request.GET.listing_type == 'RENT' %}selected{% endif %}>Alquiler</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Categoría -->
+                <div class="col-12 col-md-6 col-lg-2">
+                    <div class="input-group input-group-merge border-0 bg-light rounded-3 overflow-hidden">
+                        <span class="input-group-text bg-transparent border-0 text-muted">
+                            <i class="bi bi-truck"></i>
+                        </span>
+                        <select name="category" class="form-select bg-transparent border-0 py-2 ps-0 shadow-none">
+                            <option value="">Categoría</option>
+                            <option value="CARAVANA" {% if request.GET.category == 'CARAVANA' %}selected{% endif %}>Caravana</option>
+                            <option value="AUTOCARAVANA" {% if request.GET.category == 'AUTOCARAVANA' %}selected{% endif %}>Autocaravana</option>
+                            <option value="CAMPER" {% if request.GET.category == 'CAMPER' %}selected{% endif %}>Camper</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tipo de Vendedor (Particular/Profesional) -->
+                <div class="col-12 col-md-6 col-lg-2">
+                    <div class="input-group input-group-merge border-0 bg-light rounded-3 overflow-hidden">
+                        <span class="input-group-text bg-transparent border-0 text-muted">
+                            <i class="bi bi-person-badge"></i>
+                        </span>
+                        <select name="seller_type" class="form-select bg-transparent border-0 py-2 ps-0 shadow-none">
+                            <option value="">Vendedor</option>
+                            <option value="PRIVATE" {% if request.GET.seller_type == 'PRIVATE' %}selected{% endif %}>Particular</option>
+                            <option value="PROFESSIONAL" {% if request.GET.seller_type == 'PROFESSIONAL' %}selected{% endif %}>Profesional</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Precio Máximo -->
+                <div class="col-12 col-md-6 col-lg-2">
+                    <div class="input-group input-group-merge border-0 bg-light rounded-3 overflow-hidden">
+                        <span class="input-group-text bg-transparent border-0 text-muted">
+                            <i class="bi bi-currency-euro"></i>
+                        </span>
+                        <select name="max_price" class="form-select bg-transparent border-0 py-2 ps-0 shadow-none">
+                            <option value="">Precio Máximo</option>
+                            <option value="15000" {% if request.GET.max_price == '15000' %}selected{% endif %}>Hasta 15.000€</option>
+                            <option value="30000" {% if request.GET.max_price == '30000' %}selected{% endif %}>Hasta 30.000€</option>
+                            <option value="50000" {% if request.GET.max_price == '50000' %}selected{% endif %}>Hasta 50.000€</option>
+                            <option value="100000" {% if request.GET.max_price == '100000' %}selected{% endif %}>Hasta 100.000€</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Botón Buscar -->
+                <div class="col-12 col-lg-2">
+                    <button type="submit" class="btn btn-primary w-100 py-2 rounded-3 fw-bold">
+                        <i class="bi bi-search me-1"></i> Buscar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {% if listings %}
+        <!-- Grid moderno de anuncios -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for listing in listings %}
+                <div class="col">
+                    <div class="hp-listing-card h-100 shadow-sm border-0 rounded-4 overflow-hidden bg-white transition-all">
+                        <a href="{% url 'listings:listing_detail' listing.pk %}" class="text-decoration-none">
+                            <!-- Imagen con Overlay de Precio -->
+                            <div class="position-relative hp-listing-image-wrapper">
+                                {% with listing.images.first as first_image %}
+                                    {% if first_image %}
+                                        <img src="{{ first_image.image.url }}" 
+                                             class="w-100" 
+                                             alt="{{ listing.title }}" 
+                                             style="height: 220px; object-fit: cover;">
+                                    {% else %}
+                                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 220px;">
+                                            <i class="bi bi-image text-secondary opacity-25 fs-1"></i>
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
+                                
+                                <!-- Tipo de Anuncio (Venta/Alquiler) -->
+                                <span class="position-absolute top-0 start-0 m-3 badge {% if listing.listing_type == 'SALE' %}bg-danger{% else %}bg-primary{% endif %} shadow-sm fw-bold rounded-pill hp-type-badge">
+                                    {{ listing.get_listing_type_display }}
+                                </span>
+
+                                <!-- Precio estilo HivePress -->
+                                <div class="hp-price-tag position-absolute bottom-0 start-0 m-3 px-3 py-1 rounded-pill shadow-sm">
+                                    <span class="fw-bold price-element" data-price="{{ listing.price|stringformat:".2f" }}">€{{ listing.price }}</span>
+                                </div>
+
+                                <!-- Categoría (Derecha) -->
+                                {% if listing.category %}
+                                    <span class="position-absolute top-0 end-0 m-3 badge hp-badge-category">
+                                        {{ listing.get_category_display }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Contenido -->
+                            <div class="p-3">
+                                <div class="d-flex align-items-center text-muted small mb-1">
+                                    <i class="bi bi-geo-alt me-1"></i> {{ listing.location }}
+                                </div>
+                                <h5 class="text-dark fw-bold mb-2 hp-title">{{ listing.title }}</h5>
+                                
+                                <!-- Atributos rápidos (HivePress Style) -->
+                                <div class="hp-attributes d-flex gap-3 py-2 border-top border-bottom border-light-subtle mb-3">
+                                    <div class="d-flex align-items-center gap-1 small text-muted">
+                                        <i class="bi bi-people"></i> <span>{{ listing.seats|default:"-" }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-1 small text-muted">
+                                        <i class="bi bi-moon-stars"></i> <span>{{ listing.berths|default:"-" }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-1 small text-muted">
+                                        <i class="bi bi-gear"></i> <span>{{ listing.get_transmission_display|default:"Manual"|truncatechars:1 }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-1 small fw-medium {% if listing.seller_type == 'PRIVATE' %}text-success{% else %}text-info{% endif %}">
+                                        {% if listing.seller_type == 'PRIVATE' %}
+                                            <i class="bi bi-person"></i>
+                                        {% else %}
+                                            <i class="bi bi-person-badge"></i>
+                                        {% endif %}
+                                        <span>{{ listing.get_seller_type_display }}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Footer de la tarjeta -->
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <div class="hp-avatar-mini me-2">
+                                            {% if listing.owner.profile.profile_picture %}
+                                                <img src="{{ listing.owner.profile.profile_picture.url }}" alt="{{ listing.owner.username }}" class="w-100 h-100" style="object-fit: cover;">
+                                            {% else %}
+                                                {{ listing.owner.username|first|upper }}
+                                            {% endif %}
+                                        </div>
+                                        <span class="small text-muted">{{ listing.owner.username }}</span>
+                                    </div>
+                                    <div class="hp-details-link text-primary fw-bold small">
+                                        Ver más <i class="bi bi-arrow-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Paginación (si existe) -->
+        {% if page_obj %}
+            <div class="mt-5 d-flex justify-content-center">
+                <nav aria-label="Listings pagination">
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link border-0 text-dark" href="?page={{ page_obj.previous_page_number }}">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                        
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item">
+                                    <span class="page-link border-0 fw-bold text-primary bg-transparent">{{ num }}</span>
+                                </li>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link border-0 text-muted" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link border-0 text-dark" href="?page={{ page_obj.next_page_number }}">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        {% endif %}
+    {% else %}
+        <!-- Estado vacío elegante -->
+        <div class="text-center py-5">
+            <div class="bg-light dark:bg-dark rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 120px; height: 120px;">
+                <i class="bi bi-truck-front display-1 text-secondary opacity-50"></i>
+            </div>
+            <h3 class="display-6 fw-bold text-dark dark:text-light mb-3">No hay caravanas disponibles</h3>
+            <p class="lead text-muted mb-4">
+                ¡Sé el primero en anunciar una caravana y comienza tu aventura!
+            </p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="{% url 'listings:listing_create' %}" class="btn btn-success btn-lg rounded-pill px-4">
+                    <i class="bi bi-plus-circle me-2"></i>Publicar Anuncio
+                </a>
+                <a href="{% url 'home' %}" class="btn btn-outline-primary btn-lg rounded-pill px-4">
+                    <i class="bi bi-house-door me-2"></i>Volver al inicio
+                </a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+    /* HivePress Style Implementation */
+    .hp-listing-card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(0,0,0,0.05) !important;
+    }
+
+    .hp-listing-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .hp-listing-image-wrapper {
+        overflow: hidden;
+    }
+
+    .hp-listing-card:hover img {
+        transform: scale(1.05);
+        transition: all 0.3s ease;
+    }
+
+    .hp-price-tag {
+        background: #ffffff;
+        color: #10b981;
+        font-size: 0.95rem;
+    }
+
+    .hp-badge-category {
+        background: rgba(255, 255, 255, 0.9);
+        color: #374151;
+        font-weight: 600;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+    }
+
+    .hp-type-badge {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+    }
+
+    .hp-title {
+        font-size: 1.15rem;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .hp-avatar-mini {
+        width: 24px;
+        height: 24px;
+        background: #e5e7eb;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: bold;
+        color: #6b7280;
+        overflow: hidden;
+    }
+
+    .hp-details-link i {
+        transition: transform 0.2s ease;
+    }
+    .hp-listing-card:hover .hp-details-link i {
+        transform: translateX(4px);
+    }
+
+    /* Estilos específicos para la barra de filtros estilo HivePress */
+    .hp-filter-bar form {
+        transition: box-shadow 0.3s ease;
+    }
+
+    .hp-filter-bar form:focus-within {
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .input-group-merge .form-control:focus, 
+    .input-group-merge .form-select:focus {
+        box-shadow: none !important;
+    }
+
+    .hp-filter-bar .form-select {
+        cursor: pointer;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+        background-position: right 0.75rem center;
+        background-repeat: no-repeat;
+        background-size: 16px 12px;
+    }
+
+    .pagination .page-link:focus { box-shadow: none; }
+
+    @media (max-width: 991.98px) {
+        .hp-filter-bar .row > div {
+            margin-bottom: 0.5rem;
+        }
+    }
+</style>
+
+<script>
+    // Función para formatear precios con separadores de miles y decimales
+    function formatPrice(price) {
+        // Convertir a número y redondear a 2 decimales
+        // Reemplazamos coma por punto por si acaso viene localizado
+        let cleanPrice = price.toString().replace(',', '.');
+        const num = parseFloat(cleanPrice);
+        if (isNaN(num)) {
+            return '€0,00';
+        }
+        
+        // Formatear con separadores de miles y decimales europeos
+        return new Intl.NumberFormat('es-ES', {
+            style: 'currency',
+            currency: 'EUR',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(num);
+    }
+    
+    // Formatear todos los precios en la página cuando se carga
+    document.addEventListener('DOMContentLoaded', function() {
+        const priceElements = document.querySelectorAll('.price-element');
+        priceElements.forEach(function(element) {
+            const priceValue = element.getAttribute('data-price');
+            if (priceValue) {
+                element.textContent = formatPrice(priceValue);
+            }
+        });
+    });
+</script>
+{% endblock %}

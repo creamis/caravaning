@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block title %}{% if form.instance.pk %}Editar Post{% else %}Crear Nuevo Post{% endif %}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm ">
+                <div class="card-header bg-light ">
+                    <h2 class="mb-0 text-gray-800 dark:text-gray-200">{% if form.instance.pk %}Editar Post{% else %}Crear Nuevo Post{% endif %}</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {% for error in form.non_field_errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <!-- Título -->
+                        <div class="mb-3">
+                            <label for="{{ form.title.id_for_label }}" class="form-label">{{ form.title.label }}</label>
+                            {{ form.title }}
+                            {% for error in form.title.errors %}
+                                <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Contenido -->
+                        <div class="mb-3">
+                            <label for="{{ form.content.id_for_label }}" class="form-label">{{ form.content.label }}</label>
+                            {{ form.content }}
+                            {% for error in form.content.errors %}
+                                <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Imágenes -->
+                        <div class="mb-3">
+                            <label for="{{ form.images.id_for_label }}" class="form-label">{{ form.images.label }}</label>
+                            {{ form.images }}
+                            {% for error in form.images.errors %}
+                                <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+
+                            {% if form.instance.pk and form.instance.images.all %}
+                                <p class="mt-2 small text-muted">Imágenes actuales:</p>
+                                <div class="d-flex flex-wrap mb-2">
+                                    {% for img in form.instance.images.all %}
+                                        <img src="{{ img.image.url }}" class="rounded me-2 mb-2" style="max-height:100px; object-fit:cover;">
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <!-- Preview de nuevas imágenes -->
+                            <div id="image-preview-container" class="d-flex flex-wrap mt-2"></div>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <a href="{% url 'blog:post_list' %}" class="btn btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">{% if form.instance.pk %}Guardar Cambios{% else %}Publicar Post{% endif %}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const imageInput = document.getElementById('{{ form.images.id_for_label }}');
+    const previewContainer = document.getElementById('image-preview-container');
+
+    if(imageInput){
+        imageInput.addEventListener('change', function(e){
+            previewContainer.innerHTML = '';
+            for(const file of e.target.files){
+                const reader = new FileReader();
+                reader.onload = function(event){
+                    const img = document.createElement('img');
+                    img.src = event.target.result;
+                    img.style.maxHeight = '150px';
+                    img.style.objectFit = 'cover';
+                    img.className = 'me-2 mb-2 rounded shadow-sm';
+                    previewContainer.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+});
+</script>
+{% endblock %}
