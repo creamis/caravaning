@@ -28,10 +28,11 @@
                 <!-- Ubicación -->
                 <div class="col-12 col-lg-2">
                     <div class="input-group input-group-merge border-0 bg-light rounded-3 overflow-hidden">
+                        <label for="id_location" class="visually-hidden">Ubicación</label>
                         <span class="input-group-text bg-transparent border-0 text-muted">
                             <i class="bi bi-geo-alt"></i>
                         </span>
-                        <input type="text" name="location" class="form-control bg-transparent border-0 py-2 ps-0 shadow-none" 
+                        <input type="text" id="id_location" name="location" class="form-control bg-transparent border-0 py-2 ps-0 shadow-none" 
                                placeholder="¿Ubicación? (ej. Madrid)" value="{{ request.GET.location|default:'' }}">
                     </div>
                 </div>
@@ -39,10 +40,11 @@
                 <!-- Categoría -->
                 <div class="col-12 col-md-6 col-lg-3">
                     <div class="input-group input-group-merge border-0 bg-light rounded-3 overflow-hidden">
+                        <label for="id_category" class="visually-hidden">Categoría</label>
                         <span class="input-group-text bg-transparent border-0 text-muted">
                             <i class="bi bi-truck"></i>
                         </span>
-                        <select name="category" class="form-select bg-transparent border-0 py-2 ps-0 shadow-none">
+                        <select id="id_category" name="category" class="form-select bg-transparent border-0 py-2 ps-0 shadow-none">
                             <option value="">Categoría</option>
                             <option value="CARAVANA" {% if request.GET.category == 'CARAVANA' %}selected{% endif %}>Caravana</option>
                             <option value="AUTOCARAVANA" {% if request.GET.category == 'AUTOCARAVANA' %}selected{% endif %}>Autocaravana</option>
@@ -54,10 +56,11 @@
                 <!-- Tipo de Vendedor (Particular/Profesional) -->
                 <div class="col-12 col-md-6 col-lg-3">
                     <div class="input-group input-group-merge border-0 bg-light rounded-3 overflow-hidden">
+                        <label for="id_seller_type" class="visually-hidden">Tipo de Vendedor</label>
                         <span class="input-group-text bg-transparent border-0 text-muted">
                             <i class="bi bi-person-badge"></i>
                         </span>
-                        <select name="seller_type" class="form-select bg-transparent border-0 py-2 ps-0 shadow-none">
+                        <select id="id_seller_type" name="seller_type" class="form-select bg-transparent border-0 py-2 ps-0 shadow-none">
                             <option value="">Vendedor</option>
                             <option value="PRIVATE" {% if request.GET.seller_type == 'PRIVATE' %}selected{% endif %}>Particular</option>
                             <option value="PROFESSIONAL" {% if request.GET.seller_type == 'PROFESSIONAL' %}selected{% endif %}>Profesional</option>
@@ -68,10 +71,11 @@
                 <!-- Precio Máximo -->
                 <div class="col-12 col-md-6 col-lg-2">
                     <div class="input-group input-group-merge border-0 bg-light rounded-3 overflow-hidden">
+                        <label for="id_max_price" class="visually-hidden">Precio Máximo</label>
                         <span class="input-group-text bg-transparent border-0 text-muted">
                             <i class="bi bi-currency-euro"></i>
                         </span>
-                        <select name="max_price" class="form-select bg-transparent border-0 py-2 ps-0 shadow-none">
+                        <select id="id_max_price" name="max_price" class="form-select bg-transparent border-0 py-2 ps-0 shadow-none">
                             <option value="">Precio Máximo</option>
                             <option value="15000" {% if request.GET.max_price == '15000' %}selected{% endif %}>Hasta 15.000€</option>
                             <option value="30000" {% if request.GET.max_price == '30000' %}selected{% endif %}>Hasta 30.000€</option>
@@ -150,7 +154,7 @@
                                 <div class="d-flex align-items-center text-muted small mb-1">
                                     <i class="bi bi-geo-alt me-1"></i> {{ listing.location }}
                                 </div>
-                                <h5 class="text-dark fw-bold mb-2 hp-title">{{ listing.title }}</h5>
+                                <h2 class="h5 text-dark fw-bold mb-2 hp-title">{{ listing.title }}</h2>
                                 
                                 <!-- Atributos rápidos (HivePress Style) -->
                                 <div class="hp-attributes d-flex gap-3 py-2 border-top border-bottom border-light-subtle mb-3">
@@ -238,7 +242,7 @@
             <div class="bg-light dark:bg-dark rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 120px; height: 120px;">
                 <i class="bi bi-truck-front display-1 text-secondary opacity-50"></i>
             </div>
-            <h3 class="display-6 fw-bold text-dark dark:text-light mb-3">No hay caravanas disponibles</h3>
+            <h2 class="display-6 fw-bold text-dark dark:text-light mb-3">No hay caravanas disponibles</h2>
             <p class="lead text-muted mb-4">
                 ¡Sé el primero en anunciar una caravana y comienza tu aventura!
             </p>

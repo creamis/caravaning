@@ -93,7 +93,7 @@
 
             <!-- Descripción con diseño moderno -->
             <div class="hp-content-block bg-white p-4 rounded-4 shadow-sm border mb-4">
-                <h4 class="fw-bold mb-3 text-dark border-bottom pb-2">Descripción</h4>
+                <h2 class="h4 fw-bold mb-3 text-dark border-bottom pb-2">Descripción</h2>
                 <div class="hp-description text-secondary" style="line-height: 1.7;">
                         {{ listing.description|linebreaks }}
                 </div>
@@ -101,7 +101,7 @@
 
             <!-- Especificaciones HivePress Style -->
             <div class="hp-content-block bg-white p-4 rounded-4 shadow-sm border mb-4">
-                <h4 class="fw-bold mb-4 text-dark border-bottom pb-2">Especificaciones</h4>
+                <h2 class="h4 fw-bold mb-4 text-dark border-bottom pb-2">Especificaciones</h2>
                 <div class="row g-3">
                     {% if listing.seats %}
                     <div class="col-6 col-md-4">
@@ -174,7 +174,7 @@
 
             <!-- Equipamiento con diseño moderno -->
             <div class="hp-content-block bg-white p-4 rounded-4 shadow-sm border mb-4">
-                <h4 class="fw-bold mb-3 text-dark border-bottom pb-2">Equipamiento</h4>
+                <h2 class="h4 fw-bold mb-3 text-dark border-bottom pb-2">Equipamiento</h2>
                     <div class="row g-3">
                         {% if listing.has_kitchen %}
                         <div class="col-6 col-md-4">
@@ -237,7 +237,7 @@
 
             <!-- Sección de Opiniones -->
             <div class="hp-content-block bg-white p-4 rounded-4 shadow-sm border mb-4">
-                <h4 class="fw-bold mb-4 text-dark border-bottom pb-2">Opiniones de la comunidad</h4>
+                <h2 class="h4 fw-bold mb-4 text-dark border-bottom pb-2">Opiniones de la comunidad</h2>
                 
                 {% if listing.reviews.all %}
                     {% for review in listing.reviews.all %}
@@ -264,16 +264,16 @@
                 {% if user.is_authenticated %}
                     {% if user != listing.owner %}
                         <div class="mt-4 p-3 bg-light rounded-4">
-                            <h5 class="fw-bold mb-3">Deja tu opinión</h5>
+                            <h3 class="h5 fw-bold mb-3">Deja tu opinión</h3>
                             <form method="post">
                                 {% csrf_token %}
                                 <div class="row g-3">
                                     <div class="col-md-4">
-                                        <label class="form-label small fw-bold">Puntuación</label>
+                                        <label for="{{ review_form.rating.id_for_label }}" class="form-label small fw-bold">Puntuación</label>
                                         {{ review_form.rating }}
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label small fw-bold">Tu comentario</label>
+                                        <label for="{{ review_form.content.id_for_label }}" class="form-label small fw-bold">Tu comentario</label>
                                         {{ review_form.content }}
                                     </div>
                                     <div class="col-12">
@@ -296,20 +296,20 @@
             <div class="sticky-top" style="top: 2rem; z-index: 10;">
                 <!-- Bloque de Precio y Contacto -->
                 <div class="bg-white p-4 rounded-4 shadow-sm border mb-4 text-center">
-                    <h5 class="text-muted small fw-bold text-uppercase mb-2">Precio</h5>
-                    <h2 class="display-5 fw-bold text-primary mb-4 price-element" data-price="{{ listing.price }}">€{{ listing.price }}</h2>
+                    <h3 class="h6 text-muted small fw-bold text-uppercase mb-2">Precio</h3>
+                    <p class="display-5 fw-bold text-primary mb-4 price-element" data-price="{{ listing.price }}">€{{ listing.price }}</p>
                     {% if user.is_authenticated %}
                         {% if user != listing.owner %}
                             <div class="d-grid gap-2">
                                 <a href="{% url 'messaging:contact_seller' listing.pk %}" class="btn btn-primary btn-lg rounded-pill fw-bold py-3">
-                                    <i class="bi bi-envelope-fill me-2"></i>Contactar con el vendedor
+                                    <i class="bi bi-envelope-fill me-2" aria-hidden="true"></i>Contactar con el vendedor
                                 </a>
                             </div>
                         {% endif %}
                     {% else %}
                         <div class="d-grid gap-2">
                             <a href="{% url 'messaging:contact_seller' listing.pk %}" class="btn btn-outline-primary btn-lg rounded-pill fw-bold py-3">
-                                <i class="bi bi-lock-fill me-2"></i>Inicia sesión para contactar
+                                <i class="bi bi-lock-fill me-2" aria-hidden="true"></i>Inicia sesión para contactar
                             </a>
                         </div>
                     {% endif %}
@@ -317,7 +317,7 @@
 
                 <!-- Bloque del Vendedor -->
                 <div class="bg-white p-4 rounded-4 shadow-sm border mb-4">
-                    <h5 class="text-muted small fw-bold text-uppercase mb-3">Vendedor</h5>
+                    <h3 class="h6 text-muted small fw-bold text-uppercase mb-3">Vendedor</h3>
                     <a href="{% url 'listings:user_listings' listing.owner.username %}" class="text-decoration-none">
                         <div class="d-flex align-items-center">
                             {% if listing.owner.profile.profile_picture %}

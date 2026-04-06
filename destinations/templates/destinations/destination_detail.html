@@ -79,13 +79,13 @@
                     </div>
 
                     <hr class="my-4 opacity-10">
-                    <div class="hp-description text-secondary mb-4" style="line-height: 1.8; white-space: pre-line;">
+                    <section class="hp-description text-secondary mb-4" style="line-height: 1.8; white-space: pre-line;">
                         {{ destination.description }}
-                    </div>
+                    </section>
                     
                     <!-- Sección de Reseñas -->
                     <div class="mt-5">
-                        <h4 class="fw-bold mb-4">Opiniones de la comunidad</h4>
+                        <h2 class="h4 fw-bold mb-4">Opiniones de la comunidad</h2>
                         
                         {% for review in destination.reviews.all %}
                         <div class="d-flex mb-4 p-3 bg-light rounded-4">
@@ -112,18 +112,20 @@
 
                         {% if user.is_authenticated %}
                         <div class="mt-4 border-top pt-4">
-                            <h5 class="fw-bold mb-3">Deja tu valoración</h5>
+                            <h3 class="h5 fw-bold mb-3">Deja tu valoración</h3>
                             <form method="post">
                                 {% csrf_token %}
                                 <div class="mb-3">
-                                    <select name="rating" class="form-select rounded-3 mb-2">
+                                    <label for="rating_select" class="form-label small fw-bold">Puntuación</label>
+                                    <select id="rating_select" name="rating" class="form-select rounded-3 mb-2">
                                         <option value="5">5 Estrellas (Excelente)</option>
                                         <option value="4">4 Estrellas</option>
                                         <option value="3">3 Estrellas</option>
                                         <option value="2">2 Estrellas</option>
                                         <option value="1">1 Estrella</option>
                                     </select>
-                                    <textarea name="content" class="form-control rounded-3" rows="3" placeholder="Tu experiencia..."></textarea>
+                                    <label for="review_content" class="form-label small fw-bold">Tu reseña</label>
+                                    <textarea id="review_content" name="content" class="form-control rounded-3" rows="3" placeholder="Tu experiencia..."></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-dark btn-sm rounded-pill px-4">Publicar reseña</button>
                             </form>
