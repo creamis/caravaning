@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}{% if form.instance.pk %}Editar Lugar{% else %}Compartir Lugar{% endif %}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="hp-detail-header mb-4">
+                <h1 class="display-6 fw-bold text-dark mb-2">{% if form.instance.pk %}Editar Lugar{% else %}Compartir un lugar genial{% endif %}</h1>
+                <p class="text-muted">Ayuda a otros viajeros a descubrir sitios increíbles para visitar o pernoctar.</p>
+            </div>
+
+            <form method="post" enctype="multipart/form-data" class="hp-form">
+                {% csrf_token %}
+                
+                <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm border mb-4">
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <label class="form-label fw-bold text-dark small">Nombre del lugar</label>
+                            {% render_field form.title class="form-control form-control-lg rounded-3" placeholder="Ej: Mirador del Estrecho" %}
+                            {{ form.title.errors }}
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-bold text-dark small">Ubicación</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0 rounded-start-3"><i class="bi bi-geo-alt"></i></span>
+                                {% render_field form.location class="form-control border-start-0 rounded-end-3" placeholder="Ej: Tarifa, Cádiz o nombre del lugar" %}
+                            </div>
+                            <div class="form-text small">Introduce un nombre o dirección que Google Maps pueda reconocer.</div>
+                            {{ form.location.errors }}
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-bold text-dark small">¿Por qué es genial este lugar?</label>
+                            {% render_field form.description class="form-control rounded-3" rows="5" placeholder="Cuéntanos qué lo hace especial, servicios cercanos, vistas..." %}
+                            {{ form.description.errors }}
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-bold text-dark small">Foto del lugar</label>
+                            <div class="hp-upload-zone border-dashed rounded-4 p-4 text-center bg-light border-2">
+                                <i class="bi bi-camera display-6 text-primary mb-2 d-block"></i>
+                                {% render_field form.image class="form-control" %}
+                                <div class="form-text mt-2 text-muted">Sube una imagen representativa del lugar.</div>
+                            </div>
+                            {{ form.image.errors }}
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-bold text-dark small">Galería de imágenes (Opcional)</label>
+                            <div class="hp-upload-zone border-dashed rounded-4 p-4 text-center bg-light border-2">
+                                <i class="bi bi-images display-6 text-success mb-2 d-block"></i>
+                                {% render_field form.gallery class="form-control" %}
+                                <div class="form-text mt-2 text-muted">Puedes seleccionar varias imágenes manteniendo pulsada la tecla <strong>Ctrl</strong> (o Cmd en Mac).</div>
+                            </div>
+                            {{ form.gallery.errors }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5 fw-bold shadow-sm">
+                        {% if form.instance.pk %}Guardar Cambios{% else %}Publicar Lugar{% endif %}
+                    </button>
+                    <a href="{% url 'destinations:destination_list' %}" class="btn btn-link text-muted text-decoration-none ms-3">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .border-dashed { border-style: dashed !important; }
+    .hp-upload-zone:hover { border-color: #0d6efd !important; background-color: #f8fbff !important; transition: all 0.3s ease; }
+</style>
+{% endblock %}

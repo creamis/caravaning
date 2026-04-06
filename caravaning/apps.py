@@ -1,0 +1,1 @@
+# Este archivo debe quedar vacío o con la configuración por defecto de la app principal

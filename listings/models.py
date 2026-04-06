@@ -5,7 +5,6 @@ from django.urls import reverse
 
 class Listing(models.Model):
     class ListingType(models.TextChoices):
-        RENT = 'RENT', 'Alquiler'
         SALE = 'SALE', 'Venta'
 
     class Category(models.TextChoices):
@@ -35,7 +34,7 @@ class Listing(models.Model):
     title = models.CharField(max_length=200, verbose_name="Título")
     description = models.TextField(verbose_name="Descripción")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio (€)")
-    listing_type = models.CharField(max_length=10, choices=ListingType.choices, default=ListingType.RENT, verbose_name="Tipo de anuncio")
+    listing_type = models.CharField(max_length=10, choices=ListingType.choices, default=ListingType.SALE, verbose_name="Tipo de anuncio")
     category = models.CharField(max_length=20, choices=Category.choices, default=Category.CARAVANA, verbose_name="Categoría")
     location = models.CharField(max_length=100, verbose_name="Ubicación")
     is_available = models.BooleanField(default=True, verbose_name="Disponible")

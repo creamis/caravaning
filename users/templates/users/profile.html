@@ -10,28 +10,120 @@
 
 {% block content %}
 <div class="container mt-5">
-    <div class="card shadow-sm">
-        <div class="card-header bg-light">
-            <h2 class="mb-0">Perfil de {{ user.username }}</h2>
-        </div>
-        <div class="card-body">
-            <div class="text-center mb-4">
-                <img src="{{ user.profile.profile_picture.url }}" 
-                     alt="Foto de perfil" 
-                     class="rounded-circle shadow" 
-                     style="width: 150px; height: 150px; object-fit: cover; border: 4px solid #fff;">
+    <div class="row">
+        <!-- Sidebar de Perfil -->
+        <div class="col-lg-4 mb-4">
+            <div class="card border-0 shadow-sm rounded-4 text-center p-4">
+                <div class="position-relative d-inline-block mx-auto mb-3">
+                    <img src="{{ user.profile.profile_picture.url }}" 
+                         alt="Foto de perfil" 
+                         class="rounded-circle shadow-sm" 
+                         style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #fff;">
+                </div>
+                <h4 class="fw-bold mb-1">{{ user.username }}</h4>
+                <p class="text-muted small mb-3"><i class="bi bi-envelope me-1"></i>{{ user.email }}</p>
+                <p class="small text-secondary mb-4">
+                    {{ user.first_name }} {{ user.last_name }}<br>
+                    <span class="badge bg-light text-dark border mt-1 fw-normal">Miembro desde {{ user.date_joined|date:"M Y" }}</span>
+                </p>
+                <div class="d-grid">
+                    <a href="{% url 'users:profile_edit' %}" class="btn btn-outline-primary btn-sm rounded-pill">
+                        <i class="bi bi-pencil me-1"></i> Editar Perfil
+                    </a>
+                </div>
             </div>
-            <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Nombre:</strong> {{ user.first_name|default:"No especificado" }} {{ user.last_name|default:"" }}</p>
-            <hr>
-            <h4 class="mt-4">Acciones</h4>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-3">
-                <a href="{% url 'listings:listing_create' %}" class="btn btn-success"><i class="bi bi-plus-circle-fill me-2"></i>Publicar Nuevo Anuncio</a>
-                <a href="{% url 'blog:post_create' %}" class="btn btn-info"><i class="bi bi-file-earmark-plus-fill me-2"></i>Crear Nuevo Post</a>
-                <a href="{% url 'listings:user_listings' user.username %}" class="btn btn-primary"><i class="bi bi-card-list me-2"></i>Ver Mis Anuncios</a>
-                <a href="{% url 'users:profile_edit' %}" class="btn btn-secondary"><i class="bi bi-pencil-square me-2"></i>Editar Foto</a>
+        </div>
+
+        <!-- Panel de Gestión (Dashboard) -->
+        <div class="col-lg-8">
+            <h2 class="fw-bold mb-4">Mi Panel de Gestión</h2>
+            
+            <div class="row g-4">
+                <!-- Gestión de Anuncios -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4 hover-lift">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-success-subtle p-3 rounded-4 me-3">
+                                <i class="bi bi-megaphone-fill text-success fs-4"></i>
+                            </div>
+                            <h5 class="fw-bold mb-0">Mis Anuncios ({{ listing_count }})</h5>
+                        </div>
+                        <p class="text-secondary small mb-4">Gestiona tus caravanas en venta o alquiler. Publica nuevos anuncios o edita los existentes.</p>
+                        <div class="mt-auto d-flex gap-2">
+                            <a href="{% url 'listings:user_listings' user.username %}" class="btn btn-light btn-sm rounded-pill flex-grow-1">Ver todos</a>
+                            <a href="{% url 'listings:listing_create' %}" class="btn btn-success btn-sm rounded-pill px-3"><i class="bi bi-plus-lg"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gestión de Blog -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4 hover-lift">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-info-subtle p-3 rounded-4 me-3">
+                                <i class="bi bi-journal-text text-info fs-4"></i>
+                            </div>
+                            <h5 class="fw-bold mb-0">Mis Historias ({{ post_count }})</h5>
+                        </div>
+                        <p class="text-secondary small mb-4">Comparte tus experiencias de viaje y consejos en el blog. Mantén a la comunidad inspirada.</p>
+                        <div class="mt-auto d-flex gap-2">
+                            <a href="{% url 'blog:user_posts' user.username %}" class="btn btn-light btn-sm rounded-pill flex-grow-1">Ver posts</a>
+                            <a href="{% url 'blog:post_create' %}" class="btn btn-info btn-sm rounded-pill px-3 text-white"><i class="bi bi-plus-lg"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gestión de Destinos -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4 hover-lift">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-warning-subtle p-3 rounded-4 me-3">
+                                <i class="bi bi-geo-alt-fill text-warning fs-4"></i>
+                            </div>
+                            <h5 class="fw-bold mb-0">Lugares ({{ destination_count }})</h5>
+                        </div>
+                        <p class="text-secondary small mb-4">Tus recomendaciones de lugares increíbles para visitar o pernoctar con la caravana.</p>
+                        <div class="mt-auto d-flex gap-2">
+                            <a href="{% url 'destinations:user_destinations' user.username %}" class="btn btn-light btn-sm rounded-pill flex-grow-1">Ver lugares</a>
+                            <a href="{% url 'destinations:destination_create' %}" class="btn btn-warning btn-sm rounded-pill px-3"><i class="bi bi-plus-lg"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Centro de Mensajes -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4 hover-lift">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary-subtle p-3 rounded-4 me-3">
+                                <i class="bi bi-chat-dots-fill text-primary fs-4"></i>
+                            </div>
+                            <h5 class="fw-bold mb-0">Centro de Mensajes</h5>
+                        </div>
+                        <p class="text-secondary small mb-4">Revisa tus conversaciones y consultas de otros usuarios interesados en tus publicaciones.</p>
+                        <div class="mt-auto">
+                            <a href="#" class="btn btn-light btn-sm rounded-pill w-100">Abrir Bandeja</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .hover-lift {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important;
+    }
+    .bg-primary-subtle { background-color: #cfe2ff; }
+    .bg-success-subtle { background-color: #d1e7dd; }
+    .bg-info-subtle { background-color: #cff4fc; }
+    .bg-warning-subtle { background-color: #fff3cd; }
+    .rounded-4 { border-radius: 1rem !important; }
+    .btn-sm { font-size: 0.85rem; padding: 0.5rem 1rem; }
+    .card { background-color: #ffffff; }
+</style>
 {% endblock %}

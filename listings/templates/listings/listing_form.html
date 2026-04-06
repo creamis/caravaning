@@ -36,10 +36,7 @@
                             <label class="form-label fw-bold text-dark small">¿Eres particular o profesional?</label>
                             {% render_field form.seller_type class="form-select rounded-3" %}
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold text-dark small">Tipo de anuncio</label>
-                            {% render_field form.listing_type class="form-select rounded-3" %}
-                        </div>
+                        
 
                         <div class="col-md-4">
                             <label class="form-label fw-bold text-dark small">Categoría</label>
@@ -66,10 +63,6 @@
                                 {% render_field form.price class="form-control border-start-0 rounded-end-3" placeholder="0.00" %}
                             </div>
                             {{ form.price.errors }}
-                            <div id="price_per_day_info" class="form-text text-info mt-1" style="display: none;">
-                                <i class="bi bi-info-circle me-1"></i>
-                                En caso de alquiler el precio indicado será por día.
-                            </div>
                         </div>
 
                         <div class="col-md-6">
@@ -192,25 +185,4 @@
         color: #0dcaf0; /* Color azul claro de Bootstrap para información */
     }
 </style>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const listingTypeSelect = document.getElementById('id_listing_type');
-        const pricePerDayInfo = document.getElementById('price_per_day_info');
-
-        function togglePriceInfo() {
-            if (listingTypeSelect.value === 'RENT') {
-                pricePerDayInfo.style.display = 'block';
-            } else {
-                pricePerDayInfo.style.display = 'none';
-            }
-        }
-
-        // Ejecutar al cargar la página
-        togglePriceInfo();
-
-        // Ejecutar cada vez que cambie el tipo de anuncio
-        listingTypeSelect.addEventListener('change', togglePriceInfo);
-    });
-</script>
 {% endblock %}

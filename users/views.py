@@ -4,6 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Profile  # Asegúrate de importar el modelo Profile
 from .forms import CustomUserCreationForm, ProfileUpdateForm
+from listings.models import Listing
+from blog.models import Post
+from destinations.models import Destination
 
 def register(request):
     """Vista para registrar nuevos usuarios."""
@@ -26,7 +29,14 @@ def profile(request):
         profile = request.user.profile
     except Profile.DoesNotExist:
         profile = Profile.objects.create(user=request.user)
-    return render(request, "users/profile.html")
+    
+    context = {
+        'listing_count': Listing.objects.filter(owner=request.user).count(),
+        'post_count': Post.objects.filter(author=request.user).count(),
+        'destination_count': Destination.objects.filter(author=request.user).count(),
+    }
+    
+    return render(request, "users/profile.html", context)
 
 @login_required
 def profile_edit(request):

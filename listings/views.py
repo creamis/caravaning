@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import get_user_model
-from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from .models import Listing, ListingImage, Review
@@ -13,6 +13,10 @@ class UserIsOwnerMixin(UserPassesTestMixin):
     def test_func(self):
         return self.request.user == self.get_object().owner
 
+class ExternalRentalsView(TemplateView):
+    """Muestra información sobre plataformas de alquiler externas (afiliados)."""
+    template_name = 'listings/external_rentals.html'
+
 class ListingListView(ListView):
     model = Listing
     template_name = 'listings/listing_list.html'
@@ -21,7 +25,7 @@ class ListingListView(ListView):
 
     def get_queryset(self):
         # Empezamos con todos los anuncios disponibles
-        queryset = Listing.objects.filter(is_available=True).order_by('-created_at')
+        queryset = Listing.objects.filter(is_available=True).prefetch_related('images').order_by('-created_at')
         
         # Obtenemos los parámetros de filtrado desde la URL (GET)
         location = self.request.GET.get('location')

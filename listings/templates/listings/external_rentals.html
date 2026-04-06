@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Alquiler de Caravanas y Autocaravanas{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-dark mb-3">Opciones de Alquiler</h1>
+        <p class="lead text-muted mx-auto" style="max-width: 800px;">
+            Aunque en nuestra plataforma nos centramos en la venta, colaboramos con los mejores líderes del sector 
+            para que puedas alquilar tu vehículo con total seguridad o encontrar el compañero de viaje ideal.
+        </p>
+    </div>
+
+    <!-- Sección Propietarios: Yescapa -->
+    <div class="row align-items-center bg-white rounded-4 shadow-sm p-4 p-lg-5 mb-5 border border-primary-subtle">
+        <div class="col-lg-6">
+            <div class="badge bg-primary mb-3 px-3 py-2 rounded-pill">RECOMENDADO PARA PROPIETARIOS</div>
+            <h2 class="fw-bold mb-4">Rentabiliza tu caravana con Yescapa</h2>
+            <p class="text-muted">
+                Si tienes una caravana, autocaravana o camper y quieres sacar un ingreso extra de forma segura, 
+                <strong>Yescapa</strong> es la plataforma líder en Europa para el alquiler entre particulares.
+            </p>
+            <ul class="list-unstyled my-4">
+                <li class="mb-3 d-flex align-items-start">
+                    <i class="bi bi-shield-check text-success fs-4 me-3"></i>
+                    <div><strong>Seguro a todo riesgo:</strong> Tu vehículo está cubierto durante cada alquiler por una póliza específica.</div>
+                </li>
+                <li class="mb-3 d-flex align-items-start">
+                    <i class="bi bi-person-vcard text-success fs-4 me-3"></i>
+                    <div><strong>Usuarios verificados:</strong> Yescapa revisa la identidad y documentos de todos los viajeros.</div>
+                </li>
+                <li class="mb-3 d-flex align-items-start">
+                    <i class="bi bi-cash-stack text-success fs-4 me-3"></i>
+                    <div><strong>Pagos garantizados:</strong> Gestión profesional de pagos y depósitos de garantía.</div>
+                </li>
+            </ul>
+            <a href="https://www.yescapa.es" target="_blank" class="btn btn-primary btn-lg px-5 rounded-pill shadow-sm">
+                Publicar en Yescapa <i class="bi bi-box-arrow-up-right ms-2"></i>
+            </a>
+        </div>
+        <div class="col-lg-6 mt-4 mt-lg-0">
+            <img src="https://plus.unsplash.com/premium_photo-1663100056711-91ad124ae40f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=800" alt="Yescapa Alquiler" class="img-fluid rounded-4 shadow">
+        </div>
+    </div>
+
+    <!-- Sección Viajeros: Otras Plataformas -->
+    <h3 class="fw-bold text-center mb-5">¿Buscas alquilar para tus próximas vacaciones?</h3>
+    <div class="row g-4">
+        <!-- Indie Campers -->
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm hover-lift">
+                <div class="card-body p-4">
+                    <div class="mb-3 text-primary"><i class="bi bi-globe2 fs-1"></i></div>
+                    <h4 class="fw-bold">Indie Campers</h4>
+                    <p class="text-muted small">Ideal para quienes buscan una flota propia, moderna y asistencia 24/7 en toda Europa.</p>
+                    <ul class="ps-3 small text-muted mb-4">
+                        <li>Modelos exclusivos propios</li>
+                        <li>Recogida en múltiples países</li>
+                        <li>Soporte técnico premium</li>
+                    </ul>
+                    <a href="https://indiecampers.com" target="_blank" class="btn btn-outline-primary w-100 rounded-pill">Ver ofertas</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roadsurfer -->
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm hover-lift">
+                <div class="card-body p-4">
+                    <div class="mb-3 text-warning"><i class="bi bi-stars fs-1"></i></div>
+                    <h4 class="fw-bold">Roadsurfer</h4>
+                    <p class="text-muted small">Famosos por su estilo "Vanlife" y sus vehículos perfectamente equipados y coloridos.</p>
+                    <ul class="ps-3 small text-muted mb-4">
+                        <li>Kilometraje ilimitado</li>
+                        <li>Mascotas bienvenidas</li>
+                        <li>Flota muy joven y cuidada</li>
+                    </ul>
+                    <a href="https://roadsurfer.com" target="_blank" class="btn btn-outline-primary w-100 rounded-pill">Ver ofertas</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Camplify -->
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm hover-lift">
+                <div class="card-body p-4">
+                    <div class="mb-3 text-info"><i class="bi bi-people-fill fs-1"></i></div>
+                    <h4 class="fw-bold">Camplify</h4>
+                    <p class="text-muted small">Conecta con una comunidad local para alquilar vehículos únicos directamente a sus dueños.</p>
+                    <ul class="ps-3 small text-muted mb-4">
+                        <li>Experiencia comunitaria</li>
+                        <li>Precios muy competitivos</li>
+                        <li>Atención personalizada</li>
+                    </ul>
+                    <a href="https://www.camplify.es" target="_blank" class="btn btn-outline-primary w-100 rounded-pill">Ver ofertas</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5 text-center p-4 bg-light rounded-4">
+        <p class="mb-0 text-muted fst-italic">
+            * Los enlaces proporcionados son de afiliación. Al reservar a través de ellos, apoyas a Caravaning Project sin coste adicional para ti.
+        </p>
+    </div>
+</div>
+
+<style>
+    .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-lift:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
+    }
+    .bg-primary-subtle {
+        background-color: #e7f1ff !important;
+    }
+</style>
+{% endblock %}

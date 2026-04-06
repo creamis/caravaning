@@ -1,0 +1,1 @@
+# Vaciar este archivo. El modelo correcto está en destinations/models.py

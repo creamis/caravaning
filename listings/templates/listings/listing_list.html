@@ -36,22 +36,8 @@
                     </div>
                 </div>
 
-                <!-- Operación (Venta/Alquiler) -->
-                <div class="col-12 col-md-6 col-lg-2">
-                    <div class="input-group input-group-merge border-0 bg-light rounded-3 overflow-hidden">
-                        <span class="input-group-text bg-transparent border-0 text-muted">
-                            <i class="bi bi-tag"></i>
-                        </span>
-                        <select name="listing_type" class="form-select bg-transparent border-0 py-2 ps-0 shadow-none">
-                            <option value="">Operación</option>
-                            <option value="SALE" {% if request.GET.listing_type == 'SALE' %}selected{% endif %}>Venta</option>
-                            <option value="RENT" {% if request.GET.listing_type == 'RENT' %}selected{% endif %}>Alquiler</option>
-                        </select>
-                    </div>
-                </div>
-
                 <!-- Categoría -->
-                <div class="col-12 col-md-6 col-lg-2">
+                <div class="col-12 col-md-6 col-lg-3">
                     <div class="input-group input-group-merge border-0 bg-light rounded-3 overflow-hidden">
                         <span class="input-group-text bg-transparent border-0 text-muted">
                             <i class="bi bi-truck"></i>
@@ -66,7 +52,7 @@
                 </div>
 
                 <!-- Tipo de Vendedor (Particular/Profesional) -->
-                <div class="col-12 col-md-6 col-lg-2">
+                <div class="col-12 col-md-6 col-lg-3">
                     <div class="input-group input-group-merge border-0 bg-light rounded-3 overflow-hidden">
                         <span class="input-group-text bg-transparent border-0 text-muted">
                             <i class="bi bi-person-badge"></i>
@@ -112,25 +98,39 @@
                 <div class="col">
                     <div class="hp-listing-card h-100 shadow-sm border-0 rounded-4 overflow-hidden bg-white transition-all">
                         <a href="{% url 'listings:listing_detail' listing.pk %}" class="text-decoration-none">
-                            <!-- Imagen con Overlay de Precio -->
+                            <!-- Slider en el Listado de Anuncios -->
                             <div class="position-relative hp-listing-image-wrapper">
-                                {% with listing.images.first as first_image %}
-                                    {% if first_image %}
-                                        <img src="{{ first_image.image.url }}" 
-                                             class="w-100" 
-                                             alt="{{ listing.title }}" 
-                                             style="height: 220px; object-fit: cover;">
-                                    {% else %}
-                                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 220px;">
-                                            <i class="bi bi-image text-secondary opacity-25 fs-1"></i>
+                                <div id="carouselListing-{{ listing.id }}" class="carousel slide" data-bs-interval="false">
+                                    <div class="carousel-inner">
+                                        {% for img in listing.images.all %}
+                                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                            <img src="{{ img.image.url }}" class="d-block w-100" style="height: 220px; object-fit: cover;" alt="{{ listing.title }}">
                                         </div>
+                                        {% empty %}
+                                        <!-- Imagen por defecto si no hay fotos -->
+                                        <div class="carousel-item active">
+                                            <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&q=80&w=400" class="d-block w-100" style="height: 220px; object-fit: cover;" alt="Sin imagen">
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    
+                                    {% if listing.images.count > 1 %}
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselListing-{{ listing.id }}" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true" style="width: 1.2rem;"></span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselListing-{{ listing.id }}" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true" style="width: 1.2rem;"></span>
+                                    </button>
                                     {% endif %}
-                                {% endwith %}
+                                </div>
                                 
-                                <!-- Tipo de Anuncio (Venta/Alquiler) -->
-                                <span class="position-absolute top-0 start-0 m-3 badge {% if listing.listing_type == 'SALE' %}bg-danger{% else %}bg-primary{% endif %} shadow-sm fw-bold rounded-pill hp-type-badge">
-                                    {{ listing.get_listing_type_display }}
+                                <!-- Etiqueta de Venta -->
+                                <span class="position-absolute top-0 start-0 m-3 badge bg-danger shadow-sm fw-bold rounded-pill hp-type-badge">
+                                    Venta
                                 </span>
+                                {% comment %}
+                                ELIMINADO: El bloque with listing.images.first se ha sustituido por el carrusel de arriba.
+                                {% endcomment %}
 
                                 <!-- Precio estilo HivePress -->
                                 <div class="hp-price-tag position-absolute bottom-0 start-0 m-3 px-3 py-1 rounded-pill shadow-sm">

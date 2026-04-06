@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import (
-    ListingDetailView, ListingListView, ListingCreateView, ListingUpdateView, ListingDeleteView, UserListingsView
+    ListingDetailView, ListingListView, ListingCreateView, ListingUpdateView, 
+    ListingDeleteView, UserListingsView, ExternalRentalsView
 )
 
 app_name = 'listings'
@@ -12,4 +13,5 @@ urlpatterns = [
     path('anuncio/<int:pk>/editar/', ListingUpdateView.as_view(), name='listing_update'),
     path('anuncio/<int:pk>/eliminar/', ListingDeleteView.as_view(), name='listing_delete'),
     path('usuario/<str:username>/', UserListingsView.as_view(), name='user_listings'),
+    path('alquiler-externo/', ExternalRentalsView.as_view(), name='external_rentals')
 ]

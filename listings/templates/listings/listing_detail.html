@@ -4,8 +4,26 @@
 
 {% block title %}{{ listing.title }}{% endblock %}
 
-{% block head %}
-{{ super }}
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "{{ listing.title }}",
+  "description": "{{ listing.description|truncatewords:30 }}",
+  "image": "{% if listing.images.first %}{{ request.scheme }}://{{ request.get_host }}{{ listing.images.first.image.url }}{% endif %}",
+  "brand": {
+    "@type": "Brand",
+    "name": "{{ listing.get_category_display }}"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "{{ listing.price }}",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock"
+  }
+}
+</script>
 {% endblock %}
 
 {% block content %}
@@ -46,7 +64,7 @@
                     <div class="carousel-inner">
                         {% for image in listing.images.all %}
                             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                                <img src="{{ image.image.url }}" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="{{ listing.title }}">
+                                <img src="{{ image.image.url }}" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="{{ listing.title }} - Foto {{ forloop.counter }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
                             </div>
                         {% endfor %}
                     </div>

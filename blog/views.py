@@ -1,9 +1,10 @@
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Post, PostImage, Comment
 from .forms import PostForm, CommentForm
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.models import User
 # Listado de posts publicados
 
 def home(request):
@@ -88,3 +89,26 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         for image in self.request.FILES.getlist('images'):
             PostImage.objects.create(post=self.object, image=image)
         return response
+
+class UserPostsView(ListView):
+    """Muestra los posts de un usuario específico."""
+    model = Post
+    template_name = 'blog/user_posts.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        self.view_user = get_object_or_404(User, username=self.kwargs['username'])
+        return Post.objects.filter(author=self.view_user).order_by('-created_at')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['view_user'] = self.view_user
+        return context
+
+class PostDeleteView(LoginRequiredMixin, DeleteView):
+    """Elimina un post si el usuario es el autor."""
+    model = Post
+    template_name = 'blog/post_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse_lazy('blog:user_posts', kwargs={'username': self.request.user.username})

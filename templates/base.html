@@ -5,6 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Caravaning{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Descubre el mundo del caravaning: compra, vende y alquila caravanas, autocaravanas y campers. Encuentra los mejores destinos y consejos de viaje.{% endblock %}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="{% block og_title %}{% endblock %} Caravaning Project">
+    <meta property="og:description" content="{% block og_description %}Tu plataforma de confianza para la comunidad de caravaning.{% endblock %}">
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%230d6efd' class='bi bi-truck-front-fill' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 0A.5.5 0 0 0 3 .5v.2a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-.2a.5.5 0 0 0-.5-.5h-9ZM1 4.5A1.5 1.5 0 0 1 2.5 3h11A1.5 1.5 0 0 1 15 4.5v10a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5V13H3v1.5a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-10Zm2.5 1a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-10ZM2 10v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-1H2Z'/%3E%3C/svg%3E">
 
@@ -239,6 +248,11 @@
                             <i class="bi bi-house-door me-2"></i> Anuncios
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center px-3 py-2 rounded-lg" href="{% url 'destinations:destination_list' %}">
+                            <i class="bi bi-geo-alt me-2"></i> Destinos
+                        </a>
+                    </li>
 
                     <li class="nav-item">
     <a class="nav-link {% if request.resolver_match.app_name == 'shop' %}active{% endif %}" 
@@ -281,8 +295,8 @@
             <div class="card-wrapper">
                 <a href="{% url 'listings:listing_create' %}" class="text-decoration-none">
                     <div class="top-card" style="background-image: url('https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&q=80&w=400');">
-                        <span class="top-card-badge">Venta/Alquiler</span>
-                        <h5 class="mb-0 fw-bold">Vende/Alquila tu caravana</h5>
+                        <span class="top-card-badge">Publicar</span>
+                        <h5 class="mb-0 fw-bold">Vende tu caravana</h5>
                     </div>
                 </a>
             </div>
@@ -295,10 +309,10 @@
                 </a>
             </div>
             <div class="card-wrapper">
-                <a href="{% url 'listings:listing_list' %}?listing_type=RENT" class="text-decoration-none">
+                <a href="{% url 'listings:external_rentals' %}" class="text-decoration-none">
                     <div class="top-card" style="background-image: url('https://plus.unsplash.com/premium_photo-1676660358272-35a60b3a614d?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?q=80&w=1626&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=400');">
-                        <span class="top-card-badge">Alquiler</span>
-                        <h5 class="mb-0 fw-bold">Alquila una caravana</h5>
+                        <span class="top-card-badge">Alquiler Externo</span>
+                        <h5 class="mb-0 fw-bold">Alquila con Yescapa y más</h5>
                     </div>
                 </a>
             </div>
@@ -312,6 +326,16 @@
                 </a>
             </div>
 
+
+            <div class="card-wrapper">
+                <a href="{% url 'destinations:destination_list' %}" class="text-decoration-none">
+                    <div class="top-card" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=400');">
+                        <span class="top-card-badge">Explorar</span>
+                        <h5 class="mb-0 fw-bold">Lugares geniales</h5>
+                    </div>
+                </a>
+            </div>
+
             <div class="card-wrapper">
                 <a href="{% url 'shop:product_list' %}" class="text-decoration-none">
                     <div class="top-card" style="background-image: url('https://plus.unsplash.com/premium_photo-1681488262364-8aeb1b6aac56?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=400');">
@@ -320,6 +344,7 @@
                     </div>
                 </a>
             </div>
+            
         </div>
     </div>
 

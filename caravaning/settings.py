@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Mis aplicaciones
+    'destinations.apps.DestinationsConfig',
     'users.apps.UsersConfig',
     'listings.apps.ListingsConfig',
     'blog.apps.BlogConfig',

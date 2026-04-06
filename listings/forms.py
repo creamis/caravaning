@@ -27,7 +27,6 @@ class ListingForm(forms.ModelForm):
             'title',
             'description',
             'price',
-            'listing_type',
             'category',
             'location',
             'is_available',
@@ -50,7 +49,6 @@ class ListingForm(forms.ModelForm):
         widgets = {
             'description': forms.Textarea(attrs={'rows': 4}),
             'seller_type': forms.Select(attrs={'class': 'form-select'}),
-            'listing_type': forms.Select(attrs={'class': 'form-select'}),
             'category': forms.Select(attrs={'class': 'form-select'}),
             'fuel_type': forms.Select(attrs={'class': 'form-select'}),
             'transmission': forms.Select(attrs={'class': 'form-select'}),

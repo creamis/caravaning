@@ -28,6 +28,7 @@ urlpatterns = [
     path('blog/', include('blog.urls', namespace='blog')),  # El blog ahora está en /blog/
     path('mensajeria/', include('messaging.urls', namespace='messaging')),
     path('tienda/', include('shop.urls', namespace='shop')),
+    path('destinos/', include('destinations.urls', namespace='destinations')),
 
 ]
 
