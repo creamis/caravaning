@@ -1,11 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from ckeditor.fields import RichTextField
 
 class Destination(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='destinations')
     title = models.CharField(max_length=200, verbose_name="Nombre del lugar")
-    description = models.TextField(verbose_name="¿Por qué es genial este lugar?")
+    description = RichTextField(verbose_name="¿Por qué es genial este lugar?")
     location = models.CharField(max_length=255, verbose_name="Ubicación", help_text="Ej: Cabo de Gata, Almería o una dirección específica")
     image = models.ImageField(upload_to='destinations/', verbose_name="Foto de portada")
     created_at = models.DateTimeField(auto_now_add=True)

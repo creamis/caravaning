@@ -5,6 +5,7 @@
 
 {% block content %}
 <div class="container py-5">
+    {{ form.media }}
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="hp-detail-header mb-4">
@@ -35,7 +36,7 @@
 
                         <div class="col-12">
                             <label class="form-label fw-bold text-dark small">¿Por qué es genial este lugar?</label>
-                            {% render_field form.description class="form-control rounded-3" rows="5" placeholder="Cuéntanos qué lo hace especial, servicios cercanos, vistas..." %}
+                            {{ form.description }}
                             {{ form.description.errors }}
                         </div>
 

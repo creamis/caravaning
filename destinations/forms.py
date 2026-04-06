@@ -6,7 +6,9 @@ class MultipleFileInput(forms.FileInput):
 
 class MultipleImageField(forms.ImageField):
     def clean(self, data, initial=None):
-        return data
+        if not data:
+            return []
+        return [super(MultipleImageField, self).clean(f) for f in data]
 
 class DestinationForm(forms.ModelForm):
     gallery = MultipleImageField(

@@ -23,7 +23,6 @@ class PostForm(forms.ModelForm):
         fields = ['title', 'content', 'status']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 10}),
             'status': forms.Select(attrs={'class': 'form-select'}),
         }
 

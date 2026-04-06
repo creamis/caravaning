@@ -72,7 +72,7 @@
             <!-- Contenido del Post -->
             <div class="hp-content-block bg-white p-4 p-md-5 rounded-4 shadow-sm border mb-4">
                 <div class="hp-post-content text-secondary" style="line-height: 1.8; font-size: 1.1rem;">
-                    {{ post.content|linebreaks }}
+                    {{ post.content|safe }}
                 </div>
             </div>
 

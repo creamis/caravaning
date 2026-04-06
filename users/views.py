@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, forms as auth_forms
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Profile  # Asegúrate de importar el modelo Profile
@@ -50,16 +50,19 @@ def profile_edit(request):
     return render(request, 'users/profile_edit.html', {'form': form})
 
 def login_view(request):
+    form = auth_forms.AuthenticationForm(request, data=request.POST or None)
     if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect("home")
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("home")
         else:
-            messages.error(request, "Usuario o contraseña incorrectos.")
-    return render(request, "users/login.html")
+            messages.error(request, "Por favor, revisa los datos introducidos.")
+            
+    return render(request, "users/login.html", {'form': form})
 
 def logout_view(request):
     logout(request)

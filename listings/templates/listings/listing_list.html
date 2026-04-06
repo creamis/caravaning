@@ -19,6 +19,14 @@
         <p class="text-secondary max-w-75 mx-auto mb-4">
             Descubre la caravana perfecta para tus aventuras. Calidad garantizada y vendedores verificados.
         </p>
+
+        {% if not user.is_authenticated %}
+        <!-- Aviso exclusivo para versión móvil (oculto en desktop) -->
+        <div class="d-lg-none alert alert-light border rounded-4 shadow-sm py-3 mb-0 mx-auto" style="max-width: 500px;">
+            <i class="bi bi-info-circle me-2 text-primary"></i>
+            Para publicar un anuncio de venta de caravana, autocaravana o camper debes estar <a href="{% url 'users:login' %}" class="text-primary fw-bold text-decoration-none">registrado</a>.
+        </div>
+        {% endif %}
     </div>
 
     <!-- Barra de Filtros Estilo HivePress -->

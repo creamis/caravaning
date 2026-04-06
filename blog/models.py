@@ -3,6 +3,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from ckeditor.fields import RichTextField
 
 class Post(models.Model):
     class Status(models.TextChoices):
@@ -12,7 +13,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts', verbose_name="Autor")
     title = models.CharField(max_length=250, verbose_name="Título")
     slug = models.SlugField(max_length=250, unique=True, help_text="URL amigable, se genera automáticamente")
-    content = models.TextField(verbose_name="Contenido")
+    content = RichTextField(verbose_name="Contenido")
     status = models.CharField(max_length=10, choices=Status.choices, default=Status.DRAFT, blank=True, verbose_name="Estado")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

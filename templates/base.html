@@ -260,7 +260,6 @@
        <i class="bi bi-cart3 me-1"></i> Tienda
     </a>
 </li>
-
                     {% if user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link d-flex align-items-center px-3 py-2 rounded-lg" href="{% url 'users:profile' %}">
@@ -290,7 +289,7 @@
     </nav>
 
     <!-- Tarjetas superiores centradas -->
-    <div class="container top-cards-section">
+    <div class="container top-cards-section d-none d-lg-block">
         <div class="cards-container">
             <div class="card-wrapper">
                 <a href="{% url 'listings:listing_create' %}" class="text-decoration-none">

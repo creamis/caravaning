@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'messaging.apps.MessagingConfig',
     'widget_tweaks',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -141,3 +142,18 @@ DEFAULT_FROM_EMAIL = 'noreply@caravaning.com'
 # Redirecciones de autenticación
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+# Configuración de CKEditor
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline', 'Strike'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat', 'Source', 'Table'],
+            ['Format', 'FontSize', 'TextColor', 'BGColor'],
+        ],
+        'width': '100%',
+    },
+}

@@ -34,17 +34,114 @@
         font-size: 1.3rem;
         margin-bottom: 0;
     }
+
+    /* Mobile HivePress Styles */
+    .hp-mobile-search {
+        background: #fff;
+        border: 1px solid rgba(0,0,0,0.08);
+        border-radius: 50px;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .hp-mobile-category-grid .icon-box {
+        width: 60px;
+        height: 60px;
+        background: #fff;
+        border: 1px solid rgba(0,0,0,0.05);
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin: 0 auto 8px;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .hp-mobile-category-grid a:active .icon-box {
+        transform: scale(0.95);
+        background-color: #f8fbff;
+    }
+
+    .hp-mobile-category-grid span {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #4b5563;
+        display: block;
+    }
 </style>
+
 <div class="container my-5">
-    <div class="hero-bg dark:brightness-75">
-        <div class="hero-content">
-            <h1 class="display-4">
-                Caravaning Project
-            </h1>
-            <p class="lead">
-                Descubre, vende, compra, alquila y vive la experiencia de viajar en caravana.<br>
-                ¡Tu aventura comienza aquí!
-            </p>
+    <!-- Versión Escritorio (Original) -->
+    <div class="d-none d-lg-block">
+        <div class="hero-bg dark:brightness-75">
+            <div class="hero-content">
+                <h1 class="display-4">Caravaning Project</h1>
+                <p class="lead">
+                    Descubre, vende, compra, alquila y vive la experiencia de viajar en caravana.<br>
+                    ¡Tu aventura comienza aquí!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Versión Móvil HivePress Style -->
+    <div class="d-lg-none px-2 py-3">
+        <div class="mb-4">
+            <h2 class="fw-bold text-dark mb-1">Hola 👋</h2>
+            <p class="text-muted small">¿Qué aventura buscas hoy?</p>
+        </div>
+
+        <!-- Cuadrícula de Categorías -->
+        <div class="hp-mobile-category-grid row g-4 text-center">
+            <div class="col-4">
+                <a href="{% url 'listings:listing_list' %}?listing_type=SALE" class="text-decoration-none">
+                    <div class="icon-box"><i class="bi bi-truck text-primary"></i></div>
+                    <span>Compra</span>
+                </a>
+            </div>
+            <div class="col-4">
+                <a href="{% url 'listings:external_rentals' %}" class="text-decoration-none">
+                    <div class="icon-box"><i class="bi bi-key text-success"></i></div>
+                    <span>Alquiler</span>
+                </a>
+            </div>
+            <div class="col-4">
+                <a href="{% url 'destinations:destination_list' %}" class="text-decoration-none">
+                    <div class="icon-box"><i class="bi bi-geo-alt text-danger"></i></div>
+                    <span>Lugares</span>
+                </a>
+            </div>
+            <div class="col-4">
+                <a href="{% url 'shop:product_list' %}" class="text-decoration-none">
+                    <div class="icon-box"><i class="bi bi-cart3 text-warning"></i></div>
+                    <span>Tienda</span>
+                </a>
+            </div>
+            <div class="col-4">
+                <a href="{% url 'blog:post_list' %}" class="text-decoration-none">
+                    <div class="icon-box"><i class="bi bi-journal-text text-info"></i></div>
+                    <span>Blog</span>
+                </a>
+            </div>
+            <div class="col-4">
+                <a href="{% url 'listings:listing_create' %}" class="text-decoration-none">
+                    <div class="icon-box" style="background: #f0fdf4;"><i class="bi bi-plus-circle text-success"></i></div>
+                    <span>Vender</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Pequeño Banner de Comunidad -->
+        <div class="mt-5 p-4 rounded-4 bg-primary text-white shadow-sm position-relative overflow-hidden">
+            <div class="position-relative" style="z-index: 2;">
+                <h4 class="fw-bold mb-1">Comunidad Caravaning</h4>
+                <p class="small mb-0 opacity-75">Únete a miles de viajeros y comparte tus rutas favoritas.</p>
+            </div>
+            <i class="bi bi-people position-absolute bottom-0 end-0 opacity-25" style="font-size: 5rem; transform: translate(20%, 20%);"></i>
         </div>
     </div>
 </div>
