@@ -10,6 +10,10 @@
         <a href="{% url 'destinations:destination_create' %}" class="btn btn-primary rounded-pill px-4">
             <i class="bi bi-plus-lg me-2"></i>Compartir lugar
         </a>
+        {% else %}
+        <span class="text-muted small bg-light px-3 py-2 rounded-pill border">
+            <i class="bi bi-info-circle me-1 text-primary"></i> Para compartir un lugar, debes estar <a href="{% url 'users:login' %}" class="text-primary text-decoration-none fw-bold">registrado</a>.
+        </span>
         {% endif %}
     </div>
 
