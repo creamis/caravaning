@@ -44,7 +44,7 @@
                     </span>
                     <h1 class="display-6 fw-bold text-dark mb-0">{{ listing.title }}</h1>
                 </div>
-                <p class="text-muted d-flex align-items-center">
+                <p class="text-secondary d-flex align-items-center">
                     <i class="bi bi-geo-alt me-2 text-primary"></i>{{ listing.location }}
                 </p>
             </div>
@@ -296,7 +296,7 @@
             <div class="sticky-top" style="top: 2rem; z-index: 10;">
                 <!-- Bloque de Precio y Contacto -->
                 <div class="bg-white p-4 rounded-4 shadow-sm border mb-4 text-center">
-                    <h3 class="h6 text-muted small fw-bold text-uppercase mb-2">Precio</h3>
+                    <h3 class="h6 text-secondary small fw-bold text-uppercase mb-2">Precio</h3>
                     <p class="display-5 fw-bold text-primary mb-4 price-element" data-price="{{ listing.price }}">€{{ listing.price }}</p>
                     {% if user.is_authenticated %}
                         {% if user != listing.owner %}
@@ -317,7 +317,7 @@
 
                 <!-- Bloque del Vendedor -->
                 <div class="bg-white p-4 rounded-4 shadow-sm border mb-4">
-                    <h3 class="h6 text-muted small fw-bold text-uppercase mb-3">Vendedor</h3>
+                    <h3 class="h6 text-secondary small fw-bold text-uppercase mb-3">Vendedor</h3>
                     <a href="{% url 'listings:user_listings' listing.owner.username %}" class="text-decoration-none">
                         <div class="d-flex align-items-center">
                             {% if listing.owner.profile.profile_picture %}
