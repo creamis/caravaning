@@ -3,6 +3,23 @@
 {% load static %}
 {% block title %}{{ post.title }}{% endblock %}
 
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ post.title }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ post.author.username }}"
+  },
+  "datePublished": "{{ post.created_at|date:'Y-m-d' }}",
+  "description": "{{ post.content|truncatewords:30 }}",
+  "image": "{% if post.images.first %}{{ request.scheme }}://{{ request.get_host }}{{ post.images.first.image.url }}{% endif %}"
+}
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="container my-5">
     <!-- Header HivePress Style -->
