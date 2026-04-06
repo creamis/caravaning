@@ -120,10 +120,14 @@
                                     
                                     {% if listing.images.count > 1 %}
                                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselListing-{{ listing.id }}" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true" style="width: 1.2rem;"></span>
+                                        <span class="hp-mini-carousel-btn" aria-hidden="true">
+                                            <i class="bi bi-chevron-left"></i>
+                                        </span>
                                     </button>
                                     <button class="carousel-control-next" type="button" data-bs-target="#carouselListing-{{ listing.id }}" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true" style="width: 1.2rem;"></span>
+                                        <span class="hp-mini-carousel-btn" aria-hidden="true">
+                                            <i class="bi bi-chevron-right"></i>
+                                        </span>
                                     </button>
                                     {% endif %}
                                 </div>
@@ -348,6 +352,26 @@
         background-position: right 0.75rem center;
         background-repeat: no-repeat;
         background-size: 16px 12px;
+    }
+
+    .hp-mini-carousel-btn {
+        background: rgba(255, 255, 255, 0.9);
+        color: #111;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        transition: all 0.2s ease;
+    }
+
+    .hp-mini-carousel-btn:hover {
+        background: #ffffff;
+        color: #0d6efd;
+        transform: scale(1.1);
     }
 
     .pagination .page-link:focus { box-shadow: none; }

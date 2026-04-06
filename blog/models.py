@@ -33,6 +33,12 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('blog:post_detail', kwargs={'slug': self.slug})
 
+    @property
+    def reading_time(self):
+        # Estimación: 200 palabras por minuto
+        word_count = len(self.content.split())
+        return max(1, round(word_count / 200))
+
     def __str__(self):
         return self.title
 

@@ -59,9 +59,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('blog:post_list')
 
     def form_valid(self, form):
-        # Asignar autor y estado PUBLISHED
+        # Asignar autor
         form.instance.author = self.request.user
-        form.instance.status = Post.Status.PUBLISHED  # Publicado directamente
 
         # Guardar el post
         response = super().form_valid(form)

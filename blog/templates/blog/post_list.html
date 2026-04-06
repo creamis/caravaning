@@ -25,19 +25,38 @@
             {% for post in posts %}
                 <div class="col">
                     <div class="hp-post-card bg-white h-100 rounded-4 shadow-sm border overflow-hidden d-flex flex-column">
-                        <!-- Imagen -->
-                        <a href="{% url 'blog:post_detail' post.slug %}" class="overflow-hidden">
-                            {% if post.images.all %}
-                                <img src="{{ post.images.all.0.image.url }}" 
-                                     class="hp-post-img w-100" 
-                                     style="height: 200px; object-fit: cover;"
-                                     alt="{{ post.title }}">
-                            {% else %}
-                                <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
-                                    <i class="bi bi-image display-1 text-secondary opacity-25"></i>
+                        <!-- Carrusel de Imágenes -->
+                        <div class="position-relative overflow-hidden">
+                            <div id="carouselBlog-{{ post.id }}" class="carousel slide" data-bs-interval="false">
+                                <div class="carousel-inner">
+                                    {% for img in post.images.all %}
+                                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                            <a href="{% url 'blog:post_detail' post.slug %}">
+                                                <img src="{{ img.image.url }}" class="hp-post-img w-100" style="height: 200px; object-fit: cover;" alt="{{ post.title }}">
+                                            </a>
+                                        </div>
+                                    {% empty %}
+                                        <div class="carousel-item active">
+                                            <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                                <i class="bi bi-image display-1 text-secondary opacity-25"></i>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                            {% endif %}
-                        </a>
+                                {% if post.images.count > 1 %}
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselBlog-{{ post.id }}" data-bs-slide="prev">
+                                        <span class="hp-mini-carousel-btn" aria-hidden="true">
+                                            <i class="bi bi-chevron-left"></i>
+                                        </span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselBlog-{{ post.id }}" data-bs-slide="next">
+                                        <span class="hp-mini-carousel-btn" aria-hidden="true">
+                                            <i class="bi bi-chevron-right"></i>
+                                        </span>
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
                         
                         <div class="p-4 d-flex flex-column flex-grow-1">
                             <!-- Meta info: Autor y Fecha -->
@@ -160,6 +179,26 @@
         font-size: 0.75rem;
         color: #6b7280;
         border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .hp-mini-carousel-btn {
+        background: rgba(255, 255, 255, 0.9);
+        color: #111;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        transition: all 0.2s ease;
+    }
+
+    .hp-mini-carousel-btn:hover {
+        background: #ffffff;
+        color: #0d6efd;
+        transform: scale(1.1);
     }
 
     .btn-white { background: white; color: #374151; }
