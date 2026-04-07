@@ -5,9 +5,14 @@
 {% block content %}
 <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-5">
-        <h1 class="fw-bold">Explora lugares geniales</h1>
+        <h1 class="fw-bold mb-0">Explora lugares geniales</h1>
         {% if user.is_authenticated %}
-        <a href="{% url 'destinations:destination_create' %}" class="btn btn-primary rounded-pill px-4">
+        <!-- Botón para móvil (más pequeño) -->
+        <a href="{% url 'destinations:destination_create' %}" class="btn btn-sm btn-primary rounded-pill px-3 d-lg-none">
+            <i class="bi bi-plus-lg me-2"></i>Compartir lugar
+        </a>
+        <!-- Botón para escritorio (tamaño original) -->
+        <a href="{% url 'destinations:destination_create' %}" class="btn btn-primary rounded-pill px-4 d-none d-lg-inline-flex">
             <i class="bi bi-plus-lg me-2"></i>Compartir lugar
         </a>
         {% else %}

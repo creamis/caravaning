@@ -235,6 +235,55 @@
                     </div>
             </div>
 
+            <!-- BLOQUE MÓVIL: Precio y Vendedor (Solo visible en < lg) -->
+            <div class="d-lg-none">
+                <!-- Precio y Contacto Móvil -->
+                <div class="bg-white p-4 rounded-4 shadow-sm border mb-4 text-center">
+                    <h3 class="h6 text-secondary small fw-bold text-uppercase mb-2">Precio</h3>
+                    <p class="display-5 fw-bold text-primary mb-4 price-element" data-price="{{ listing.price }}">€{{ listing.price }}</p>
+                    {% if user.is_authenticated %}
+                        {% if user != listing.owner %}
+                            <div class="d-grid gap-2">
+                                <a href="{% url 'messaging:contact_seller' listing.pk %}" class="btn btn-primary btn-lg rounded-pill fw-bold py-3">
+                                    <i class="bi bi-envelope-fill me-2" aria-hidden="true"></i>Contactar
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'messaging:contact_seller' listing.pk %}" class="btn btn-outline-primary btn-lg rounded-pill fw-bold py-3">
+                                <i class="bi bi-lock-fill me-2" aria-hidden="true"></i>Inicia sesión para contactar
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Vendedor Móvil -->
+                <div class="bg-white p-4 rounded-4 shadow-sm border mb-4">
+                    <h3 class="h6 text-secondary small fw-bold text-uppercase mb-3">Vendedor</h3>
+                    <a href="{% url 'listings:user_listings' listing.owner.username %}" class="text-decoration-none">
+                        <div class="d-flex align-items-center">
+                            {% if listing.owner.profile.profile_picture %}
+                                <img src="{{ listing.owner.profile.profile_picture.url }}" alt="{{ listing.owner.username }}" class="flex-shrink-0 rounded-circle me-3 border" style="width: 50px; height: 50px; object-fit: cover;">
+                            {% else %}
+                                <div class="hp-avatar-fallback me-3">{{ listing.owner.username|first|upper }}</div>
+                            {% endif %}
+                            <div>
+                                <span class="fw-bold d-block text-dark">{{ listing.owner.username }}</span>
+                                <span class="badge bg-light text-muted border py-1 px-2 mb-1" style="font-size: 0.7rem;">{{ listing.get_seller_type_display }}</span>
+                                <span class="text-primary d-block small">Ver otros anuncios</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                {% if user.is_authenticated and user == listing.owner %}
+                <div class="alert alert-light border rounded-4 text-center mb-4">
+                    <p class="small text-muted mb-0">Gestiona tu anuncio en la sección inferior o desde tu perfil.</p>
+                </div>
+                {% endif %}
+            </div>
+
             <!-- Sección de Opiniones -->
             <div class="hp-content-block bg-white p-4 rounded-4 shadow-sm border mb-4">
                 <h2 class="h4 fw-bold mb-4 text-dark border-bottom pb-2">Opiniones de la comunidad</h2>
@@ -291,7 +340,7 @@
             </div>
         </div>
 
-        <div class="col-lg-4">
+        <div class="col-lg-4 d-none d-lg-block">
             <!-- Sidebar fija con información de contacto -->
             <div class="sticky-top" style="top: 2rem; z-index: 10;">
                 <!-- Bloque de Precio y Contacto -->
