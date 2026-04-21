@@ -1,425 +1,989 @@
-
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Caravanas en Venta{% endblock %}
-
-{% block head %}
-{{ block.super }}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-{% endblock %}
+{% block title %}Caravanas en Venta y Alquiler — Caravaning Project{% endblock %}
 
 {% block content %}
-<div class="container py-4">
-    <!-- Header elegante -->
-    <div class="text-center mb-5">
-        <h1 class="display-5 fw-bold text-dark mb-2">
-            <i class="bi bi-compass me-2 text-primary"></i>Explorar Anuncios
-        </h1>
-        <p class="text-secondary max-w-75 mx-auto mb-4">
-            Descubre la caravana perfecta para tus aventuras. Calidad garantizada y vendedores verificados.
-        </p>
+<div class="container py-4 py-lg-5">
 
-        {% if not user.is_authenticated %}
-        <!-- Aviso exclusivo para versión móvil (oculto en desktop) -->
-        <div class="d-lg-none alert alert-light border rounded-4 shadow-sm py-3 mb-0 mx-auto" style="max-width: 500px;">
-            <i class="bi bi-info-circle me-2 text-primary"></i>
-            Para publicar un anuncio de venta de caravana, autocaravana o camper debes estar <a href="{% url 'users:login' %}" class="text-primary fw-bold text-decoration-none">registrado</a>.
+    <!-- Page header -->
+    <div class="ll-page-header">
+        <a href="{% url 'home' %}" class="ll-back-btn d-lg-none" aria-label="Volver al inicio">
+            <i class="bi bi-arrow-left"></i>
+        </a>
+        <div>
+            <p class="ll-eyebrow">Anuncios</p>
+            <h1 class="ll-title">Explorar caravanas</h1>
         </div>
+        <div class="ll-page-icon d-lg-none">
+            <i class="bi bi-truck-front-fill"></i>
+        </div>
+        {% if user.is_authenticated %}
+            <a href="{% url 'listings:listing_create' %}" class="ll-publish-btn d-none d-lg-inline-flex">
+                <i class="bi bi-plus-lg me-2"></i>Publicar anuncio
+            </a>
+        {% else %}
+            <a href="{% url 'users:register' %}" class="ll-publish-btn d-none d-lg-inline-flex">
+                <i class="bi bi-plus-lg me-2"></i>Publicar anuncio
+            </a>
         {% endif %}
     </div>
 
-    <!-- Barra de Filtros Estilo HivePress -->
-    <div class="hp-filter-bar mb-5">
-        <form method="get" action="{% url 'listings:listing_list' %}" class="bg-white shadow-sm rounded-4 p-3 p-lg-2 border border-light-subtle">
-            <div class="row g-2 align-items-center">
-                <!-- Ubicación -->
-                <div class="col-12 col-lg-2">
-                    <div class="input-group input-group-merge border-0 bg-light rounded-3 overflow-hidden">
-                        <label for="id_location" class="visually-hidden">Ubicación</label>
-                        <span class="input-group-text bg-transparent border-0 text-secondary">
-                            <i class="bi bi-geo-alt"></i>
-                        </span>
-                        <input type="text" id="id_location" name="location" class="form-control bg-transparent border-0 py-2 ps-0 shadow-none" 
-                               placeholder="¿Ubicación? (ej. Madrid)" value="{{ request.GET.location|default:'' }}">
-                    </div>
-                </div>
-
-                <!-- Categoría -->
-                <div class="col-12 col-md-6 col-lg-3">
-                    <div class="input-group input-group-merge border-0 bg-light rounded-3 overflow-hidden">
-                        <label for="id_category" class="visually-hidden">Categoría</label>
-                        <span class="input-group-text bg-transparent border-0 text-secondary">
-                            <i class="bi bi-truck"></i>
-                        </span>
-                        <select id="id_category" name="category" class="form-select bg-transparent border-0 py-2 ps-0 shadow-none">
-                            <option value="">Categoría</option>
-                            <option value="CARAVANA" {% if request.GET.category == 'CARAVANA' %}selected{% endif %}>Caravana</option>
-                            <option value="AUTOCARAVANA" {% if request.GET.category == 'AUTOCARAVANA' %}selected{% endif %}>Autocaravana</option>
-                            <option value="CAMPER" {% if request.GET.category == 'CAMPER' %}selected{% endif %}>Camper</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Tipo de Vendedor (Particular/Profesional) -->
-                <div class="col-12 col-md-6 col-lg-3">
-                    <div class="input-group input-group-merge border-0 bg-light rounded-3 overflow-hidden">
-                        <label for="id_seller_type" class="visually-hidden">Tipo de Vendedor</label>
-                        <span class="input-group-text bg-transparent border-0 text-secondary">
-                            <i class="bi bi-person-badge"></i>
-                        </span>
-                        <select id="id_seller_type" name="seller_type" class="form-select bg-transparent border-0 py-2 ps-0 shadow-none">
-                            <option value="">Vendedor</option>
-                            <option value="PRIVATE" {% if request.GET.seller_type == 'PRIVATE' %}selected{% endif %}>Particular</option>
-                            <option value="PROFESSIONAL" {% if request.GET.seller_type == 'PROFESSIONAL' %}selected{% endif %}>Profesional</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Precio Máximo -->
-                <div class="col-12 col-md-6 col-lg-2">
-                    <div class="input-group input-group-merge border-0 bg-light rounded-3 overflow-hidden">
-                        <label for="id_max_price" class="visually-hidden">Precio Máximo</label>
-                        <span class="input-group-text bg-transparent border-0 text-secondary">
-                            <i class="bi bi-currency-euro"></i>
-                        </span>
-                        <select id="id_max_price" name="max_price" class="form-select bg-transparent border-0 py-2 ps-0 shadow-none">
-                            <option value="">Precio Máximo</option>
-                            <option value="15000" {% if request.GET.max_price == '15000' %}selected{% endif %}>Hasta 15.000€</option>
-                            <option value="30000" {% if request.GET.max_price == '30000' %}selected{% endif %}>Hasta 30.000€</option>
-                            <option value="50000" {% if request.GET.max_price == '50000' %}selected{% endif %}>Hasta 50.000€</option>
-                            <option value="100000" {% if request.GET.max_price == '100000' %}selected{% endif %}>Hasta 100.000€</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Botón Buscar -->
-                <div class="col-12 col-lg-2">
-                    <button type="submit" class="btn btn-primary w-100 py-2 rounded-3 fw-bold">
-                        <i class="bi bi-search me-1"></i> Buscar
-                    </button>
-                </div>
+    <!-- Filter form -->
+    <form method="get" action="{% url 'listings:listing_list' %}" class="ll-filter-form">
+        <!-- Search bar -->
+        <div class="ll-search-row">
+            <div class="ll-search-input-wrap">
+                <i class="bi bi-search ll-search-icon"></i>
+                <input
+                    type="text"
+                    name="q"
+                    class="ll-search-input"
+                    placeholder="Buscar por título, marca, modelo…"
+                    value="{{ request.GET.q|default:'' }}"
+                    aria-label="Buscar anuncios"
+                >
             </div>
-        </form>
-    </div>
+            <button type="submit" class="ll-search-btn">
+                Buscar
+            </button>
+        </div>
+
+        <!-- Filter chips grid -->
+        <div class="ll-filters-grid">
+            <div class="ll-filter-chip">
+                <i class="bi bi-truck ll-filter-icon"></i>
+                <select name="category" class="ll-filter-select" aria-label="Categoría">
+                    <option value="">Categoría</option>
+                    <option value="CARAVANA"     {% if request.GET.category == 'CARAVANA' %}selected{% endif %}>Caravana</option>
+                    <option value="AUTOCARAVANA" {% if request.GET.category == 'AUTOCARAVANA' %}selected{% endif %}>Autocaravana</option>
+                    <option value="CAMPER"       {% if request.GET.category == 'CAMPER' %}selected{% endif %}>Camper</option>
+                </select>
+            </div>
+
+            <div class="ll-filter-chip">
+                <i class="bi bi-person-badge ll-filter-icon"></i>
+                <select name="seller_type" class="ll-filter-select" aria-label="Tipo de vendedor">
+                    <option value="">Vendedor</option>
+                    <option value="PRIVATE"      {% if request.GET.seller_type == 'PRIVATE' %}selected{% endif %}>Particular</option>
+                    <option value="PROFESSIONAL" {% if request.GET.seller_type == 'PROFESSIONAL' %}selected{% endif %}>Profesional</option>
+                </select>
+            </div>
+
+            <div class="ll-filter-chip">
+                <i class="bi bi-currency-euro ll-filter-icon"></i>
+                <select name="max_price" class="ll-filter-select" aria-label="Precio máximo">
+                    <option value="">Precio máximo</option>
+                    <option value="15000"  {% if request.GET.max_price == '15000' %}selected{% endif %}>Hasta 15.000 €</option>
+                    <option value="30000"  {% if request.GET.max_price == '30000' %}selected{% endif %}>Hasta 30.000 €</option>
+                    <option value="50000"  {% if request.GET.max_price == '50000' %}selected{% endif %}>Hasta 50.000 €</option>
+                    <option value="100000" {% if request.GET.max_price == '100000' %}selected{% endif %}>Hasta 100.000 €</option>
+                </select>
+            </div>
+
+            <div class="ll-filter-chip">
+                <i class="bi bi-geo-alt ll-filter-icon"></i>
+                <input
+                    type="text"
+                    name="location"
+                    class="ll-filter-select"
+                    placeholder="Ubicación"
+                    value="{{ request.GET.location|default:'' }}"
+                    aria-label="Ubicación"
+                >
+            </div>
+        </div>
+
+        <!-- Active filters + result count row -->
+        <div class="ll-results-row">
+            <span class="ll-result-count">
+                {% if listings %}{{ listings|length }} anuncio{{ listings|length|pluralize }}{% else %}Sin resultados{% endif %}
+            </span>
+            <div class="ll-active-tags">
+                {% if request.GET.listing_type and request.GET.listing_type != '' %}
+                    <span class="ll-tag ll-tag-green">
+                        {{ request.GET.listing_type|capfirst }}
+                        <a href="?{% for k,v in request.GET.items %}{% if k != 'listing_type' %}{{ k }}={{ v }}&{% endif %}{% endfor %}" class="ll-tag-remove" aria-label="Quitar filtro">×</a>
+                    </span>
+                {% endif %}
+                {% if request.GET.category %}
+                    <span class="ll-tag ll-tag-blue">
+                        {{ request.GET.category|capfirst }}
+                        <a href="?{% for k,v in request.GET.items %}{% if k != 'category' %}{{ k }}={{ v }}&{% endif %}{% endfor %}" class="ll-tag-remove" aria-label="Quitar filtro">×</a>
+                    </span>
+                {% endif %}
+                {% if request.GET.seller_type %}
+                    <span class="ll-tag ll-tag-amber">
+                        {{ request.GET.seller_type|capfirst }}
+                        <a href="?{% for k,v in request.GET.items %}{% if k != 'seller_type' %}{{ k }}={{ v }}&{% endif %}{% endfor %}" class="ll-tag-remove" aria-label="Quitar filtro">×</a>
+                    </span>
+                {% endif %}
+                {% if request.GET.max_price %}
+                    <span class="ll-tag ll-tag-gray">
+                        Hasta {{ request.GET.max_price|floatformat:0 }} €
+                        <a href="?{% for k,v in request.GET.items %}{% if k != 'max_price' %}{{ k }}={{ v }}&{% endif %}{% endfor %}" class="ll-tag-remove" aria-label="Quitar filtro">×</a>
+                    </span>
+                {% endif %}
+                {% if request.GET.q or request.GET.category or request.GET.seller_type or request.GET.max_price or request.GET.location %}
+                    <a href="{% url 'listings:listing_list' %}" class="ll-clear-all">Limpiar filtros</a>
+                {% endif %}
+            </div>
+        </div>
+    </form>
 
     {% if listings %}
-        <!-- Grid moderno de anuncios -->
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <!-- Listings grid -->
+        <div class="ll-grid">
             {% for listing in listings %}
-                <div class="col">
-                    <div class="hp-listing-card h-100 shadow-sm border-0 rounded-4 overflow-hidden bg-white transition-all">
-                        <a href="{% url 'listings:listing_detail' listing.pk %}" class="text-decoration-none">
-                            <!-- Slider en el Listado de Anuncios -->
-                            <div class="position-relative hp-listing-image-wrapper">
-                                <div id="carouselListing-{{ listing.id }}" class="carousel slide" data-bs-interval="false">
-                                    <div class="carousel-inner">
-                                        {% for img in listing.images.all %}
-                                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                                            <img src="{{ img.image.url }}" class="d-block w-100" style="height: 220px; object-fit: cover;" alt="{{ listing.title }}">
-                                        </div>
-                                        {% empty %}
-                                        <!-- Imagen por defecto si no hay fotos -->
-                                        <div class="carousel-item active">
-                                            <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&q=80&w=400" class="d-block w-100" style="height: 220px; object-fit: cover;" alt="Sin imagen">
-                                        </div>
-                                        {% endfor %}
-                                    </div>
-                                    
-                                    {% if listing.images.count > 1 %}
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselListing-{{ listing.id }}" data-bs-slide="prev">
-                                        <span class="hp-mini-carousel-btn" aria-hidden="true">
-                                            <i class="bi bi-chevron-left"></i>
-                                        </span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselListing-{{ listing.id }}" data-bs-slide="next">
-                                        <span class="hp-mini-carousel-btn" aria-hidden="true">
-                                            <i class="bi bi-chevron-right"></i>
-                                        </span>
-                                    </button>
-                                    {% endif %}
-                                </div>
-                                
-                                <!-- Etiqueta de Venta -->
-                                <span class="position-absolute top-0 start-0 m-3 badge bg-danger shadow-sm fw-bold rounded-pill hp-type-badge">
-                                    Venta
-                                </span>
-                                {% comment %}
-                                ELIMINADO: El bloque with listing.images.first se ha sustituido por el carrusel de arriba.
-                                {% endcomment %}
+            <article class="ll-card">
+                <a href="{% url 'listings:listing_detail' listing.pk %}" class="text-decoration-none" aria-label="{{ listing.title }}">
 
-                                <!-- Precio estilo HivePress -->
-                                <div class="hp-price-tag position-absolute bottom-0 start-0 m-3 px-3 py-1 rounded-pill shadow-sm">
-                                    <span class="fw-bold price-element" data-price="{{ listing.price|stringformat:".2f" }}">€{{ listing.price }}</span>
+                    <!-- Image area with carousel -->
+                    <div class="ll-card-image-wrap">
+                        <div id="carousel-{{ listing.id }}" class="carousel slide" data-bs-interval="false">
+                            <div class="carousel-inner">
+                                {% for img in listing.images.all %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                    <img src="{{ img.image.url }}"
+                                         class="ll-card-img"
+                                         alt="{{ listing.title }}"
+                                         loading="lazy">
                                 </div>
-
-                                <!-- Categoría (Derecha) -->
-                                {% if listing.category %}
-                                    <span class="position-absolute top-0 end-0 m-3 badge hp-badge-category">
-                                        {{ listing.get_category_display }}
-                                    </span>
-                                {% endif %}
+                                {% empty %}
+                                <div class="carousel-item active">
+                                    <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&q=80&w=600"
+                                         class="ll-card-img"
+                                         alt="{{ listing.title }}"
+                                         loading="lazy">
+                                </div>
+                                {% endfor %}
                             </div>
-                            
-                            <!-- Contenido -->
-                            <div class="p-3">
-                                <div class="d-flex align-items-center text-muted small mb-1">
-                                    <i class="bi bi-geo-alt me-1"></i> {{ listing.location }}
-                                </div>
-                                <h2 class="h5 text-dark fw-bold mb-2 hp-title">{{ listing.title }}</h2>
-                                
-                                <!-- Atributos rápidos (HivePress Style) -->
-                                <div class="hp-attributes d-flex gap-3 py-2 border-top border-bottom border-light-subtle mb-3">
-                                    <div class="d-flex align-items-center gap-1 small text-muted">
-                                        <i class="bi bi-people"></i> <span>{{ listing.seats|default:"-" }}</span>
-                                    </div>
-                                    <div class="d-flex align-items-center gap-1 small text-muted">
-                                        <i class="bi bi-moon-stars"></i> <span>{{ listing.berths|default:"-" }}</span>
-                                    </div>
-                                    <div class="d-flex align-items-center gap-1 small text-muted">
-                                        <i class="bi bi-gear"></i> <span>{{ listing.get_transmission_display|default:"Manual"|truncatechars:1 }}</span>
-                                    </div>
-                                    <div class="d-flex align-items-center gap-1 small fw-medium {% if listing.seller_type == 'PRIVATE' %}text-success{% else %}text-info{% endif %}">
-                                        {% if listing.seller_type == 'PRIVATE' %}
-                                            <i class="bi bi-person"></i>
-                                        {% else %}
-                                            <i class="bi bi-person-badge"></i>
-                                        {% endif %}
-                                        <span>{{ listing.get_seller_type_display }}</span>
-                                    </div>
-                                </div>
+                            {% if listing.images.count > 1 %}
+                            <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#carousel-{{ listing.id }}" data-bs-slide="prev"
+                                    aria-label="Imagen anterior">
+                                <span class="ll-carousel-btn"><i class="bi bi-chevron-left"></i></span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                    data-bs-target="#carousel-{{ listing.id }}" data-bs-slide="next"
+                                    aria-label="Imagen siguiente">
+                                <span class="ll-carousel-btn"><i class="bi bi-chevron-right"></i></span>
+                            </button>
+                            {% endif %}
+                        </div>
 
-                                <!-- Footer de la tarjeta -->
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <div class="hp-avatar-mini me-2">
-                                            {% if listing.owner.profile.profile_picture %}
-                                                <img src="{{ listing.owner.profile.profile_picture.url }}" alt="{{ listing.owner.username }}" class="w-100 h-100" style="object-fit: cover;">
-                                            {% else %}
-                                                {{ listing.owner.username|first|upper }}
-                                            {% endif %}
-                                        </div>
-                                        <span class="small text-muted">{{ listing.owner.username }}</span>
-                                    </div>
-                                    <div class="hp-details-link text-primary fw-bold small">
-                                        Ver más <i class="bi bi-arrow-right"></i>
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- Category badge -->
+                        {% if listing.category %}
+                        <span class="ll-badge-category ll-badge-{{ listing.category|lower }}">
+                            {{ listing.get_category_display }}
+                        </span>
+                        {% endif %}
+
+                        <!-- Price pill -->
+                        <div class="ll-price-pill">
+                            <span class="price-element" data-price="{{ listing.price|stringformat:'.2f' }}">
+                                {{ listing.price }} €
+                            </span>
+                        </div>
+
+                        <!-- Seller type pill (top right) -->
+                        <span class="ll-seller-pill ll-seller-{{ listing.seller_type|lower }}">
+                            {% if listing.seller_type == 'PRIVATE' %}
+                                <i class="bi bi-person"></i> Particular
+                            {% else %}
+                                <i class="bi bi-building"></i> Profesional
+                            {% endif %}
+                        </span>
+
+                        <!-- Like button -->
+                        <a href="{% url 'listings:toggle_like' listing.pk %}"
+                           class="ll-like-btn {% if user in listing.likes.all %}active{% endif %}"
+                           data-listing-id="{{ listing.pk }}"
+                           role="button"
+                           aria-label="{% if user in listing.likes.all %}Quitar de favoritos{% else %}Añadir a favoritos{% endif %}"
+                           onclick="event.preventDefault(); handleLike(this);">
+                            <i class="bi bi-heart{% if user in listing.likes.all %}-fill{% endif %}"></i>
                         </a>
                     </div>
-                </div>
+
+                    <!-- Card body -->
+                    <div class="ll-card-body">
+                        <div class="ll-location">
+                            <i class="bi bi-geo-alt"></i>
+                            {{ listing.location }}
+                        </div>
+
+                        <h2 class="ll-card-title">{{ listing.title }}</h2>
+
+                        <!-- Attributes row -->
+                        <div class="ll-attrs">
+                            {% if listing.seats %}
+                            <div class="ll-attr">
+                                <i class="bi bi-people"></i>
+                                <span>{{ listing.seats }} plazas</span>
+                            </div>
+                            {% endif %}
+                            {% if listing.berths %}
+                            <div class="ll-attr">
+                                <i class="bi bi-moon-stars"></i>
+                                <span>{{ listing.berths }} literas</span>
+                            </div>
+                            {% endif %}
+                            {% if listing.transmission %}
+                            <div class="ll-attr">
+                                <i class="bi bi-gear"></i>
+                                <span>{{ listing.get_transmission_display }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Card footer -->
+                        <div class="ll-card-footer">
+                            <div class="ll-owner">
+                                <div class="ll-avatar ll-avatar-{{ listing.seller_type|lower }}">
+                                    {% if listing.owner.profile.profile_picture %}
+                                        <img src="{{ listing.owner.profile.profile_picture.url }}"
+                                             alt="{{ listing.owner.username }}"
+                                             style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+                                    {% else %}
+                                        {{ listing.owner.username|first|upper }}
+                                    {% endif %}
+                                </div>
+                                <span class="ll-owner-name">{{ listing.owner.username }}</span>
+                            </div>
+                            <span class="ll-see-more">
+                                Ver más <i class="bi bi-arrow-right"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                </a>
+            </article>
             {% endfor %}
         </div>
-        
-        <!-- Paginación (si existe) -->
+
+        <!-- Pagination -->
         {% if page_obj %}
-            <div class="mt-5 d-flex justify-content-center">
-                <nav aria-label="Listings pagination">
-                    <ul class="pagination">
-                        {% if page_obj.has_previous %}
-                            <li class="page-item">
-                                <a class="page-link border-0 text-dark" href="?page={{ page_obj.previous_page_number }}">
-                                    <i class="bi bi-chevron-left"></i>
-                                </a>
-                            </li>
-                        {% endif %}
-                        
-                        {% for num in page_obj.paginator.page_range %}
-                            {% if page_obj.number == num %}
-                                <li class="page-item">
-                                    <span class="page-link border-0 fw-bold text-primary bg-transparent">{{ num }}</span>
-                                </li>
-                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                                <li class="page-item">
-                                    <a class="page-link border-0 text-muted" href="?page={{ num }}">{{ num }}</a>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                        
-                        {% if page_obj.has_next %}
-                            <li class="page-item">
-                                <a class="page-link border-0 text-dark" href="?page={{ page_obj.next_page_number }}">
-                                    <i class="bi bi-chevron-right"></i>
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </nav>
-            </div>
-        {% endif %}
-    {% else %}
-        <!-- Estado vacío elegante -->
-        <div class="text-center py-5">
-            <div class="bg-light dark:bg-dark rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 120px; height: 120px;">
-                <i class="bi bi-truck-front display-1 text-secondary opacity-50"></i>
-            </div>
-            <h2 class="display-6 fw-bold text-dark dark:text-light mb-3">No hay caravanas disponibles</h2>
-            <p class="lead text-muted mb-4">
-                ¡Sé el primero en anunciar una caravana y comienza tu aventura!
-            </p>
-            <div class="d-flex justify-content-center gap-3">
-                <a href="{% url 'listings:listing_create' %}" class="btn btn-success btn-lg rounded-pill px-4">
-                    <i class="bi bi-plus-circle me-2"></i>Publicar Anuncio
+        <nav class="ll-pagination" aria-label="Paginación de anuncios">
+            {% if page_obj.has_previous %}
+                <a class="ll-page-btn" href="?page={{ page_obj.previous_page_number }}" aria-label="Página anterior">
+                    <i class="bi bi-chevron-left"></i>
                 </a>
-                <a href="{% url 'home' %}" class="btn btn-outline-primary btn-lg rounded-pill px-4">
-                    <i class="bi bi-house-door me-2"></i>Volver al inicio
+            {% else %}
+                <span class="ll-page-btn ll-page-disabled" aria-hidden="true">
+                    <i class="bi bi-chevron-left"></i>
+                </span>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <span class="ll-page-btn ll-page-active" aria-current="page">{{ num }}</span>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a class="ll-page-btn" href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a class="ll-page-btn" href="?page={{ page_obj.next_page_number }}" aria-label="Página siguiente">
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            {% else %}
+                <span class="ll-page-btn ll-page-disabled" aria-hidden="true">
+                    <i class="bi bi-chevron-right"></i>
+                </span>
+            {% endif %}
+        </nav>
+        {% endif %}
+
+    {% else %}
+        <!-- Empty state -->
+        <div class="ll-empty">
+            <div class="ll-empty-icon">
+                <i class="bi bi-truck-front"></i>
+            </div>
+            <h2 class="ll-empty-title">No hay anuncios disponibles</h2>
+            <p class="ll-empty-desc">
+                Prueba a cambiar los filtros o sé el primero en publicar tu caravana.
+            </p>
+            <div class="ll-empty-actions">
+                <a href="{% url 'listings:listing_create' %}" class="ll-btn-primary">
+                    <i class="bi bi-plus-circle me-2"></i>Publicar anuncio
+                </a>
+                <a href="{% url 'listings:listing_list' %}" class="ll-btn-secondary">
+                    <i class="bi bi-arrow-counterclockwise me-2"></i>Ver todos
                 </a>
             </div>
         </div>
     {% endif %}
+
 </div>
 
+<!-- Mobile FAB publish button -->
+{% if user.is_authenticated %}
+<a href="{% url 'listings:listing_create' %}" class="ll-mobile-fab d-lg-none" aria-label="Publicar anuncio">
+    <i class="bi bi-plus-lg"></i>
+</a>
+{% endif %}
+
 <style>
-    /* HivePress Style Implementation */
-    .hp-listing-card {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        border: 1px solid rgba(0,0,0,0.05) !important;
+/* ===== PAGE LAYOUT ===== */
+.ll-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.ll-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    margin: 0 0 4px;
+}
+
+.ll-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+}
+
+.ll-publish-btn {
+    display: inline-flex;
+    align-items: center;
+    background: #16a34a;
+    color: white;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+}
+
+.ll-publish-btn:hover {
+    background: #15803d;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.ll-back-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: #1f2937;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    margin-bottom: 16px;
+}
+
+.ll-back-btn:hover {
+    background: #fff;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ll-back-btn:active {
+    transform: scale(0.95);
+}
+
+.ll-page-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(34, 197, 94, 0.1);
+    color: #16a34a;
+    font-size: 20px;
+}
+
+/* ===== FILTER FORM ===== */
+.ll-filter-form {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.ll-search-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.ll-search-input-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f5f7fa;
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 10px;
+    padding: 0 14px;
+}
+
+.ll-search-icon {
+    font-size: 14px;
+    color: #9ca3af;
+    flex-shrink: 0;
+}
+
+.ll-search-input {
+    border: none;
+    background: transparent;
+    padding: 10px 0;
+    font-size: 14px;
+    color: #1f2937;
+    width: 100%;
+    outline: none;
+}
+
+.ll-search-input::placeholder { color: #9ca3af; }
+
+.ll-search-btn {
+    background: #16a34a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.ll-search-btn:hover { background: #15803d; }
+
+.ll-filters-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.ll-filter-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f5f7fa;
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 10px;
+    padding: 0 12px;
+}
+
+.ll-filter-icon {
+    font-size: 13px;
+    color: #9ca3af;
+    flex-shrink: 0;
+}
+
+.ll-filter-select {
+    border: none;
+    background: transparent;
+    padding: 10px 0;
+    font-size: 13px;
+    color: #374151;
+    width: 100%;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.ll-filter-select::placeholder { color: #9ca3af; }
+
+/* ===== RESULTS ROW ===== */
+.ll-results-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.ll-result-count {
+    font-size: 13px;
+    color: #6b7280;
+    margin-right: 4px;
+}
+
+.ll-active-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
+
+.ll-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.ll-tag-green  { background: #eaf3de; color: #3b6d11; }
+.ll-tag-blue   { background: #e6f1fb; color: #0c447c; }
+.ll-tag-amber  { background: #faeeda; color: #633806; }
+.ll-tag-gray   { background: #f1efe8; color: #444441; }
+
+.ll-tag-remove {
+    color: inherit;
+    text-decoration: none;
+    opacity: 0.6;
+    font-size: 14px;
+    line-height: 1;
+    margin-left: 2px;
+}
+
+.ll-tag-remove:hover { opacity: 1; }
+
+.ll-clear-all {
+    font-size: 12px;
+    color: #6b7280;
+    text-decoration: none;
+    border-bottom: 1px dashed #9ca3af;
+}
+
+.ll-clear-all:hover { color: #374151; }
+
+/* ===== LISTINGS GRID ===== */
+.ll-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+@media (max-width: 991px)  { .ll-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 575px)  { .ll-grid { grid-template-columns: 1fr; gap: 14px; } }
+
+/* ===== CARD ===== */
+.ll-card {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ll-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px -8px rgba(0,0,0,0.1);
+}
+
+.ll-card:active { transform: scale(0.99); }
+
+/* ===== CARD IMAGE ===== */
+.ll-card-image-wrap {
+    position: relative;
+    overflow: hidden;
+}
+
+.ll-card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease;
+}
+
+.ll-card:hover .ll-card-img { transform: scale(1.04); }
+
+/* Category badge — semantic colors per type */
+.ll-badge-category {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border-radius: 6px;
+    padding: 3px 9px;
+    font-size: 11px;
+    font-weight: 600;
+    z-index: 2;
+}
+
+.ll-badge-caravana     { background: #eaf3de; color: #27500a; }
+.ll-badge-autocaravana { background: #eaf3de; color: #27500a; }
+.ll-badge-camper       { background: #e6f1fb; color: #0c447c; }
+
+/* Seller pill — top right */
+.ll-seller-pill {
+    position: absolute;
+    top: 10px;
+    right: 44px;
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    z-index: 2;
+}
+
+.ll-seller-private      { background: rgba(234,243,222,0.92); color: #27500a; }
+.ll-seller-professional { background: rgba(250,238,218,0.92); color: #633806; }
+
+/* Price pill */
+.ll-price-pill {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(255,255,255,0.96);
+    border-radius: 8px;
+    padding: 4px 10px;
+    z-index: 2;
+}
+
+.ll-price-pill span {
+    font-size: 14px;
+    font-weight: 700;
+    color: #27500a;
+}
+
+/* Like button */
+.ll-like-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.92);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    text-decoration: none;
+    z-index: 3;
+    transition: transform 0.2s ease, color 0.2s ease;
+    font-size: 15px;
+}
+
+.ll-like-btn:hover   { transform: scale(1.15); color: #ef4444; }
+.ll-like-btn.active  { color: #ef4444; }
+
+/* Carousel controls */
+.ll-carousel-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1f2937;
+    font-size: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    transition: background 0.15s;
+}
+
+.ll-carousel-btn:hover { background: #fff; }
+
+/* ===== CARD BODY ===== */
+.ll-card-body { padding: 14px 16px; }
+
+.ll-location {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #9ca3af;
+    margin-bottom: 5px;
+}
+
+.ll-location i { font-size: 12px; }
+
+.ll-card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 10px;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Attributes */
+.ll-attrs {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.ll-attr {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.ll-attr i { font-size: 12px; }
+
+/* Card footer */
+.ll-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ll-owner {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.ll-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.ll-avatar-private      { background: #eaf3de; color: #27500a; }
+.ll-avatar-professional { background: #faeeda; color: #633806; }
+
+.ll-owner-name {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.ll-see-more {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #185fa5;
+    transition: gap 0.2s;
+}
+
+.ll-card:hover .ll-see-more { gap: 7px; }
+
+/* ===== PAGINATION ===== */
+.ll-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 32px;
+}
+
+.ll-page-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    color: #374151;
+    background: #f5f7fa;
+    border: 1px solid rgba(0,0,0,0.07);
+    transition: background 0.15s;
+}
+
+.ll-page-btn:hover   { background: #e5e7eb; color: #1f2937; }
+.ll-page-active      { background: #16a34a !important; color: #fff !important; border-color: #16a34a !important; }
+.ll-page-disabled    { opacity: 0.35; pointer-events: none; }
+
+/* ===== EMPTY STATE ===== */
+.ll-empty {
+    text-align: center;
+    padding: 64px 24px;
+}
+
+.ll-empty-icon {
+    width: 96px;
+    height: 96px;
+    background: #f5f7fa;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: #d1d5db;
+    margin-bottom: 20px;
+}
+
+.ll-empty-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.ll-empty-desc {
+    font-size: 15px;
+    color: #6b7280;
+    max-width: 400px;
+    margin: 0 auto 24px;
+    line-height: 1.6;
+}
+
+.ll-empty-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.ll-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    background: #16a34a;
+    color: white;
+    border-radius: 50px;
+    padding: 11px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.ll-btn-primary:hover { background: #15803d; color: white; }
+
+.ll-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    background: transparent;
+    color: #374151;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 50px;
+    padding: 11px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.ll-btn-secondary:hover { background: #f5f7fa; color: #1f2937; }
+
+/* ===== MOBILE FAB ===== */
+.ll-mobile-fab {
+    position: fixed;
+    bottom: 84px;
+    right: 18px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #16a34a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 4px 16px rgba(22,163,74,0.4);
+    text-decoration: none;
+    z-index: 900;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.ll-mobile-fab:hover  { color: white; transform: scale(1.07); }
+.ll-mobile-fab:active { transform: scale(0.95); box-shadow: 0 2px 8px rgba(22,163,74,0.3); }
+
+/* ===== MOBILE OVERRIDES ===== */
+@media (max-width: 768px) {
+    .ll-page-header { flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-left: 1rem; padding-right: 1rem; gap: 1rem; }
+    .ll-title { font-size: 20px; }
+
+    .ll-filter-form {
+        border-radius: 14px;
+        padding: 14px;
+        margin-bottom: 16px;
     }
 
-    .hp-listing-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1) !important;
-    }
+    .ll-search-btn { padding: 10px 14px; font-size: 13px; }
 
-    .hp-listing-image-wrapper {
-        overflow: hidden;
-    }
+    .ll-card-img { height: 180px; }
 
-    .hp-listing-card:hover img {
-        transform: scale(1.05);
-        transition: all 0.3s ease;
-    }
+    .ll-card-body { padding: 12px 14px; }
 
-    .hp-price-tag {
-        background: #ffffff;
-        color: #10b981;
-        font-size: 0.95rem;
-    }
+    .ll-card-title { font-size: 14px; }
 
-    .hp-badge-category {
-        background: rgba(255, 255, 255, 0.9);
-        color: #374151;
-        font-weight: 600;
-        font-size: 0.75rem;
-        text-transform: uppercase;
-    }
-
-    .hp-type-badge {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-    }
-
-    .hp-title {
-        font-size: 1.15rem;
-        line-height: 1.4;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .hp-avatar-mini {
-        width: 24px;
-        height: 24px;
-        background: #e5e7eb;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.7rem;
-        font-weight: bold;
-        color: #6b7280;
-        overflow: hidden;
-    }
-
-    .hp-details-link i {
-        transition: transform 0.2s ease;
-    }
-    .hp-listing-card:hover .hp-details-link i {
-        transform: translateX(4px);
-    }
-
-    /* Estilos específicos para la barra de filtros estilo HivePress */
-    .hp-filter-bar form {
-        transition: box-shadow 0.3s ease;
-    }
-
-    .hp-filter-bar form:focus-within {
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1) !important;
-    }
-
-    .input-group-merge .form-control:focus, 
-    .input-group-merge .form-select:focus {
-        box-shadow: none !important;
-    }
-
-    .hp-filter-bar .form-select {
-        cursor: pointer;
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
-        background-position: right 0.75rem center;
-        background-repeat: no-repeat;
-        background-size: 16px 12px;
-    }
-
-    .hp-mini-carousel-btn {
-        background: rgba(255, 255, 255, 0.9);
-        color: #111;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.85rem;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        transition: all 0.2s ease;
-    }
-
-    .hp-mini-carousel-btn:hover {
-        background: #ffffff;
-        color: #0d6efd;
-        transform: scale(1.1);
-    }
-
-    .pagination .page-link:focus { box-shadow: none; }
-
-    @media (max-width: 991.98px) {
-        .hp-filter-bar .row > div {
-            margin-bottom: 0.5rem;
-        }
-    }
+    .ll-page-btn { width: 34px; height: 34px; }
+}
 </style>
 
 <script>
-    // Función para formatear precios con separadores de miles y decimales
-    function formatPrice(price) {
-        // Convertir a número y redondear a 2 decimales
-        // Reemplazamos coma por punto por si acaso viene localizado
-        let cleanPrice = price.toString().replace(',', '.');
-        const num = parseFloat(cleanPrice);
-        if (isNaN(num)) {
-            return '€0,00';
-        }
-        
-        // Formatear con separadores de miles y decimales europeos
-        return new Intl.NumberFormat('es-ES', {
+document.addEventListener('DOMContentLoaded', function () {
+
+    /* ---- Format prices ---- */
+    document.querySelectorAll('.price-element').forEach(function (el) {
+        const raw = el.getAttribute('data-price');
+        if (!raw) return;
+        const num = parseFloat(raw.replace(',', '.'));
+        if (isNaN(num)) return;
+        el.textContent = new Intl.NumberFormat('es-ES', {
             style: 'currency',
             currency: 'EUR',
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
         }).format(num);
-    }
-    
-    // Formatear todos los precios en la página cuando se carga
-    document.addEventListener('DOMContentLoaded', function() {
-        const priceElements = document.querySelectorAll('.price-element');
-        priceElements.forEach(function(element) {
-            const priceValue = element.getAttribute('data-price');
-            if (priceValue) {
-                element.textContent = formatPrice(priceValue);
-            }
-        });
     });
+
+});
+
+/* ---- Like toggle (AJAX) ---- */
+function handleLike(btn) {
+    const url = btn.href;
+
+    fetch(url, {
+        method: 'GET',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+    .then(function (response) {
+        if (response.status === 401) {
+            window.location.href = '{% url "users:login" %}';
+            return null;
+        }
+        return response.json();
+    })
+    .then(function (data) {
+        if (!data || data.liked === undefined) return;
+        const icon = btn.querySelector('i');
+        if (data.liked) {
+            btn.classList.add('active');
+            icon.className = 'bi bi-heart-fill';
+            btn.setAttribute('aria-label', 'Quitar de favoritos');
+        } else {
+            btn.classList.remove('active');
+            icon.className = 'bi bi-heart';
+            btn.setAttribute('aria-label', 'Añadir a favoritos');
+        }
+    })
+    .catch(function () {
+        window.location.href = url;
+    });
+}
 </script>
+
 {% endblock %}
+

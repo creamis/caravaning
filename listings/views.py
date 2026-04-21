@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
+from django.http import JsonResponse
 from .models import Listing, ListingImage, Review
 from .forms import ListingForm, ReviewForm
 User = get_user_model()
@@ -25,7 +26,7 @@ class ListingListView(ListView):
 
     def get_queryset(self):
         # Empezamos con todos los anuncios disponibles
-        queryset = Listing.objects.filter(is_available=True).prefetch_related('images').order_by('-created_at')
+        queryset = Listing.objects.filter(is_available=True).prefetch_related('images', 'likes').order_by('-created_at')
         
         # Obtenemos los parámetros de filtrado desde la URL (GET)
         location = self.request.GET.get('location')
@@ -141,3 +142,27 @@ class UserListingsView(ListView):
         context = super().get_context_data(**kwargs)
         context['profile_user'] = self.profile_user
         return context
+
+def toggle_like(request, pk):
+    """Añade o elimina un like de un anuncio."""
+    if not request.user.is_authenticated:
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'authenticated': False}, status=401)
+        return redirect('users:login')
+    
+    listing = get_object_or_404(Listing, pk=pk)
+    is_liked = listing.likes.filter(id=request.user.id).exists()
+    
+    if is_liked:
+        listing.likes.remove(request.user)
+    else:
+        listing.likes.add(request.user)
+    
+    # Si es una petición AJAX, retorna JSON
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({
+            'liked': not is_liked,
+            'likes_count': listing.likes.count()
+        })
+    
+    return redirect(request.META.get('HTTP_REFERER', 'listings:listing_list'))

@@ -5,6 +5,14 @@
 
 {% block content %}
 <div class="container py-5">
+    <div class="d-lg-none d-flex align-items-center justify-content-between mb-3 px-3">
+        <a href="{% url 'home' %}" class="ll-back-btn-mobile" aria-label="Volver al inicio">
+            <i class="bi bi-arrow-left"></i>
+        </a>
+        <div class="ll-page-icon-mobile">
+            <i class="bi bi-house-fill"></i>
+        </div>
+    </div>
     <!-- Hero Section -->
     <div class="text-center mb-5">
         <h1 class="display-4 fw-bold text-dark mb-3">Opciones de Alquiler</h1>
@@ -118,6 +126,44 @@
     }
     .bg-primary-subtle {
         background-color: #e7f1ff !important;
+    }
+    .ll-back-btn-mobile {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.9);
+        color: #1f2937;
+        text-decoration: none;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s ease;
+    }
+    .ll-back-btn-mobile:hover {
+        background: #fff;
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .ll-back-btn-mobile:active {
+        transform: scale(0.95);
+    }
+    .ll-page-icon-mobile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(34, 197, 94, 0.1);
+        color: #16a34a;
+        font-size: 20px;
+    }
+    @media (max-width: 768px) {
+        .text-center.mb-5 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
     }
 </style>
 {% endblock %}

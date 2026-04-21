@@ -11,11 +11,33 @@
   "headline": "{{ post.title }}",
   "author": {
     "@type": "Person",
-    "name": "{{ post.author.username }}"
+    "name": "{{ post.author.username }}",
+    "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'users:profile' %}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Caravaning Project",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/vanlife1.png' %}"
+    }
   },
   "datePublished": "{{ post.created_at|date:'Y-m-d' }}",
-  "description": "{{ post.content|truncatewords:30 }}",
-  "image": "{% if post.images.first %}{{ request.scheme }}://{{ request.get_host }}{{ post.images.first.image.url }}{% endif %}"
+  "dateModified": "{{ post.updated_at|date:'Y-m-d' }}",
+  "description": "{{ post.content|striptags|truncatewords:50 }}",
+  "image": [
+    {% for image in post.images.all %}
+    "{{ request.scheme }}://{{ request.get_host }}{{ image.image.url }}"{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ request.build_absolute_uri }}"
+  },
+  "articleSection": "Caravaning",
+  "keywords": "caravaning, viajes, caravanas, consejos, {{ post.title|lower }}",
+  "wordCount": "{{ post.content|wordcount }}",
+  "timeRequired": "PT{{ post.reading_time }}M"
 }
 </script>
 {% endblock %}

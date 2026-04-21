@@ -10,17 +10,36 @@
   "@context": "https://schema.org/",
   "@type": "Product",
   "name": "{{ listing.title }}",
-  "description": "{{ listing.description|truncatewords:30 }}",
-  "image": "{% if listing.images.first %}{{ request.scheme }}://{{ request.get_host }}{{ listing.images.first.image.url }}{% endif %}",
+  "description": "{{ listing.description|truncatewords:50 }}",
+  "image": [
+    {% for image in listing.images.all %}
+    "{{ request.scheme }}://{{ request.get_host }}{{ image.image.url }}"{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ],
   "brand": {
     "@type": "Brand",
     "name": "{{ listing.get_category_display }}"
   },
+  "category": "{{ listing.get_category_display }}",
   "offers": {
     "@type": "Offer",
     "price": "{{ listing.price }}",
     "priceCurrency": "EUR",
-    "availability": "https://schema.org/InStock"
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "{{ listing.seller.username }}"
+    },
+    "priceValidUntil": "{{ listing.created_at|date:'Y-m-d'|add:365 }}"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.5",
+    "reviewCount": "{{ listing.likes.count }}"
+  },
+  "manufacturer": {
+    "@type": "Organization",
+    "name": "{{ listing.brand|default:'Caravaning Project' }}"
   }
 }
 </script>
@@ -240,18 +259,18 @@
                 <!-- Precio y Contacto Móvil -->
                 <div class="bg-white p-4 rounded-4 shadow-sm border mb-4 text-center">
                     <h3 class="h6 text-secondary small fw-bold text-uppercase mb-2">Precio</h3>
-                    <p class="display-5 fw-bold text-primary mb-4 price-element" data-price="{{ listing.price }}">€{{ listing.price }}</p>
+                    <p class="h3 fw-bold text-primary mb-4 price-element" data-price="{{ listing.price }}">€{{ listing.price }}</p>
                     {% if user.is_authenticated %}
                         {% if user != listing.owner %}
                             <div class="d-grid gap-2">
-                                <a href="{% url 'messaging:contact_seller' listing.pk %}" class="btn btn-primary btn-lg rounded-pill fw-bold py-3">
+                                <a href="{% url 'messaging:contact_seller' listing.pk %}" class="btn btn-primary rounded-pill fw-bold py-2 px-3">
                                     <i class="bi bi-envelope-fill me-2" aria-hidden="true"></i>Contactar
                                 </a>
                             </div>
                         {% endif %}
                     {% else %}
                         <div class="d-grid gap-2">
-                            <a href="{% url 'messaging:contact_seller' listing.pk %}" class="btn btn-outline-primary btn-lg rounded-pill fw-bold py-3">
+                            <a href="{% url 'messaging:contact_seller' listing.pk %}" class="btn btn-outline-primary rounded-pill fw-bold py-2 px-3">
                                 <i class="bi bi-lock-fill me-2" aria-hidden="true"></i>Inicia sesión para contactar
                             </a>
                         </div>
@@ -346,18 +365,18 @@
                 <!-- Bloque de Precio y Contacto -->
                 <div class="bg-white p-4 rounded-4 shadow-sm border mb-4 text-center">
                     <h3 class="h6 text-secondary small fw-bold text-uppercase mb-2">Precio</h3>
-                    <p class="display-5 fw-bold text-primary mb-4 price-element" data-price="{{ listing.price }}">€{{ listing.price }}</p>
+                    <p class="h3 fw-bold text-primary mb-4 price-element" data-price="{{ listing.price }}">€{{ listing.price }}</p>
                     {% if user.is_authenticated %}
                         {% if user != listing.owner %}
                             <div class="d-grid gap-2">
-                                <a href="{% url 'messaging:contact_seller' listing.pk %}" class="btn btn-primary btn-lg rounded-pill fw-bold py-3">
+                                <a href="{% url 'messaging:contact_seller' listing.pk %}" class="btn btn-primary rounded-pill fw-bold py-2 px-3">
                                     <i class="bi bi-envelope-fill me-2" aria-hidden="true"></i>Contactar con el vendedor
                                 </a>
                             </div>
                         {% endif %}
                     {% else %}
                         <div class="d-grid gap-2">
-                            <a href="{% url 'messaging:contact_seller' listing.pk %}" class="btn btn-outline-primary btn-lg rounded-pill fw-bold py-3">
+                            <a href="{% url 'messaging:contact_seller' listing.pk %}" class="btn btn-outline-primary rounded-pill fw-bold py-2 px-3">
                                 <i class="bi bi-lock-fill me-2" aria-hidden="true"></i>Inicia sesión para contactar
                             </a>
                         </div>

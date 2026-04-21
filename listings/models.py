@@ -40,6 +40,7 @@ class Listing(models.Model):
     is_available = models.BooleanField(default=True, verbose_name="Disponible")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    likes = models.ManyToManyField(User, related_name='liked_listings', blank=True, verbose_name="Me gusta")
 
     # --- Nuevas características del vehículo ---
     year = models.PositiveIntegerField(null=True, blank=True, verbose_name="Año de fabricación")
@@ -60,6 +61,9 @@ class Listing(models.Model):
 
     def __str__(self):
         return self.title
+
+    def total_likes(self):
+        return self.likes.count()
 
     def get_absolute_url(self):
         return reverse('listings:listing_detail', kwargs={'pk': self.pk})

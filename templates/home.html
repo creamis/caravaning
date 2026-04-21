@@ -1,13 +1,18 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Caravaning Project - Compra y Alquiler de Caravanas{% endblock %}
-{% block meta_description %}Encuentra tu próxima aventura. La mayor comunidad de caravaning para comprar, vender o descubrir destinos increíbles.{% endblock %}
+{% block title %}Caravaning Project - Compra, Vende y Alquila Caravanas | Comunidad Caravaning{% endblock %}
+{% block meta_description %}Encuentra tu próxima aventura en caravaning. Compra y vende caravanas, autocaravanas y campers. Alquila con Yescapa. Descubre destinos increíbles y únete a la comunidad.{% endblock %}
+{% block meta_keywords %}caravanas, autocaravanas, campers, caravaning, venta caravanas, alquiler caravanas, comprar caravana, vender caravana, destinos caravaning, comunidad caravaning, viajes en caravana{% endblock %}
+{% block og_type %}website{% endblock %}
+{% block og_title %}Caravaning Project - Tu Comunidad de Caravaning{% endblock %}
+{% block og_description %}La mayor plataforma de caravaning: compra, vende, alquila caravanas y descubre los mejores destinos para tu aventura.{% endblock %}
 
 {% block content %}
 <style>
+    /* ===== DESKTOP HERO ===== */
     .hero-bg {
-        background-image: url('https://www.saloncaravaning.com/app/uploads/sites/86/2023/07/istock-1385942908-1.jpg');
+        background-image: url('https://images.unsplash.com/photo-1563783850023-077d97825802?q=80&w=1170&auto=format&fit=crop');
         background-size: cover;
         background-position: center;
         min-height: 60vh;
@@ -17,164 +22,505 @@
         border-radius: 1rem;
         box-shadow: 0 4px 24px rgba(0,0,0,0.2);
     }
+
     .hero-content {
-        background: rgba(0,0,0,0.6);
+        background: transparent;
         padding: 2.5rem 2rem;
         border-radius: 1rem;
         text-align: center;
-        color: #fff;
+        color: #ffffff;
         max-width: 600px;
+        text-shadow: 3px 3px 12px rgba(0,0,0,0.8), 0 0 30px rgba(0,0,0,0.6);
     }
+
     .hero-content h1 {
         font-size: 2.8rem;
         font-weight: bold;
         margin-bottom: 1rem;
+        color: #ffffff;
     }
+
     .hero-content p {
         font-size: 1.3rem;
         margin-bottom: 0;
+        color: #ffffff;
     }
 
-    /* Mobile HivePress Styles */
-    .hp-mobile-search {
-        background: #fff;
-        border: 1px solid rgba(0,0,0,0.08);
-        border-radius: 50px;
-        padding: 12px 20px;
-        display: flex;
-        align-items: center;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
+    /* ===== MOBILE SHELL ===== */
+    @media (max-width: 768px) {
+        /* Hide desktop version */
+        .desktop-only { display: none !important; }
 
-    /* Mobile Banner Cards */
-    .hp-banner-card {
-        position: relative;
-        height: 120px;
-        border-radius: 1.25rem;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        padding: 1.5rem;
-        text-decoration: none !important;
-        background-size: cover;
-        background-position: center;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .hp-banner-card:active {
-        transform: scale(0.98);
-    }
-    .hp-banner-card::before {
-        content: "";
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: linear-gradient(90deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 100%);
-        z-index: 1;
-    }
-    .hp-banner-card .card-content {
-        position: relative;
-        z-index: 2;
-        color: white;
-    }
-
-    /* Animación de entrada suave (Fade-in + Slide) */
-    @keyframes hp-fade-up {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
+        /* Full-bleed mobile wrapper */
+        .mobile-shell {
+            margin: 0 -16px;
+            background: #f5f7fa;
+            min-height: 100vh;
         }
-        to {
-            opacity: 1;
-            transform: translateY(0);
+
+        /* ---- HERO ---- */
+        .m-hero {
+            position: relative;
+            height: 260px;
+            background: url('https://images.unsplash.com/photo-1563783850023-077d97825802?q=80&w=800&auto=format&fit=crop') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .m-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.6) 100%);
+            pointer-events: none;
+        }
+
+        .m-hero-topbar {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 24px 0;
+        }
+
+        .m-hero-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .m-hero-logo-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .m-hero-logo span {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .m-hero-search-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .m-hero-search-btn:active { background: rgba(255,255,255,0.35); }
+
+        .m-hero-copy {
+            position: relative;
+            z-index: 2;
+            padding: 0 24px 22px;
+        }
+
+        .m-hero-eyebrow {
+            font-size: 12px;
+            color: rgba(255,255,255,0.8);
+            font-weight: 400;
+            margin: 0 0 4px;
+        }
+
+        .m-hero-copy h1 {
+            font-size: 22px !important;
+            font-weight: 700 !important;
+            color: white !important;
+            margin: 0;
+            line-height: 1.25;
+        }
+
+        /* ---- CONTENT CARD (white rounded surface over hero) ---- */
+        .m-content {
+            background: #f5f7fa;
+            border-radius: 24px 24px 0 0;
+            margin-top: -24px;
+            position: relative;
+            z-index: 3;
+            padding: 20px 24px 28px;
+        }
+
+        /* ---- SEARCH BAR ---- */
+        .m-search {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: 14px;
+            padding: 11px 14px;
+            margin-bottom: 24px;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: box-shadow 0.2s;
+        }
+
+        .m-search:active { box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+
+        .m-search span {
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        /* ---- SECTION LABEL ---- */
+        .m-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            margin: 0 0 12px;
+        }
+
+        /* ---- CATEGORY GRID ---- */
+        .m-categories {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .m-cat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-decoration: none;
+            border: 1px solid rgba(0,0,0,0.06);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .m-cat-card:active {
+            transform: scale(0.97);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .m-cat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .m-cat-card.listings .m-cat-icon  { background: #eaf3de; color: #3b6d11; }
+        .m-cat-card.rentals .m-cat-icon   { background: #e6f1fb; color: #185fa5; }
+        .m-cat-card.destinations .m-cat-icon { background: #faeeda; color: #854f0b; }
+        .m-cat-card.shop .m-cat-icon      { background: #fbeaf0; color: #993556; }
+
+        .m-cat-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1f2937;
+            margin: 0 0 2px;
+        }
+
+        .m-cat-desc {
+            font-size: 11px;
+            color: #9ca3af;
+            margin: 0;
+        }
+
+        /* ---- QUICK LINKS ROW ---- */
+        .m-quicklinks {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding-bottom: 2px;
+        }
+
+        .m-quicklinks::-webkit-scrollbar { display: none; }
+
+        .m-quicklink {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: white;
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 20px;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #374151;
+            text-decoration: none;
+            transition: background 0.15s;
+        }
+
+        .m-quicklink:active { background: #f3f4f6; }
+
+        .m-quicklink i { font-size: 14px; }
+        .m-quicklink.blog i    { color: #993556; }
+        .m-quicklink.featured i { color: #854f0b; }
+        .m-quicklink.new i     { color: #3b6d11; }
+
+        /* ---- SELL CTA BANNER ---- */
+        .m-sell-banner {
+            background: white;
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 18px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .m-sell-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: #eaf3de;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 20px;
+            color: #3b6d11;
+        }
+
+        .m-sell-text { flex: 1; }
+
+        .m-sell-text h3 {
+            font-size: 14px !important;
+            font-weight: 600;
+            color: #1f2937;
+            margin: 0 0 2px;
+        }
+
+        .m-sell-text p {
+            font-size: 12px;
+            color: #6b7280;
+            margin: 0;
+        }
+
+        .m-sell-btn {
+            flex-shrink: 0;
+            background: #16a34a;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 9px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .m-sell-btn:active { background: #15803d; }
+
+        .m-sell-btn-secondary {
+            display: block;
+            text-align: center;
+            font-size: 12px;
+            color: #16a34a;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 6px;
+            border-radius: 8px;
+        }
+
+        /* ---- FEATURED ITEMS ---- */
+        .m-featured-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .m-featured-item {
+            background: white;
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 14px;
+            padding: 14px 12px;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            transition: transform 0.15s;
+        }
+
+        .m-featured-item:active { transform: scale(0.97); }
+
+        .m-featured-item i {
+            font-size: 20px;
+        }
+
+        .m-featured-item.offers i    { color: #854f0b; }
+        .m-featured-item.popular i   { color: #185fa5; }
+
+        .m-featured-item span {
+            font-size: 12px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .m-featured-item small {
+            font-size: 11px;
+            color: #9ca3af;
         }
     }
 
-    .hp-banner-card {
-        animation: hp-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    /* ===== DESKTOP: hide mobile shell ===== */
+    @media (min-width: 769px) {
+        .mobile-shell { display: none !important; }
     }
-
-    /* Efecto cascada: cada banner espera un poco más que el anterior */
-    .hp-banner-card:nth-child(1) { animation-delay: 0.1s; }
-    .hp-banner-card:nth-child(2) { animation-delay: 0.2s; }
-    .hp-banner-card:nth-child(3) { animation-delay: 0.3s; }
-    .hp-banner-card:nth-child(4) { animation-delay: 0.4s; }
-    .hp-banner-card:nth-child(5) { animation-delay: 0.5s; }
-    .hp-banner-card:nth-child(6) { animation-delay: 0.6s; }
 </style>
 
-<div class="container my-5">
-    <!-- Versión Escritorio (Original) -->
-    <div class="d-none d-lg-block">
-        <div class="hero-bg dark:brightness-75">
-            <div class="hero-content">
-                <h1 class="display-4">Caravaning Project</h1>
-                <p class="lead">
-                    Descubre, vende, compra, alquila y vive la experiencia de viajar en caravana.<br>
-                    ¡Tu aventura comienza aquí!
-                </p>
-            </div>
+<!-- ===== DESKTOP VERSION ===== -->
+<div class="container my-5 desktop-only d-none d-lg-block">
+    <div class="hero-bg">
+        <div class="hero-content">
+            <h1 class="display-4">Caravaning Project</h1>
+            <p class="lead">
+                Descubre, vende, compra, alquila y vive la experiencia de viajar en caravana.<br>
+                ¡Tu aventura comienza aquí!
+            </p>
         </div>
     </div>
+</div>
 
-    <!-- Versión Móvil HivePress Style -->
-    <div class="d-lg-none px-2 py-3">
-        <div class="mb-4">
-            <h2 class="fw-bold text-dark mb-1">Hola 👋</h2>
-            <p class="text-muted small">¿Qué aventura buscas hoy?</p>
-        </div>
+<!-- ===== MOBILE VERSION ===== -->
+<div class="d-lg-none">
+    <div class="mobile-shell">
 
-        <!-- Secciones estilo Banner con imágenes -->
-        <div class="d-flex flex-column gap-3">
-            <a href="{% url 'listings:listing_list' %}?listing_type=SALE" class="hp-banner-card shadow-sm" style="background-image: url('https://images.unsplash.com/photo-1563783850023-077d97825802?auto=format&fit=crop&q=80&w=400');">
-                <div class="card-content">
-                    <h4 class="fw-bold mb-0"><i class="bi bi-truck me-2"></i>Compra</h4>
-                    <p class="small mb-0 opacity-75">Tu propia caravana</p>
-                </div>
-            </a>
-
-            <a href="{% url 'listings:external_rentals' %}" class="hp-banner-card shadow-sm" style="background-image: url('https://plus.unsplash.com/premium_photo-1676660358272-35a60b3a614d?auto=format&fit=crop&q=80&w=400');">
-                <div class="card-content">
-                    <h4 class="fw-bold mb-0"><i class="bi bi-key me-2"></i>Alquiler</h4>
-                    <p class="small mb-0 opacity-75">Explora con libertad</p>
-                </div>
-            </a>
-
-            <a href="{% url 'destinations:destination_list' %}" class="hp-banner-card shadow-sm" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=400');">
-                <div class="card-content">
-                    <h4 class="fw-bold mb-0"><i class="bi bi-geo-alt me-2"></i>Destinos</h4>
-                    <p class="small mb-0 opacity-75">Lugares para pernoctar</p>
-                </div>
-            </a>
-
-            <a href="{% url 'shop:product_list' %}" class="hp-banner-card shadow-sm" style="background-image: url('https://plus.unsplash.com/premium_photo-1681488262364-8aeb1b6aac56?auto=format&fit=crop&q=80&w=400');">
-                <div class="card-content">
-                    <h4 class="fw-bold mb-0"><i class="bi bi-cart3 me-2"></i>Tienda</h4>
-                    <p class="small mb-0 opacity-75">Accesorios y gadgets</p>
-                </div>
-            </a>
-
-            <a href="{% url 'blog:post_list' %}" class="hp-banner-card shadow-sm" style="background-image: url('https://plus.unsplash.com/premium_photo-1726862932006-c6e2f8434266?auto=format&fit=crop&q=80&w=400');">
-                <div class="card-content">
-                    <h4 class="fw-bold mb-0"><i class="bi bi-journal-text me-2"></i>Blog</h4>
-                    <p class="small mb-0 opacity-75">Consejos y noticias</p>
-                </div>
-            </a>
-
-            <a href="{% url 'listings:listing_create' %}" class="hp-banner-card shadow-sm" style="background-image: url('https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&q=80&w=400');">
-                <div class="card-content">
-                    <h4 class="fw-bold mb-0"><i class="bi bi-plus-circle me-2"></i>Publicar</h4>
-                    <p class="small mb-0 opacity-75">Vende tu vehículo aquí</p>
-                </div>
-            </a>
-        </div>
-
-        <!-- Pequeño Banner de Comunidad -->
-        <div class="mt-4 p-4 rounded-4 bg-primary text-white shadow-sm position-relative overflow-hidden">
-            <div class="position-relative" style="z-index: 2;">
-                <h4 class="fw-bold mb-1">Comunidad</h4>
-                <p class="small mb-0 opacity-75">Únete a miles de viajeros y comparte tus rutas favoritas.</p>
+        <!-- Hero -->
+        <div class="m-hero">
+            <div class="m-hero-topbar">
+                <a href="{% url 'home' %}" class="m-hero-logo">
+                    <div class="m-hero-logo-icon">
+                        <i class="bi bi-truck" style="color:white;font-size:15px;"></i>
+                    </div>
+                    <span>Caravaning</span>
+                </a>
+                <a href="{% url 'listings:listing_list' %}" class="m-hero-search-btn" aria-label="Buscar">
+                    <i class="bi bi-search" style="color:white;font-size:15px;"></i>
+                </a>
             </div>
-            <i class="bi bi-people position-absolute bottom-0 end-0 opacity-25" style="font-size: 5rem; transform: translate(20%, 20%);"></i>
+            <div class="m-hero-copy">
+                <p class="m-hero-eyebrow">Bienvenido a Caravaning Project</p>
+                <h1>Encuentra tu próxima aventura</h1>
+            </div>
         </div>
+
+        <!-- Main content -->
+        <div class="m-content">
+
+            <!-- Search bar -->
+            <a href="{% url 'listings:listing_list' %}" class="m-search" aria-label="Buscar anuncios">
+                <i class="bi bi-search" style="font-size:15px;color:#9ca3af;"></i>
+                <span>Buscar caravanas, destinos…</span>
+            </a>
+
+            <!-- Categories -->
+            <p class="m-label">Explorar</p>
+            <div class="m-categories">
+                <a href="{% url 'listings:listing_list' %}?listing_type=SALE" class="m-cat-card listings">
+                    <div class="m-cat-icon"><i class="bi bi-truck"></i></div>
+                    <p class="m-cat-title">Compra</p>
+                    <p class="m-cat-desc">Caravanas en venta</p>
+                </a>
+                <a href="{% url 'listings:external_rentals' %}" class="m-cat-card rentals">
+                    <div class="m-cat-icon"><i class="bi bi-key"></i></div>
+                    <p class="m-cat-title">Alquiler</p>
+                    <p class="m-cat-desc">Yescapa y más</p>
+                </a>
+                <a href="{% url 'destinations:destination_list' %}" class="m-cat-card destinations">
+                    <div class="m-cat-icon"><i class="bi bi-geo-alt"></i></div>
+                    <p class="m-cat-title">Destinos</p>
+                    <p class="m-cat-desc">Lugares increíbles</p>
+                </a>
+                <a href="{% url 'shop:product_list' %}" class="m-cat-card shop">
+                    <div class="m-cat-icon"><i class="bi bi-bag"></i></div>
+                    <p class="m-cat-title">Tienda</p>
+                    <p class="m-cat-desc">Accesorios premium</p>
+                </a>
+            </div>
+
+            <!-- Quick links scrollable -->
+            <p class="m-label">Accesos rápidos</p>
+            <div class="m-quicklinks">
+                <a href="{% url 'blog:post_list' %}" class="m-quicklink blog">
+                    <i class="bi bi-journal-text"></i> Blog
+                </a>
+                <a href="{% url 'listings:listing_list' %}?featured=true" class="m-quicklink featured">
+                    <i class="bi bi-star"></i> Destacados
+                </a>
+                <a href="{% url 'listings:listing_list' %}?ordering=-created_at" class="m-quicklink new">
+                    <i class="bi bi-clock"></i> Nuevos
+                </a>
+                <a href="{% url 'listings:listing_list' %}?listing_type=RENTAL" class="m-quicklink" style="color:#374151;">
+                    <i class="bi bi-calendar3" style="color:#185fa5;"></i> Alquiler P2P
+                </a>
+            </div>
+
+            <!-- Sell CTA -->
+            <div class="m-sell-banner">
+                <div class="m-sell-icon">
+                    <i class="bi bi-tag"></i>
+                </div>
+                <div class="m-sell-text">
+                    <h3>Vende tu caravana</h3>
+                    <p>Llega a miles de compradores</p>
+                </div>
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'listings:listing_create' %}" class="m-sell-btn">Publicar</a>
+                {% else %}
+                    <a href="{% url 'users:register' %}" class="m-sell-btn">Regístrate</a>
+                {% endif %}
+            </div>
+
+            {% if not request.user.is_authenticated %}
+            <a href="{% url 'users:login' %}" class="m-sell-btn-secondary">
+                ¿Ya tienes cuenta? Inicia sesión →
+            </a>
+            {% endif %}
+
+            <!-- Featured items -->
+            <p class="m-label" style="margin-top:20px;">Destacados del mes</p>
+            <div class="m-featured-grid">
+                <a href="{% url 'listings:listing_list' %}?featured=true" class="m-featured-item offers">
+                    <i class="bi bi-fire"></i>
+                    <span>Ofertas especiales</span>
+                    <small>Ver todos</small>
+                </a>
+                <a href="{% url 'destinations:destination_list' %}?popular=true" class="m-featured-item popular">
+                    <i class="bi bi-map"></i>
+                    <span>Destinos populares</span>
+                    <small>Ver todos</small>
+                </a>
+            </div>
+
+        </div>
+        <!-- /m-content -->
+
     </div>
+    <!-- /mobile-shell -->
 </div>
 {% endblock %}

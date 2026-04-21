@@ -155,5 +155,6 @@ CKEDITOR_CONFIGS = {
             ['Format', 'FontSize', 'TextColor', 'BGColor'],
         ],
         'width': '100%',
+        'removePlugins': 'exportpdf',
     },
 }

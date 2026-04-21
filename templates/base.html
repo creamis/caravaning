@@ -6,129 +6,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Caravaning{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}Descubre el mundo del caravaning: compra, vende y alquila caravanas, autocaravanas y campers. Encuentra los mejores destinos y consejos de viaje.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}caravanas, autocaravanas, campers, caravaning, alquiler caravanas, venta caravanas, destinos caravaning, comunidad caravaning{% endblock %}">
+    <meta name="author" content="Caravaning Project">
+    <meta name="robots" content="{% block meta_robots %}index, follow{% endblock %}">
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
-    
+
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:title" content="{% block og_title %}{% endblock %} Caravaning Project">
+    <meta property="og:title" content="{% block og_title %}Caravaning Project{% endblock %}">
     <meta property="og:description" content="{% block og_description %}Tu plataforma de confianza para la comunidad de caravaning.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% static 'images/vanlife1.png' %}{% endblock %}">
+    <meta property="og:site_name" content="Caravaning Project">
+    <meta property="og:locale" content="es_ES">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}Caravaning Project{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Tu plataforma de confianza para la comunidad de caravaning.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{% static 'images/vanlife1.png' %}{% endblock %}">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%230d6efd' class='bi bi-truck-front-fill' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 0A.5.5 0 0 0 3 .5v.2a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-.2a.5.5 0 0 0-.5-.5h-9ZM1 4.5A1.5 1.5 0 0 1 2.5 3h11A1.5 1.5 0 0 1 15 4.5v10a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5V13H3v1.5a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-10Zm2.5 1a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-10ZM2 10v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-1H2Z'/%3E%3C/svg%3E">
 
-    {% comment %} <link rel="stylesheet" href="{% static 'css/output.css' %}"> {% endcomment %}
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Preload critical resources -->
+    <link rel="preload" href="{% static 'images/vanlife.png' %}" as="image">
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+
     <style>
-        /* Estilos personalizados mejorados */
+        /* ===== BASE ===== */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f9fafb;
+            background-color: #f5f7fa;
             color: #1f2937;
         }
-        
-        .navbar-brand {
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            transition: all 0.3s ease;
-        }
-        
-        .navbar-brand:hover {
-            transform: scale(1.02);
-        }
-        
-        .navbar {
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-        
-        .nav-link {
-            font-weight: 500;
-            color: #4b5563 !important;
-        }
-        .nav-link:hover {
-            transform: translateY(-1px);
-            color: #60a5fa !important;
-        }
-        
+
         .btn {
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
             font-weight: 500;
         }
-        
+
         .btn-success {
             background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
             border: none;
         }
-        
+
         .btn-success:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
         }
-        
-        /* Corrección para botones en modo light - navbar */
+
         .btn-outline-light {
             border-color: rgba(255, 255, 255, 0.5);
             color: white !important;
         }
-        
+
         .btn-outline-secondary {
             background: transparent;
-            border-color: #6c757d; /* Color secundario de Bootstrap */
+            border-color: #6c757d;
             color: #6c757d !important;
         }
-        
+
         .btn-outline-secondary:hover {
             background-color: #6c757d;
             color: white !important;
         }
-        
+
         .main-content {
             flex: 1;
             padding-top: 1rem;
             padding-bottom: 2rem;
         }
-        
-        /* Animaciones suaves */
-        .fade-in {
-            animation: fadeIn 0.6s ease-in;
+
+        @media (min-width: 769px) {
+            .main-content {
+                padding-top: 6rem;
+            }
         }
-        
-        /* Estilo para el banner de cookies */
-        #cookie-consent-banner {
-            background: #ffffff;
-            border-top: 2px solid #3b82f6;
-            box-shadow: 0 -10px 25px rgba(0,0,0,0.1);
-        }
-        
-        /* Estilo para contenedores */
+
         .container {
             max-width: 1200px;
         }
-        
-        /* Mejora de cards */
+
+        /* ===== DESKTOP HEADER ===== */
+        .simple-header {
+            box-shadow: 0 1px 0 rgba(0,0,0,0.07);
+        }
+
+        .simple-header a:hover {
+            transform: scale(1.02);
+            transition: transform 0.25s ease;
+        }
+
+        /* ===== DESKTOP CARDS ===== */
         .card {
             border: none;
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
+
         .card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
         }
-        
-        /* Estilos para las tarjetas superiores - Rediseño Elegante */
+
+        /* ===== TOP CARDS SECTION (desktop) ===== */
         .top-cards-section {
             padding: 0.5rem 0 1rem 0;
         }
-        
+
         .top-card {
             background: #ffffff;
             text-align: center;
@@ -137,11 +132,11 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             height: 100%;
             border: none;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-end; /* Texto en la parte inferior */
+            justify-content: flex-end;
             position: relative;
             overflow: hidden;
             min-height: 150px;
@@ -149,7 +144,7 @@
             background-position: center;
             padding-bottom: 1.5rem !important;
         }
-        
+
         .top-card-badge {
             position: absolute;
             top: 12px;
@@ -161,17 +156,16 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255,255,255,0.95);
             color: #111827;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .top-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.2);
         }
 
-        /* Capa de oscurecimiento para legibilidad del texto */
         .top-card::before {
             content: "";
             position: absolute;
@@ -179,7 +173,7 @@
             background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%);
             z-index: 1;
         }
-        
+
         .top-card h5 {
             font-size: 1rem;
             font-weight: 700;
@@ -190,106 +184,232 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
             padding: 0 10px;
         }
-        
-        /* Contenedor centrado para las tarjetas */
+
         .cards-container {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 0.75rem;
         }
-        
+
         .card-wrapper {
             flex: 1 1 calc(20% - 0.75rem);
             min-width: 160px;
             max-width: 180px;
         }
-        
+
         @media (max-width: 992px) {
-            .card-wrapper {
-                flex: 1 1 calc(33.333% - 0.75rem);
-            }
+            .card-wrapper { flex: 1 1 calc(33.333% - 0.75rem); }
         }
-        
+
+        /* ===== ACCESSIBILITY ===== */
+        .btn:focus,
+        .form-control:focus,
+        .nav-link:focus {
+            outline: 2px solid #046b1a;
+            outline-offset: 2px;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: #046b1a;
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            z-index: 1000;
+        }
+
+        .skip-link:focus { top: 6px; }
+
+        /* ===== COOKIE BANNER ===== */
+        #cookie-consent-banner {
+            background: #ffffff;
+            border-top: 2px solid #3b82f6;
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.1);
+        }
+
+        /* ===== MOBILE — Base ===== */
         @media (max-width: 768px) {
-            .card-wrapper {
-                flex: 1 1 calc(50% - 0.75rem);
+            body {
+                background-color: #f5f7fa;
+                padding-bottom: 80px;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+
+            .main-content {
+                padding-top: 0 !important;
+                padding-bottom: 100px !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+
+            .container {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+
+            /* Hide desktop header and top cards on mobile */
+            .simple-header { display: none !important; }
+            .top-cards-section { display: none !important; }
+
+            /* Typography scale */
+            h1, .h1 { font-size: 22px !important; }
+            h2, .h2 { font-size: 18px !important; }
+            h3, .h3 { font-size: 16px !important; }
+            h4, .h4 { font-size: 14px !important; }
+
+            /* Cards on mobile */
+            .card {
+                border-radius: 12px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+            }
+
+            .card:hover {
+                transform: none;
+            }
+
+            .card:active {
+                transform: scale(0.98);
+            }
+
+            /* Buttons */
+            .btn {
+                min-height: 44px;
+                padding: 10px 16px !important;
+                border-radius: 10px;
+                font-size: 14px;
+            }
+
+            a { -webkit-tap-highlight-color: rgba(4, 107, 26, 0.08); }
+
+            .footer {
+                margin-bottom: 80px;
+                padding: 1.5rem 1rem !important;
+                font-size: 12px;
             }
         }
-        
-        @media (max-width: 576px) {
-            .card-wrapper {
-                flex: 1 1 100%;
+
+        /* ===== MOBILE BOTTOM NAV ===== */
+        .mobile-bottom-nav {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-bottom-nav {
+                display: flex !important;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 72px;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border-top: 0.5px solid rgba(0,0,0,0.1);
+                z-index: 1000;
+                justify-content: space-around;
+                align-items: center;
+                padding-bottom: env(safe-area-inset-bottom, 0px);
             }
+
+            .mobile-bottom-nav a {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 4px;
+                text-decoration: none;
+                color: #9ca3af;
+                transition: color 0.2s ease;
+                flex: 1;
+                height: 100%;
+                position: relative;
+            }
+
+            .mobile-bottom-nav a.active { color: #16a34a; }
+
+            .mobile-bottom-nav a i {
+                font-size: 22px;
+                transition: transform 0.2s ease;
+            }
+
+            .mobile-bottom-nav a:active i { transform: scale(0.88); }
+
+            .mobile-bottom-nav a span {
+                font-size: 10px;
+                font-weight: 500;
+                letter-spacing: 0.3px;
+            }
+
+            /* Active indicator dot */
+            .mobile-bottom-nav a.active::after {
+                content: "";
+                position: absolute;
+                bottom: 6px;
+                width: 4px;
+                height: 4px;
+                background: #16a34a;
+                border-radius: 50%;
+            }
+
+            /* Publish FAB button */
+            .mobile-bottom-nav .nav-publish {
+                position: relative;
+            }
+
+            .mobile-bottom-nav .nav-publish .nav-fab {
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                background: #16a34a;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4);
+                margin-bottom: 4px;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .mobile-bottom-nav .nav-publish:active .nav-fab {
+                transform: scale(0.92);
+                box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
+            }
+
+            .mobile-bottom-nav .nav-publish i.bi-plus-lg {
+                font-size: 20px;
+                color: white;
+            }
+
+            .mobile-bottom-nav .nav-publish span {
+                color: #16a34a;
+                font-weight: 600;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-bottom-nav { display: none !important; }
         }
     </style>
 </head>
 <body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white mb-2">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
-                <img src="{% static 'images/vanlife1.png' %}" alt="Logo Caravaning" style="height: 65px; width: auto;" class="me-2">
-                
-                <span style="color: #046b1a;">Caravaning Project</span>
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+    <!-- Desktop Header -->
+    <header class="simple-header bg-white py-3 border-bottom">
+        <div class="container d-flex align-items-center justify-content-center">
+            <a href="{% url 'home' %}" class="d-flex align-items-center text-decoration-none">
+                <img src="{% static 'images/vanlife.png' %}" alt="Logo Caravaning Project" style="height: 70px; width: auto;" class="me-3">
+                <span class="h4 mb-0 fw-bold text-success">Caravaning Project</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center gap-2">
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center px-3 py-2 rounded-lg" href="{% url 'blog:post_list' %}">
-                            <i class="bi bi-journal-text me-2"></i> Blog
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center px-3 py-2 rounded-lg" href="{% url 'listings:listing_list' %}">
-                            <i class="bi bi-house-door me-2"></i> Anuncios
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center px-3 py-2 rounded-lg" href="{% url 'destinations:destination_list' %}">
-                            <i class="bi bi-geo-alt me-2"></i> Destinos
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-    <a class="nav-link {% if request.resolver_match.app_name == 'shop' %}active{% endif %}" 
-       href="{% url 'shop:product_list' %}">
-       <i class="bi bi-cart3 me-1"></i> Tienda
-    </a>
-</li>
-                    {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center px-3 py-2 rounded-lg" href="{% url 'users:profile' %}">
-                                <i class="bi bi-person-circle me-2"></i> Perfil
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <span class="navbar-text text-success fw-semibold me-2 d-flex align-items-center">
-                                <i class="bi bi-person-check-fill me-2"></i> Hola, {{ user.username }}
-                            </span>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-outline-primary btn-sm px-3 py-2" href="{% url 'users:logout' %}">
-                                <i class="bi bi-box-arrow-right me-1"></i> Cerrar Sesión
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="btn btn-success btn-sm px-4 py-2" href="{% url 'users:login' %}">
-                                <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- Tarjetas superiores centradas -->
-    <div class="container top-cards-section d-none d-lg-block">
+    <!-- Desktop Top Cards -->
+    <div class="container top-cards-section d-none d-md-block">
         <div class="cards-container">
             <div class="card-wrapper">
                 <a href="{% url 'listings:listing_create' %}" class="text-decoration-none">
@@ -301,7 +421,7 @@
             </div>
             <div class="card-wrapper">
                 <a href="{% url 'listings:listing_list' %}?listing_type=SALE" class="text-decoration-none">
-                    <div class="top-card" style="background-image: url('https://images.unsplash.com/photo-1563783850023-077d97825802?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3Dauto=format&fit=crop&q=80&w=400');">
+                    <div class="top-card" style="background-image: url('https://images.unsplash.com/photo-1563783850023-077d97825802?q=80&w=1170&auto=format&fit=crop');">
                         <span class="top-card-badge">Compra</span>
                         <h5 class="mb-0 fw-bold">Compra tu caravana</h5>
                     </div>
@@ -309,23 +429,20 @@
             </div>
             <div class="card-wrapper">
                 <a href="{% url 'listings:external_rentals' %}" class="text-decoration-none">
-                    <div class="top-card" style="background-image: url('https://plus.unsplash.com/premium_photo-1676660358272-35a60b3a614d?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?q=80&w=1626&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=400');">
+                    <div class="top-card" style="background-image: url('https://plus.unsplash.com/premium_photo-1676660358272-35a60b3a614d?q=80&w=687&auto=format&fit=crop');">
                         <span class="top-card-badge">Alquiler Externo</span>
                         <h5 class="mb-0 fw-bold">Alquila con Yescapa y más</h5>
                     </div>
                 </a>
             </div>
-            
             <div class="card-wrapper">
                 <a href="{% url 'blog:post_list' %}" class="text-decoration-none">
-                    <div class="top-card" style="background-image: url('https://plus.unsplash.com/premium_photo-1726862932006-c6e2f8434266?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=400');">
+                    <div class="top-card" style="background-image: url('https://plus.unsplash.com/premium_photo-1726862932006-c6e2f8434266?q=80&w=1171&auto=format&fit=crop');">
                         <span class="top-card-badge">Noticias</span>
                         <h5 class="mb-0 fw-bold">Últimas noticias</h5>
                     </div>
                 </a>
             </div>
-
-
             <div class="card-wrapper">
                 <a href="{% url 'destinations:destination_list' %}" class="text-decoration-none">
                     <div class="top-card" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=400');">
@@ -334,40 +451,69 @@
                     </div>
                 </a>
             </div>
-
             <div class="card-wrapper">
                 <a href="{% url 'shop:product_list' %}" class="text-decoration-none">
-                    <div class="top-card" style="background-image: url('https://plus.unsplash.com/premium_photo-1681488262364-8aeb1b6aac56?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=400');">
+                    <div class="top-card" style="background-image: url('https://plus.unsplash.com/premium_photo-1681488262364-8aeb1b6aac56?q=80&w=1170&auto=format&fit=crop');">
                         <span class="top-card-badge">Tienda</span>
                         <h5 class="mb-0 fw-bold">Accesorios</h5>
                     </div>
                 </a>
             </div>
-            
         </div>
     </div>
 
-
-
-    
-
-
-
-
-    <main class="main-content container mx-auto px-4">
+    <main class="main-content container mx-auto px-4" id="main-content">
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="footer py-5 border-top bg-white">
+    <footer class="footer py-5 bg-white">
         <div class="container mx-auto text-center">
             <div class="mb-3">
-                <img src="{% static 'images/vanlife.png' %}" alt="Vanlife" style="max-height: 80px; width: auto; opacity: 0.9;">
+                <img src="{% static 'images/vanlife.png' %}" alt="Caravaning Project Logo" style="max-height: 80px; width: auto; opacity: 0.9;">
             </div>
-            <span class="text-muted small">Caravaning Project © {% now "Y" %}</span>
+            <div class="mb-3">
+                <h3 class="h5 fw-bold text-success mb-2">Caravaning Project</h3>
+                <p class="text-muted small mb-3">Tu comunidad de caravaning de confianza</p>
+            </div>
+            <div class="row justify-content-center mb-3">
+                <div class="col-auto">
+                    <a href="{% url 'blog:post_list' %}" class="text-decoration-none text-muted me-3">Blog</a>
+                    <a href="{% url 'listings:listing_list' %}" class="text-decoration-none text-muted me-3">Anuncios</a>
+                    <a href="{% url 'destinations:destination_list' %}" class="text-decoration-none text-muted me-3">Destinos</a>
+                    <a href="{% url 'shop:product_list' %}" class="text-decoration-none text-muted">Tienda</a>
+                </div>
+            </div>
+            <span class="text-muted small">© {% now "Y" %} Caravaning Project. Todos los derechos reservados.</span>
         </div>
     </footer>
-    
-    <!-- Bootstrap JS Bundle -->
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav" aria-label="Navegación principal">
+        <a href="{% url 'home' %}" class="{% if request.resolver_match.name == 'home' %}active{% endif %}" title="Inicio">
+            <i class="bi bi-house{% if request.resolver_match.name == 'home' %}-fill{% endif %}"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="{% url 'listings:listing_list' %}" class="{% if request.resolver_match.app_name == 'listings' and 'create' not in request.resolver_match.name %}active{% endif %}" title="Explorar">
+            <i class="bi bi-search"></i>
+            <span>Explorar</span>
+        </a>
+        <a href="{% url 'listings:listing_create' %}" class="nav-publish {% if request.resolver_match.name == 'listing_create' %}active{% endif %}" title="Publicar">
+            <div class="nav-fab">
+                <i class="bi bi-plus-lg"></i>
+            </div>
+            <span>Publicar</span>
+        </a>
+        <a href="{% url 'destinations:destination_list' %}" class="{% if request.resolver_match.app_name == 'destinations' %}active{% endif %}" title="Destinos">
+            <i class="bi bi-map{% if request.resolver_match.app_name == 'destinations' %}-fill{% endif %}"></i>
+            <span>Destinos</span>
+        </a>
+        <a href="{% url 'users:profile' %}" class="{% if request.resolver_match.name == 'profile' %}active{% endif %}" title="Perfil">
+            <i class="bi bi-person{% if request.resolver_match.name == 'profile' %}-fill{% endif %}"></i>
+            <span>Perfil</span>
+        </a>
+    </nav>
+
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Cookie Consent Banner -->
@@ -389,24 +535,21 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const banner = document.getElementById('cookie-consent-banner');
             const acceptBtn = document.getElementById('accept-cookies');
             const declineBtn = document.getElementById('decline-cookies');
 
-            console.log("Cookie script loaded");
-
-            // Comprueba si la cookie de consentimiento no existe
             if (!document.cookie.split(';').some((item) => item.trim().startsWith('cookie_consent='))) {
                 banner.style.display = 'block';
             }
 
-            acceptBtn.addEventListener('click', function() {
+            acceptBtn.addEventListener('click', function () {
                 document.cookie = "cookie_consent=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
                 banner.style.display = 'none';
             });
 
-            declineBtn.addEventListener('click', function() {
+            declineBtn.addEventListener('click', function () {
                 banner.style.display = 'none';
             });
         });
