@@ -1,35 +1,20 @@
-"""
-URL configuration for caravaning project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.conf import settings
-from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from blog.views import home
+from django.conf import settings
+from django.conf.urls.static import static
+from . import views
 
 urlpatterns = [
-    path('', home, name='home'),  # Página de inicio personalizada
     path('admin/', admin.site.urls),
-    path('anuncios/', include('listings.urls', namespace='listings')),
-    path('accounts/', include('users.urls', namespace='users')),
-    path('blog/', include('blog.urls', namespace='blog')),  # El blog ahora está en /blog/
-    path('mensajeria/', include('messaging.urls', namespace='messaging')),
-    path('tienda/', include('shop.urls', namespace='shop')),
-    path('destinos/', include('destinations.urls', namespace='destinations')),
-
+    # Rutas de las aplicaciones
+    path('', views.index, name='home'),
+    path('blog/', include('blog.urls', namespace='blog')),
+    path('listings/', include('listings.urls', namespace='listings')),
+    path('users/', include('users.urls', namespace='users')),
+    path('messaging/', include('messaging.urls', namespace='messaging')),
+    path('destinations/', include('destinations.urls', namespace='destinations')),
+    path('shop/', include('shop.urls', namespace='shop')),
+    path('info/', include('pages.urls')),
 ]
 
 if settings.DEBUG:

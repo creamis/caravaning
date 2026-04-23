@@ -198,17 +198,13 @@
             gap: 10px;
             margin-top: 20px;
             margin-bottom: 24px;
-            /* Asegura que las tarjetas tengan una altura mínima para la imagen */
-            /* Esto se moverá a .m-cat-card para mayor control */
-            /* min-height: 120px; */
         }
 
         .m-cat-card {
-            /* Eliminamos el fondo blanco para que se vea la imagen */
-            background: none;
+            background-color: #f3f4f6; /* Color de respaldo mientras carga la imagen */
+            min-height: 140px; /* Altura mínima para que la imagen sea bien visible */
             background-size: cover;
             background-position: center;
-            min-height: 140px; /* Altura mínima para que la imagen sea bien visible */
             position: relative;
             overflow: hidden;
             border-radius: 16px;

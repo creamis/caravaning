@@ -477,10 +477,20 @@
             </div>
             <div class="row justify-content-center mb-3">
                 <div class="col-auto">
+                    <a href="{% url 'pages:about' %}" class="text-decoration-none text-muted me-3">Sobre Nosotros</a>
+                    <a href="{% url 'pages:contact' %}" class="text-decoration-none text-muted me-3">Contacto</a>
                     <a href="{% url 'blog:post_list' %}" class="text-decoration-none text-muted me-3">Blog</a>
                     <a href="{% url 'listings:listing_list' %}" class="text-decoration-none text-muted me-3">Anuncios</a>
                     <a href="{% url 'destinations:destination_list' %}" class="text-decoration-none text-muted me-3">Destinos</a>
                     <a href="{% url 'shop:product_list' %}" class="text-decoration-none text-muted">Tienda</a>
+                </div>
+            </div>
+            <div class="row justify-content-center mb-3">
+                <div class="col-auto small">
+                    <a href="{% url 'pages:legal' %}" class="text-decoration-none text-muted me-2">Aviso Legal</a>
+                    <a href="{% url 'pages:privacy' %}" class="text-decoration-none text-muted me-2">Privacidad</a>
+                    <a href="{% url 'pages:cookies' %}" class="text-decoration-none text-muted me-2">Cookies</a>
+                    <a href="{% url 'pages:affiliates' %}" class="text-decoration-none text-muted">Afiliados</a>
                 </div>
             </div>
             <span class="text-muted small">© {% now "Y" %} Caravaning Project. Todos los derechos reservados.</span>

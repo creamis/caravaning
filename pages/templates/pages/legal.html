@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Aviso Legal - Caravaning Project{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 bg-white p-5 rounded-4 shadow-sm">
+            <h1 class="fw-bold mb-4">Aviso Legal</h1>
+            <p class="text-muted">Última actualización: {% now "d F Y" %}</p>
+            
+            <section class="mb-4">
+                <h2 class="h5 fw-bold">1. Información General</h2>
+                <p>En cumplimiento de la Ley 34/2002 de Servicios de la Sociedad de la Información, se informa que este sitio web es propiedad de <strong>Caravaning Project</strong>. Correo de contacto: info@caravaningproject.com.</p>
+            </section>
+
+            <section class="mb-4">
+                <h2 class="h5 fw-bold">2. Propiedad Intelectual</h2>
+                <p>Todos los contenidos publicados en este sitio web (textos, imágenes, logotipos) están protegidos por derechos de autor y propiedad industrial. Queda prohibida su reproducción total o parcial sin autorización previa.</p>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

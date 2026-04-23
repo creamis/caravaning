@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'listings.apps.ListingsConfig',
     'blog.apps.BlogConfig',
     'shop.apps.ShopConfig',
+    'pages.apps.PagesConfig',
     'messaging.apps.MessagingConfig',
     'widget_tweaks',
     'ckeditor',
