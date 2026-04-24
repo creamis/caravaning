@@ -22,6 +22,12 @@
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
+            <!-- Sistema de Navegación Atrás (Móvil) -->
+            <div class="d-lg-none mb-4">
+                <a href="javascript:history.back()" class="btn btn-dark rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm" style="width: 40px; height: 40px; border: none;">
+                    <i class="bi bi-arrow-left text-white fs-5"></i>
+                </a>
+            </div>
             <nav aria-label="breadcrumb" class="mb-4">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{% url 'destinations:destination_list' %}" class="text-decoration-none text-muted">Lugares</a></li>
