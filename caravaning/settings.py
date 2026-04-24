@@ -143,6 +143,7 @@ DEFAULT_FROM_EMAIL = 'noreply@caravaning.com'
 # Redirecciones de autenticación
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+LOGIN_URL = 'users:login'
 
 # Configuración de CKEditor
 CKEDITOR_CONFIGS = {
