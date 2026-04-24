@@ -258,9 +258,10 @@
                 padding-right: 0 !important;
             }
 
-            .container {
-                padding-left: 0 !important;
-                padding-right: 0 !important;
+            /* Aplicar márgenes derecho e izquierdo a los contenedores de contenido en móvil */
+            .container:not(.main-content) {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
             }
 
             /* Hide desktop header and top cards on mobile */
