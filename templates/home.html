@@ -204,8 +204,7 @@
         }
 
         .m-cat-card {
-            /* Eliminamos el fondo blanco para que se vea la imagen */
-            background: none;
+            background-color: transparent;
             background-size: cover;
             background-position: center;
             min-height: 140px; /* Altura mínima para que la imagen sea bien visible */
@@ -465,22 +464,22 @@
             <!-- Categories -->
             <p class="m-label">Explorar</p>
             <div class="m-categories">
-                <a href="{% url 'listings:listing_list' %}?listing_type=SALE" class="m-cat-card" style="background-image: url('https://images.unsplash.com/photo-1563783850023-077d97825802?q=80&w=400&h=200&fit=crop');">
+                <a href="{% url 'listings:listing_list' %}?listing_type=SALE" class="m-cat-card" style="background-image: url('https://images.unsplash.com/photo-1563783850023-077d97825802?q=80&amp;w=400&amp;h=200&amp;fit=crop');">
                     <div class="m-cat-icon"><i class="bi bi-truck"></i></div>
                     <p class="m-cat-title">Compra</p>
                     <p class="m-cat-desc">Caravanas en venta</p>
                 </a>
-                <a href="{% url 'listings:external_rentals' %}" class="m-cat-card" style="background-image: url('https://plus.unsplash.com/premium_photo-1676660358272-35a60b3a614d?q=80&w=400&h=200&fit=crop');">
+                <a href="{% url 'listings:external_rentals' %}" class="m-cat-card" style="background-image: url('https://plus.unsplash.com/premium_photo-1676660358272-35a60b3a614d?q=80&amp;w=400&amp;h=200&amp;fit=crop');">
                     <div class="m-cat-icon"><i class="bi bi-key"></i></div>
                     <p class="m-cat-title">Alquiler</p>
                     <p class="m-cat-desc">Yescapa y más</p>
                 </a>
-                <a href="{% url 'destinations:destination_list' %}" class="m-cat-card" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=400&h=200&fit=crop');">
+                <a href="{% url 'destinations:destination_list' %}" class="m-cat-card" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&amp;fit=crop&amp;q=80&amp;w=400&amp;h=200&amp;fit=crop');">
                     <div class="m-cat-icon"><i class="bi bi-geo-alt"></i></div>
                     <p class="m-cat-title">Destinos</p>
                     <p class="m-cat-desc">Lugares increíbles</p>
                 </a>
-                <a href="{% url 'shop:product_list' %}" class="m-cat-card" style="background-image: url('https://plus.unsplash.com/premium_photo-1681488262364-8aeb1b6aac56?q=80&w=400&h=200&fit=crop');">
+                <a href="{% url 'shop:product_list' %}" class="m-cat-card" style="background-image: url('https://plus.unsplash.com/premium_photo-1681488262364-8aeb1b6aac56?q=80&amp;w=400&amp;h=200&amp;fit=crop');">
                     <div class="m-cat-icon"><i class="bi bi-bag"></i></div>
                     <p class="m-cat-title">Tienda</p>
                     <p class="m-cat-desc">Accesorios premium</p>
