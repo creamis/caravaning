@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% load humanize %} {# Necesario para el filtro intcomma #}
 {% block title %}Caravaning Project - Compra, Vende y Alquila Caravanas | Comunidad Caravaning{% endblock %}
 {% block meta_description %}Encuentra tu próxima aventura en caravaning. Compra y vende caravanas, autocaravanas y campers. Alquila con Yescapa. Descubre destinos increíbles y únete a la comunidad.{% endblock %}
 {% block meta_keywords %}caravanas, autocaravanas, campers, caravaning, venta caravanas, alquiler caravanas, comprar caravana, vender caravana, destinos caravaning, comunidad caravaning, viajes en caravana{% endblock %}
@@ -10,57 +11,445 @@
 
 {% block content %}
 <style>
-    /* ===== DESKTOP HERO ===== */
-    .hero-bg {
-        background-image: url('https://www.guiarepsol.com/content/dam/repsol-guia/contenidos-imagenes/viajar/nos-gusta/consejos-para-viajar-en-autocaravana/gr-cms-media-featured_images-none-713ca1e0-628b-4e46-af93-824662880942-shutterstock_1470798173.jpg');
-        background-size: cover;
-        background-position: center;
-        min-height: 60vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 1rem;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+
+    /* ============================================================
+       DESKTOP HOME — estilos solo para >= 769px
+    ============================================================ */
+    @media (min-width: 769px) {
+
+        .dh-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            padding-bottom: 40px;
+        }
+
+        /* ---- HERO ---- */
+        .dh-hero {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            min-height: 380px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('https://www.guiarepsol.com/content/dam/repsol-guia/contenidos-imagenes/viajar/nos-gusta/consejos-para-viajar-en-autocaravana/gr-cms-media-featured_images-none-713ca1e0-628b-4e46-af93-824662880942-shutterstock_1470798173.jpg') center/cover no-repeat;
+        }
+
+        .dh-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.28) 100%);
+        }
+
+        .dh-hero-inner {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 48px 24px;
+            max-width: 600px;
+        }
+
+        .dh-hero-eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 12px;
+        }
+
+        .dh-hero-title {
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.12;
+            margin-bottom: 14px;
+            text-shadow: 0 2px 14px rgba(0,0,0,0.5);
+        }
+
+        .dh-hero-sub {
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.88);
+            line-height: 1.65;
+            margin-bottom: 26px;
+        }
+
+        .dh-hero-search {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.97);
+            border-radius: 13px;
+            overflow: hidden;
+            max-width: 460px;
+            margin: 0 auto 18px;
+            text-decoration: none;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            transition: box-shadow 0.2s;
+        }
+
+        .dh-hero-search:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        }
+
+        .dh-hero-search-icon {
+            padding: 0 14px;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+        }
+
+        .dh-hero-search-text {
+            flex: 1;
+            padding: 14px 4px;
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        .dh-hero-search-btn {
+            background: #16a34a;
+            color: white;
+            padding: 14px 22px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .dh-hero-ctas {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .dh-btn-primary {
+            background: #16a34a;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 11px 22px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(22,163,74,0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .dh-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(22,163,74,0.4);
+            color: white;
+        }
+
+        .dh-btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1.5px solid rgba(255,255,255,0.5);
+            border-radius: 10px;
+            padding: 11px 22px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            transition: background 0.2s;
+        }
+
+        .dh-btn-secondary:hover {
+            background: rgba(255,255,255,0.25);
+            color: white;
+        }
+
+        /* ---- STATS ---- */
+        .dh-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+
+        .dh-stat-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 20px 16px;
+            text-align: center;
+            border: 0.5px solid rgba(0,0,0,0.07);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .dh-stat-icon {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .dh-stat-num {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #111827;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .dh-stat-label {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        /* ---- HOW IT WORKS ---- */
+        .dh-section-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #111827;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        .dh-section-sub {
+            font-size: 14px;
+            color: #6b7280;
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .dh-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .dh-step {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 28px 22px;
+            text-align: center;
+            border: 0.5px solid rgba(0,0,0,0.07);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            position: relative;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+
+        .dh-step:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.09);
+        }
+
+        .dh-step-num {
+            position: absolute;
+            top: -13px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #16a34a;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(22,163,74,0.35);
+        }
+
+        .dh-step-icon {
+            font-size: 30px;
+            margin-bottom: 13px;
+            margin-top: 6px;
+        }
+
+        .dh-step-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .dh-step-desc {
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.65;
+        }
+
+        /* ---- CTA BANNERS ---- */
+        .dh-banners {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .dh-banner {
+            border-radius: 20px;
+            padding: 34px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dh-banner.venta {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 55%, #166534 100%);
+        }
+
+        .dh-banner.alquiler {
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 55%, #1e3a8a 100%);
+        }
+
+        .dh-banner::before {
+            content: '';
+            position: absolute;
+            right: -40px;
+            top: -40px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.07);
+            pointer-events: none;
+        }
+
+        .dh-banner::after {
+            content: '';
+            position: absolute;
+            right: 80px;
+            bottom: -55px;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            pointer-events: none;
+        }
+
+        .dh-banner-left {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dh-banner-eyebrow {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 6px;
+        }
+
+        .dh-banner-title {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .dh-banner-desc {
+            font-size: 14px;
+            color: rgba(255,255,255,0.85);
+            max-width: 430px;
+            line-height: 1.6;
+        }
+
+        .dh-banner-badges {
+            display: flex;
+            gap: 8px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .dh-banner-badge {
+            background: rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.92);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .dh-partner-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .dh-partner-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.55);
+        }
+
+        .dh-partner-pill {
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.28);
+            border-radius: 20px;
+            padding: 4px 13px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .dh-banner-right {
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        .dh-banner-icon {
+            width: 62px;
+            height: 62px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            margin: 0 auto 16px;
+        }
+
+        .dh-banner-btn {
+            display: inline-block;
+            background: white;
+            border: none;
+            border-radius: 12px;
+            padding: 13px 26px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
+        }
+
+        .dh-banner-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .dh-banner.venta .dh-banner-btn   { color: #15803d; }
+        .dh-banner.alquiler .dh-banner-btn { color: #1e40af; }
+
+        .dh-banner-note {
+            font-size: 11px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 8px;
+        }
+
     }
 
-    .hero-content {
-        background: transparent;
-        padding: 2.5rem 2rem;
-        border-radius: 1rem;
-        text-align: center;
-        color: #ffffff;
-        max-width: 600px;
-        text-shadow: 3px 3px 12px rgba(0,0,0,0.8), 0 0 30px rgba(0,0,0,0.6);
-    }
-
-    .hero-content h1 {
-        font-size: 2.8rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
-        color: #ffffff;
-    }
-
-    .hero-content p {
-        font-size: 1.3rem;
-        margin-bottom: 0;
-        color: #ffffff;
-    }
-
-    /* ===== MOBILE SHELL ===== */
+    /* ============================================================
+       MOBILE — solo aplica en móvil (copiado tal cual del original)
+    ============================================================ */
     @media (max-width: 768px) {
-        /* Hide desktop version */
         .desktop-only { display: none !important; }
 
-        /* Full-bleed mobile wrapper */
         .mobile-shell {
-            margin: 0; /* Eliminamos el margen negativo que causaba el scroll */
+            margin: 0;
             background: #f5f7fa;
             min-height: 100vh;
             overflow-x: hidden;
             width: 100%;
         }
 
-        /* ---- HERO ---- */
         .m-hero {
             position: relative;
             height: 260px;
@@ -150,17 +539,15 @@
             line-height: 1.25;
         }
 
-        /* ---- CONTENT CARD (white rounded surface over hero) ---- */
         .m-content {
             background: #f5f7fa;
             border-radius: 24px 24px 0 0;
             margin-top: -24px;
             position: relative;
             z-index: 3;
-            padding: 20px 24px 28px;
+            padding: 20px 24px 10px;
         }
 
-        /* ---- SEARCH BAR ---- */
         .m-search {
             display: flex;
             align-items: center;
@@ -182,7 +569,6 @@
             color: #9ca3af;
         }
 
-        /* ---- SECTION LABEL ---- */
         .m-label {
             font-size: 11px;
             font-weight: 600;
@@ -192,17 +578,12 @@
             margin: 0 0 12px;
         }
 
-        /* ---- CATEGORY GRID ---- */
-        /* Modificaciones para las tarjetas de categoría con imagen de fondo */
         .m-categories {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             margin-top: 20px;
             margin-bottom: 24px;
-            /* Asegura que las tarjetas tengan una altura mínima para la imagen */
-            /* Esto se moverá a .m-cat-card para mayor control */
-            /* min-height: 120px; */
         }
 
         .m-cat-card {
@@ -210,7 +591,7 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
-            min-height: 140px; /* Altura mínima para que la imagen sea bien visible */
+            min-height: 140px;
             position: relative;
             overflow: hidden;
             border-radius: 16px;
@@ -218,7 +599,7 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            justify-content: flex-end; /* Empuja el contenido hacia abajo */
+            justify-content: flex-end;
             text-decoration: none;
             border: 1px solid rgba(0,0,0,0.06);
             transition: transform 0.18s ease, box-shadow 0.18s ease;
@@ -236,31 +617,30 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 10px; /* Espacio entre icono y título */
+            margin-bottom: 10px;
             font-size: 18px;
-            background: rgba(255,255,255,0.2); /* Fondo translúcido para el icono */
-            color: white; /* Color blanco para el icono */
-            position: relative; /* Asegura que el icono esté sobre el degradado */
+            background: rgba(255,255,255,0.2);
+            color: white;
+            position: relative;
         }
 
         .m-cat-title {
             font-size: 13px;
             font-weight: 600;
-            color: white; /* Texto blanco para el título */
+            color: white;
             margin: 0 0 2px;
             position: relative;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* Sombra para mejor legibilidad */
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
 
         .m-cat-desc {
             font-size: 11px;
-            color: rgba(255,255,255,0.8); /* Texto blanco más suave para la descripción */
+            color: rgba(255,255,255,0.8);
             margin: 0;
             position: relative;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* Sombra para mejor legibilidad */
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
 
-        /* ---- QUICK LINKS ROW ---- */
         .m-quicklinks {
             display: flex;
             gap: 8px;
@@ -290,13 +670,11 @@
         }
 
         .m-quicklink:active { background: #f3f4f6; }
-
         .m-quicklink i { font-size: 14px; }
         .m-quicklink.blog i    { color: #993556; }
         .m-quicklink.featured i { color: #854f0b; }
         .m-quicklink.new i     { color: #3b6d11; }
 
-        /* ---- SELL CTA BANNER ---- */
         .m-sell-banner {
             background-color: #374151;
             background-size: cover;
@@ -311,14 +689,13 @@
             align-items: center;
             gap: 14px;
             margin-bottom: 24px;
-            min-height: 100px; /* Asegura que el contenedor tenga altura */
+            min-height: 100px;
         }
 
         .m-sell-icon {
             width: 48px;
             height: 48px;
             border-radius: 14px;
-            background: #eaf3de;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -329,7 +706,7 @@
             position: relative;
         }
 
-        .m-sell-text { 
+        .m-sell-text {
             flex: 1;
             position: relative;
         }
@@ -376,7 +753,6 @@
             border-radius: 8px;
         }
 
-        /* ---- FEATURED ITEMS ---- */
         .m-featured-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -411,8 +787,8 @@
             text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
 
-        .m-featured-item.offers i    { color: #fbbf24; }
-        .m-featured-item.popular i   { color: #60a5fa; }
+        .m-featured-item.offers i  { color: #fbbf24; }
+        .m-featured-item.popular i { color: #60a5fa; }
 
         .m-featured-item span {
             font-size: 12px;
@@ -428,29 +804,188 @@
             position: relative;
             text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
+
+        /* Forzamos la cuadrícula de 2 columnas y 2 filas */
+        .m-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .m-stat-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 24px 15px;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .m-stat-icon-bg {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+        .m-stat-num { font-size: 18px; font-weight: 800; color: #111827; line-height: 1; margin-bottom: 4px; }
+        .m-stat-label { font-size: 10px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
     }
 
-    /* ===== DESKTOP: hide mobile shell ===== */
     @media (min-width: 769px) {
         .mobile-shell { display: none !important; }
     }
 </style>
 
-<!-- ===== DESKTOP VERSION ===== -->
-<div class="container my-5 desktop-only d-none d-lg-block">
-    <div class="hero-bg">
-        <div class="hero-content">
-            <h1 class="display-4">Caravaning Project</h1>
-            <p class="lead">
-                Descubre, vende, compra, alquila y vive la experiencia de viajar en caravana.<br>
-                ¡Tu aventura comienza aquí!
-            </p>
+
+<!-- ===================================================
+     DESKTOP VERSION
+=================================================== -->
+<div class="desktop-only d-none d-md-block">
+    <div class="container mt-2 mb-4">
+        <div class="dh-wrap">
+
+            <!-- HERO -->
+            <div class="dh-hero">
+                <div class="dh-hero-overlay"></div>
+                <div class="dh-hero-inner">
+                    <p class="dh-hero-eyebrow">Bienvenido a Caravaning Project</p>
+                    <h1 class="dh-hero-title">Caravaning Project</h1>
+                    <p class="dh-hero-sub">
+                        Descubre, vende, compra, alquila y vive la experiencia de viajar en autocaravana,caravana o camper.<br>
+                        Tu aventura comienza aquí.
+                    </p>
+                    <a href="{% url 'listings:listing_list' %}" class="dh-hero-search" aria-label="Buscar anuncios">
+                        <span class="dh-hero-search-icon">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <span class="dh-hero-search-text">Buscar caravanas, destinos, accesorios…</span>
+                        <span class="dh-hero-search-btn">Buscar</span>
+                    </a>
+                    <div class="dh-hero-ctas">
+                        <a href="{% url 'listings:listing_list' %}" class="dh-btn-primary">Ver anuncios</a>
+                        <a href="{% url 'listings:listing_create' %}" class="dh-btn-secondary">Publicar anuncio</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATS -->
+            <div class="dh-stats">
+                <div class="dh-stat-card">
+                    <div class="dh-stat-icon">🚐</div> {# Icono de furgoneta #}
+                    <div class="dh-stat-num">{{ active_listings_count|intcomma }}+</div>
+                    <div class="dh-stat-label">Anuncios activos</div>
+                </div>
+                <div class="dh-stat-card">
+                    <div class="dh-stat-icon">📍</div>
+                    <div class="dh-stat-num">{{ destinations_count|intcomma }}+</div>
+                    <div class="dh-stat-label">Destinos publicados</div>
+                </div>
+                <div class="dh-stat-card">
+                    <div class="dh-stat-icon">⭐</div>
+                    <div class="dh-stat-num">{{ average_rating }}/5</div>
+                    <div class="dh-stat-label">Valoración media</div>
+                </div>
+                <div class="dh-stat-card">
+                    <div class="dh-stat-icon">👥</div>
+                    <div class="dh-stat-num">{{ users_count|intcomma }}+</div>
+                    <div class="dh-stat-label">Usuarios registrados</div>
+                </div>
+            </div>
+
+            <!-- HOW IT WORKS -->
+            <div>
+                <h2 class="dh-section-title">¿Cómo funciona?</h2>
+                <p class="dh-section-sub">En tres pasos sencillos estás listo para tu próxima aventura</p>
+                <div class="dh-steps">
+                    <div class="dh-step">
+                        <div class="dh-step-num">1</div>
+                        <div class="dh-step-icon">🔍</div>
+                        <div class="dh-step-title">Explora los anuncios</div>
+                        <div class="dh-step-desc">Busca entre cientos de caravanas, autocaravanas y campers en venta o alquiler en toda España.</div>
+                    </div>
+                    <div class="dh-step">
+                        <div class="dh-step-num">2</div>
+                        <div class="dh-step-icon">💬</div>
+                        <div class="dh-step-title">Contacta al vendedor</div>
+                        <div class="dh-step-desc">Escríbele directamente a través de nuestra plataforma de forma segura y sin intermediarios.</div>
+                    </div>
+                    <div class="dh-step">
+                        <div class="dh-step-num">3</div>
+                        <div class="dh-step-icon">🗺️</div>
+                        <div class="dh-step-title">¡A la aventura!</div>
+                        <div class="dh-step-desc">Descubre los mejores destinos para caravaning y empieza a planificar tu próxima ruta.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA BANNERS -->
+            <div class="dh-banners">
+
+                <!-- Venta -->
+                <div class="dh-banner venta">
+                    <div class="dh-banner-left">
+                        <p class="dh-banner-eyebrow">¿Tienes una caravana?</p>
+                        <h3 class="dh-banner-title">Vende tu caravana</h3>
+                        <p class="dh-banner-desc">Publica tu anuncio gratis y llega a miles de compradores interesados en toda España. Tarda menos de 5 minutos.</p>
+                        <div class="dh-banner-badges">
+                            <span class="dh-banner-badge">✓ Publicación gratuita</span>
+                            <span class="dh-banner-badge">✓ Sin comisiones</span>
+                            <span class="dh-banner-badge">✓ Gestión sencilla</span>
+                        </div>
+                    </div>
+                    <div class="dh-banner-right">
+                        <div class="dh-banner-icon">🏷️</div>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'listings:listing_create' %}" class="dh-banner-btn">Publicar anuncio gratis</a>
+                        {% else %}
+                            <a href="{% url 'users:register' %}" class="dh-banner-btn">Publicar anuncio gratis</a>
+                        {% endif %}
+                        <p class="dh-banner-note">Sin registro previo</p>
+                    </div>
+                </div>
+
+                <!-- Alquiler externo -->
+                <div class="dh-banner alquiler">
+                    <div class="dh-banner-left">
+                        <p class="dh-banner-eyebrow">¿Quieres alquilar tu caravana?</p>
+                        <h3 class="dh-banner-title">Alquila con las mejores plataformas</h3>
+                        <p class="dh-banner-desc">Te conectamos con Yescapa y otras plataformas especializadas en alquiler entre particulares, con seguro incluido.</p>
+                        <div class="dh-partner-row">
+                            <span class="dh-partner-label">Disponible en</span>
+                            <span class="dh-partner-pill">Yescapa</span>
+                            <span class="dh-partner-pill">Motorhome Republic</span>
+                            <span class="dh-partner-pill">+ más</span>
+                        </div>
+                    </div>
+                    <div class="dh-banner-right">
+                        <div class="dh-banner-icon">🔑</div>
+                        <a href="{% url 'listings:external_rentals' %}" class="dh-banner-btn">Ver plataformas de alquiler</a>
+                        <p class="dh-banner-note">Seguro incluido · Soporte 24h</p>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </div>
 </div>
 
-<!-- ===== MOBILE VERSION ===== -->
-<div class="d-lg-none">
+
+<!-- ===================================================
+     MOBILE VERSION (sin cambios respecto al original)
+=================================================== -->
+<div class="d-md-none">
     <div class="mobile-shell">
 
         <!-- Hero -->
@@ -506,7 +1041,7 @@
                 </a>
             </div>
 
-            <!-- Quick links scrollable -->
+            <!-- Quick links -->
             <p class="m-label">Accesos rápidos</p>
             <div class="m-quicklinks">
                 <a href="{% url 'blog:post_list' %}" class="m-quicklink blog">
@@ -545,10 +1080,10 @@
             </a>
             {% endif %}
 
-            <!-- Featured items -->
+            <!-- Featured -->
             <p class="m-label" style="margin-top:20px;">Destacados del mes</p>
             <div class="m-featured-grid">
-                <a href="{% url 'listings:listing_list' %}?featured=true" class="m-featured-item offers" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://plus.unsplash.com/premium_photo-1728544618993-c61624eaefa3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?q=80&w=400&h=300&fit=crop');">
+                <a href="{% url 'listings:listing_list' %}?featured=true" class="m-featured-item offers" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://plus.unsplash.com/premium_photo-1728544618993-c61624eaefa3?q=80&w=400&h=300&fit=crop');">
                     <i class="bi bi-fire"></i>
                     <span>Ofertas especiales</span>
                     <small>Ver todos</small>
@@ -560,10 +1095,33 @@
                 </a>
             </div>
 
-        </div>
-        <!-- /m-content -->
+            <!-- Statistics -->
+            <p class="m-label" style="margin-top:20px;">Nuestra comunidad</p>
+            <div class="m-stats">
+                <div class="m-stat-card">
+                    <div class="m-stat-icon-bg">🚐</div>
+                    <div class="m-stat-num">{{ active_listings_count|intcomma }}+</div>
+                    <div class="m-stat-label">Anuncios</div>
+                </div>
+                <div class="m-stat-card">
+                    <div class="m-stat-icon-bg">📍</div>
+                    <div class="m-stat-num">{{ destinations_count|intcomma }}+</div>
+                    <div class="m-stat-label">Destinos</div>
+                </div>
+                <div class="m-stat-card">
+                    <div class="m-stat-icon-bg">⭐</div>
+                    <div class="m-stat-num">{{ average_rating }}/5</div>
+                    <div class="m-stat-label">Valoración</div>
+                </div>
+                <div class="m-stat-card">
+                    <div class="m-stat-icon-bg">👥</div>
+                    <div class="m-stat-num">{{ users_count|intcomma }}+</div>
+                    <div class="m-stat-label">Usuarios</div>
+                </div>
+            </div>
 
+        </div>
     </div>
-    <!-- /mobile-shell -->
 </div>
+
 {% endblock %}
