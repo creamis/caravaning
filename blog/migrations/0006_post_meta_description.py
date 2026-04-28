@@ -4,7 +4,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0005_comment'),
+        ('blog', '0003_alter_post_content'),
     ]
 
     operations = [
