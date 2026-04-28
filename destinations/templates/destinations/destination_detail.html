@@ -2,17 +2,36 @@
 
 {% block title %}{{ destination.title }}{% endblock %}
 
+{% block meta_description %}{{ destination.description|striptags|truncatewords:30 }}{% endblock %}
+{% block meta_keywords %}caravaning, destino, {{ destination.location }}, {{ destination.title|lower }}, viajar en caravana{% endblock %}
+
+{% block og_title %}{{ destination.title }} - Caravaning Project{% endblock %}
+{% block og_description %}{{ destination.description|striptags|truncatewords:30 }}{% endblock %}
+{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{{ destination.image.url }}{% endblock %}
+{% block og_type %}article{% endblock %}
+
 {% block extra_head %}
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "Place",
+  "@context": "https://schema.org/",
+  "@type": "TouristAttraction",
   "name": "{{ destination.title }}",
-  "description": "{{ destination.description|truncatewords:30 }}",
+  "description": "{{ destination.description|striptags|truncatewords:50 }}",
   "image": "{{ request.scheme }}://{{ request.get_host }}{{ destination.image.url }}",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "{{ destination.location }}"
+  "location": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "{{ destination.location }}"
+    }
+  },
+  "author": {
+    "@type": "Person",
+    "name": "{{ destination.author.username }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Caravaning Project"
   }
 }
 </script>

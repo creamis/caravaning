@@ -14,6 +14,7 @@ class Post(models.Model):
     title = models.CharField(max_length=250, verbose_name="Título")
     slug = models.SlugField(max_length=250, unique=True, help_text="URL amigable, se genera automáticamente")
     content = RichTextField(verbose_name="Contenido")
+    meta_description = models.CharField(max_length=160, blank=True, help_text="Descripción para buscadores (Google). Máx 160 caracteres.", verbose_name="Meta descripción")
     status = models.CharField(max_length=10, choices=Status.choices, default=Status.DRAFT, blank=True, verbose_name="Estado")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -865,7 +865,7 @@
                         Descubre, vende, compra, alquila y vive la experiencia de viajar en autocaravana,caravana o camper.<br>
                         Tu aventura comienza aquí.
                     </p>
-                    <a href="{% url 'listings:listing_list' %}" class="dh-hero-search" aria-label="Buscar anuncios">
+                    <a href="{% url 'listings:listing_list' %}?listing_type=SALE" class="dh-hero-search" aria-label="Buscar anuncios">
                         <span class="dh-hero-search-icon">
                             <i class="bi bi-search"></i>
                         </span>
@@ -873,7 +873,7 @@
                         <span class="dh-hero-search-btn">Buscar</span>
                     </a>
                     <div class="dh-hero-ctas">
-                        <a href="{% url 'listings:listing_list' %}" class="dh-btn-primary">Ver anuncios</a>
+                        <a href="{% url 'listings:listing_list' %}?listing_type=SALE" class="dh-btn-primary">Ver anuncios</a>
                         <a href="{% url 'listings:listing_create' %}" class="dh-btn-secondary">Publicar anuncio</a>
                     </div>
                 </div>
@@ -1011,7 +1011,7 @@
         <div class="m-content">
 
             <!-- Search bar -->
-            <a href="{% url 'listings:listing_list' %}" class="m-search" aria-label="Buscar anuncios">
+            <a href="{% url 'listings:listing_list' %}?listing_type=SALE" class="m-search" aria-label="Buscar anuncios">
                 <i class="bi bi-search" style="font-size:15px;color:#9ca3af;"></i>
                 <span>Buscar caravanas, destinos…</span>
             </a>
@@ -1053,8 +1053,8 @@
                 <a href="{% url 'listings:listing_list' %}?ordering=-created_at" class="m-quicklink new">
                     <i class="bi bi-clock"></i> Nuevos
                 </a>
-                <a href="{% url 'listings:listing_list' %}?listing_type=RENTAL" class="m-quicklink" style="color:#374151;">
-                    <i class="bi bi-calendar3" style="color:#185fa5;"></i> Alquiler P2P
+                <a href="{% url 'listings:external_rentals' %}" class="m-quicklink" style="color:#374151;">
+                    <i class="bi bi-calendar3" style="color:#185fa5;"></i> Alquiler
                 </a>
             </div>
 

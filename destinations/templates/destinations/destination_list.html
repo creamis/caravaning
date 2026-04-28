@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
 {% block title %}Lugares Increíbles{% endblock %}
+{% block meta_description %}Explora los mejores destinos y lugares recomendados por la comunidad caravaning. Rutas, áreas y parajes perfectos para tu autocaravana o camper.{% endblock %}
+{% block meta_keywords %}destinos caravaning, rutas autocaravana, viajar en camper, pernocta, España, lugares increíbles{% endblock %}
+
+{% block og_title %}Explora lugares increíbles - Caravaning Project{% endblock %}
+{% block og_description %}Descubre destinos recomendados por la comunidad para tu próxima aventura en caravana o camper.{% endblock %}
+{% block og_image %}{% if destinations %}{{ request.scheme }}://{{ request.get_host }}{{ destinations.0.image.url }}{% endif %}{% endblock %}
+{% block og_type %}website{% endblock %}
 
 {% block content %}
 <div class="container py-4 py-lg-5">

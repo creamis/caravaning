@@ -22,11 +22,11 @@
                     <div class="carousel-inner">
                         {% for img in post.images.all %}
                         <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                            <img src="{{ img.image.url }}" class="d-block w-100" style="height: 200px; object-fit: cover;">
+                            <img src="{{ img.image.url }}" class="d-block w-100" style="height: 200px; object-fit: cover;" alt="{{ post.title }}">
                         </div>
                         {% empty %}
                         <div class="carousel-item active">
-                            <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=400&auto=format&fit=crop" class="d-block w-100" style="height: 200px; object-fit: cover;">
+                            <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=400&auto=format&fit=crop" class="d-block w-100" style="height: 200px; object-fit: cover;" alt="{{ post.title }}">
                         </div>
                         {% endfor %}
                     </div>

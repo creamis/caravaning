@@ -3,6 +3,14 @@
 {% load static %}
 {% block title %}{{ post.title }}{% endblock %}
 
+{% block meta_description %}{% if post.meta_description %}{{ post.meta_description }}{% else %}{{ post.content|striptags|truncatewords:30 }}{% endif %}{% endblock %}
+{% block meta_keywords %}caravaning, blog, noticias, caravanas, autocaravanas, {{ post.title|lower }}{% endblock %}
+
+{% block og_title %}{{ post.title }} - Caravaning Project{% endblock %}
+{% block og_description %}{% if post.meta_description %}{{ post.meta_description }}{% else %}{{ post.content|striptags|truncatewords:30 }}{% endif %}{% endblock %}
+{% block og_image %}{% if post.images.all %}{{ request.scheme }}://{{ request.get_host }}{{ post.images.first.image.url }}{% endif %}{% endblock %}
+{% block og_type %}article{% endblock %}
+
 {% block extra_head %}
 <script type="application/ld+json">
 {
@@ -24,7 +32,7 @@
   },
   "datePublished": "{{ post.created_at|date:'Y-m-d' }}",
   "dateModified": "{{ post.updated_at|date:'Y-m-d' }}",
-  "description": "{{ post.content|striptags|truncatewords:50 }}",
+  "description": "{% if post.meta_description %}{{ post.meta_description }}{% else %}{{ post.content|striptags|truncatewords:50 }}{% endif %}",
   "image": [
     {% for image in post.images.all %}
     "{{ request.scheme }}://{{ request.get_host }}{{ image.image.url }}"{% if not forloop.last %},{% endif %}

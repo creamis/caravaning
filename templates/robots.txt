@@ -1,0 +1,16 @@
+User-agent: *
+
+# No indexar el panel de administración
+Disallow: /admin/
+
+# No indexar páginas de usuario privadas o de sesión
+Disallow: /users/login/
+Disallow: /users/register/
+Disallow: /users/profile/
+Disallow: /messaging/
+
+# Permitir todo lo demás (Anuncios, Blog, Destinos, Tienda)
+Allow: /
+
+# Enlace al sitemap (Asegúrate de cambiar 'tu-dominio.com' por el real en producción)
+Sitemap: https://tu-dominio.com/sitemap.xml
