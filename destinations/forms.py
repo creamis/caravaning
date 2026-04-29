@@ -19,7 +19,7 @@ class DestinationForm(forms.ModelForm):
 
     class Meta:
         model = Destination
-        fields = ['title', 'description', 'location', 'image']
+        fields = ['title', 'description', 'location', 'image', 'image_url']
 
 class ReviewForm(forms.ModelForm):
     class Meta:

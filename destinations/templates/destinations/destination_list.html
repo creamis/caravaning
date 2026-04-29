@@ -6,7 +6,7 @@
 
 {% block og_title %}Explora lugares increíbles - Caravaning Project{% endblock %}
 {% block og_description %}Descubre destinos recomendados por la comunidad para tu próxima aventura en caravana o camper.{% endblock %}
-{% block og_image %}{% if destinations %}{{ request.scheme }}://{{ request.get_host }}{{ destinations.0.image.url }}{% endif %}{% endblock %}
+{% block og_image %}{% if destinations %}{{ destinations.0.get_image_url }}{% endif %}{% endblock %}
 {% block og_type %}website{% endblock %}
 
 {% block content %}
@@ -43,11 +43,11 @@
                             <div id="carouselDestination-{{ destination.id }}" class="carousel slide" data-bs-interval="false">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img src="{{ destination.image.url }}" class="ll-card-img" alt="{{ destination.title }}" loading="lazy">
+                                        <img src="{{ destination.get_image_url }}" class="ll-card-img" alt="{{ destination.title }}" loading="lazy">
                                     </div>
                                     {% for extra in destination.images.all %}
                                         <div class="carousel-item">
-                                            <img src="{{ extra.image.url }}" class="ll-card-img" alt="{{ destination.title }}" loading="lazy">
+                                            <img src="{{ extra.get_url }}" class="ll-card-img" alt="{{ destination.title }}" loading="lazy">
                                         </div>
                                     {% endfor %}
                                 </div>
@@ -68,7 +68,7 @@
                                 {{ destination.location }}
                             </div>
                             <h2 class="ll-card-title">{{ destination.title }}</h2>
-                            <p class="text-secondary small mb-4">{{ destination.description|truncatechars:120 }}</p>
+                            <p class="text-secondary small mb-4">{{ destination.plain_description|truncatechars:120 }}</p>
                             <div class="ll-card-footer">
                                 <div class="ll-owner">
                                     {% if destination.author.profile.profile_picture %}

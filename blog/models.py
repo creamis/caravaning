@@ -1,8 +1,10 @@
 # blog/models.py
+import html
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from django.utils.html import strip_tags
 from ckeditor.fields import RichTextField
 
 class Post(models.Model):
@@ -15,7 +17,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=250, unique=True, help_text="URL amigable, se genera automáticamente")
     content = RichTextField(verbose_name="Contenido")
     meta_description = models.CharField(max_length=160, blank=True, help_text="Descripción para buscadores (Google). Máx 160 caracteres.", verbose_name="Meta descripción")
-    status = models.CharField(max_length=10, choices=Status.choices, default=Status.DRAFT, blank=True, verbose_name="Estado")
+    status = models.CharField(max_length=10, choices=Status.choices, default=Status.PUBLISHED, blank=True, verbose_name="Estado")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -38,8 +40,21 @@ class Post(models.Model):
     @property
     def reading_time(self):
         # Estimación: 200 palabras por minuto
-        word_count = len(self.content.split())
+        # Limpiamos las etiquetas HTML para un conteo de palabras real
+        word_count = len(strip_tags(self.content).split())
         return max(1, round(word_count / 200))
+
+    @property
+    def plain_content(self):
+        """Retorna el contenido sin etiquetas HTML, ideal para listados."""
+        # 1. Unescape convierte &lt;h2&gt; en <h2> para que strip_tags lo vea
+        # 2. strip_tags elimina las etiquetas <h2>
+        # 3. El segundo unescape y replace limpian &nbsp; y otras entidades
+        if not self.content:
+            return ""
+        # Convertimos entidades HTML a caracteres reales, quitamos etiquetas y limpiamos espacios especiales
+        text = strip_tags(html.unescape(self.content))
+        return html.unescape(text).replace('\xa0', ' ').replace('&nbsp;', ' ').strip()
 
     def __str__(self):
         return self.title
@@ -47,7 +62,14 @@ class Post(models.Model):
 class PostImage(models.Model):
     """Modelo para almacenar las imágenes de un post."""
     post = models.ForeignKey(Post, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='blog_images/', verbose_name="Imagen")
+    image = models.ImageField(upload_to='blog_images/', verbose_name="Imagen", null=True, blank=True)
+    image_url = models.URLField(max_length=500, blank=True, null=True, verbose_name="URL de imagen externa")
+
+    def get_url(self):
+        """Retorna la URL de la imagen, priorizando la subida local."""
+        if self.image:
+            return self.image.url
+        return self.image_url
 
     def __str__(self):
         return f"Imagen para el post: {self.post.title}"

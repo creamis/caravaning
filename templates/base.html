@@ -115,6 +115,18 @@
             transition: transform 0.25s ease;
         }
 
+        .user-greeting {
+    background: #f0fdf4;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    transition: all 0.25s ease;
+}
+
+.user-greeting:hover {
+    background: #dcfce7;
+}
+
         /* ===== DESKTOP CARDS ===== */
         .card {
             border: none;
@@ -412,10 +424,33 @@
 
     <!-- Desktop Header -->
     <header class="simple-header bg-white py-3 border-bottom">
-        <div class="container d-flex align-items-center justify-content-center">
+        <div class="container d-flex align-items-center justify-content-between">
             <a href="{% url 'home' %}" class="d-flex align-items-center text-decoration-none">
                 <img src="{% static 'images/vanlife.png' %}" alt="Logo Caravaning Project" style="height: 70px; width: auto;" class="me-3">
                 <span class="h4 mb-0 fw-bold text-success">Caravaning Project</span>
+                <div class="d-none d-md-flex align-items-center gap-3">
+    {% if user.is_authenticated %}
+        <div class="user-greeting d-flex align-items-center gap-2">
+            <i class="bi bi-person-circle text-success"></i>
+            <span class="fw-medium text-dark">
+                Hola, {{ user.username }}
+            </span>
+        </div>
+
+        <a href="{% url 'users:profile' %}" class="btn btn-outline-secondary btn-sm">
+            Mi perfil
+        </a>
+
+        <a href="{% url 'users:logout' %}" class="btn btn-outline-danger btn-sm">
+            Salir
+        </a>
+    {% else %}
+        <a href="{% url 'users:login' %}" class="btn btn-success btn-sm">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar sesión
+        </a>
+    {% endif %}
+</div>
+                
             </a>
         </div>
     </header>
@@ -531,14 +566,14 @@
         </a>
         {% if user.is_authenticated %}
         <a href="{% url 'users:profile' %}" class="{% if request.resolver_match.name == 'profile' %}active{% endif %}" title="Mi Perfil">
-            <i class="bi bi-person{% if request.resolver_match.name == 'profile' %}-fill{% endif %}"></i>
-            <span>Perfil</span>
-        </a>
-        {% else %}
-        <a href="{% url 'users:login' %}" class="{% if request.resolver_match.name == 'login' %}active{% endif %}" title="Iniciar Sesión">
-            <i class="bi bi-person"></i>
-            <span>Entrar</span>
-        </a>
+    <i class="bi bi-person-fill"></i>
+    <span>{{ user.username|truncatechars:8 }}</span>
+</a>
+{% else %}
+<a href="{% url 'users:login' %}" class="{% if request.resolver_match.name == 'login' %}active{% endif %}" title="Iniciar Sesión">
+    <i class="bi bi-person"></i>
+    <span>Entrar</span>
+</a>
         {% endif %}
     </nav>
 

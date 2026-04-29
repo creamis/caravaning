@@ -17,7 +17,7 @@
                     <p class="text-muted small">Introduce tus credenciales para continuar</p>
                 </div>
 
-                <form method="post">
+                <form method="post" id="loginForm">
                     {% csrf_token %}
                     
                     {% if form.non_field_errors %}
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary btn-lg rounded-4 fw-bold py-2 shadow-sm border-0 mt-2" style="font-size: 0.95rem; letter-spacing: -0.2px;">
+                        <button type="submit" id="submitBtn" class="btn btn-primary btn-lg rounded-4 fw-bold py-2 shadow-sm border-0 mt-2" style="font-size: 0.95rem; letter-spacing: -0.2px;">
                             Entrar ahora
                         </button>
                     </div>
@@ -53,13 +53,35 @@
 
                 <div class="text-center mt-4 pt-3 border-top">
                     <p class="text-muted small mb-1">¿Aún no tienes cuenta? 
-                        <a href="{% url 'users:register' %}" class="text-primary text-decoration-none fw-bold">Regístrate gratis</a>
+                        <a href="{% url 'users:register' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" class="text-primary text-decoration-none fw-bold">Regístrate gratis</a>
                     </p>
                 </div>
             </div>
         </div>
     </div>
+    
+    <!-- Nota informativa de carga -->
+    <div id="loadingOverlay" class="position-fixed top-0 start-0 w-100 h-100 d-none align-items-center justify-content-center" style="background: rgba(255,255,255,0.8); z-index: 9999;">
+        <div class="text-center">
+            <div class="spinner-border text-primary mb-3" role="status"></div>
+            <p class="fw-bold text-dark">Verificando tus datos...</p>
+        </div>
+    </div>
 </div>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    const btn = document.getElementById('submitBtn');
+    const overlay = document.getElementById('loadingOverlay');
+    
+    // Evitar doble envío
+    btn.disabled = true;
+    overlay.classList.remove('d-none');
+    overlay.classList.add('d-flex');
+    
+    // El formulario se enviará normalmente tras este proceso
+});
+</script>
 
 <style>
     .input-group { border-radius: 12px; overflow: hidden; background-color: #f8f9fa; border: 1px solid transparent; transition: all 0.2s; }

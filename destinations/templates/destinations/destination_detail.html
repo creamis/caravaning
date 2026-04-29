@@ -7,7 +7,7 @@
 
 {% block og_title %}{{ destination.title }} - Caravaning Project{% endblock %}
 {% block og_description %}{{ destination.description|striptags|truncatewords:30 }}{% endblock %}
-{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{{ destination.image.url }}{% endblock %}
+{% block og_image %}{{ destination.get_image_url }}{% endblock %}
 {% block og_type %}article{% endblock %}
 
 {% block extra_head %}
@@ -17,7 +17,7 @@
   "@type": "TouristAttraction",
   "name": "{{ destination.title }}",
   "description": "{{ destination.description|striptags|truncatewords:50 }}",
-  "image": "{{ request.scheme }}://{{ request.get_host }}{{ destination.image.url }}",
+  "image": "{{ destination.get_image_url }}",
   "location": {
     "@type": "Place",
     "address": {
@@ -59,11 +59,11 @@
                 <div id="destinationCarousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="{{ destination.image.url }}" class="d-block w-100" style="height: 450px; object-fit: cover;" alt="{{ destination.title }}" loading="eager">
+                            <img src="{{ destination.get_image_url }}" class="d-block w-100" style="height: 450px; object-fit: cover;" alt="{{ destination.title }}" loading="eager">
                         </div>
                         {% for extra_img in destination.images.all %}
                         <div class="carousel-item">
-                            <img src="{{ extra_img.image.url }}" class="d-block w-100" style="height: 450px; object-fit: cover;" alt="Galería">
+                            <img src="{{ extra_img.get_url }}" class="d-block w-100" style="height: 450px; object-fit: cover;" alt="Galería">
                         </div>
                         {% endfor %}
                     </div>

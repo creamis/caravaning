@@ -8,7 +8,11 @@
 
 {% block og_title %}{{ post.title }} - Caravaning Project{% endblock %}
 {% block og_description %}{% if post.meta_description %}{{ post.meta_description }}{% else %}{{ post.content|striptags|truncatewords:30 }}{% endif %}{% endblock %}
-{% block og_image %}{% if post.images.all %}{{ request.scheme }}://{{ request.get_host }}{{ post.images.first.image.url }}{% endif %}{% endblock %}
+{% block og_image %}
+    {% if post.images.all %}
+        {{ post.images.first.get_url }}
+    {% endif %}
+{% endblock %}
 {% block og_type %}article{% endblock %}
 
 {% block extra_head %}
@@ -35,7 +39,7 @@
   "description": "{% if post.meta_description %}{{ post.meta_description }}{% else %}{{ post.content|striptags|truncatewords:50 }}{% endif %}",
   "image": [
     {% for image in post.images.all %}
-    "{{ request.scheme }}://{{ request.get_host }}{{ image.image.url }}"{% if not forloop.last %},{% endif %}
+    "{{ image.get_url }}"{% if not forloop.last %},{% endif %}
     {% endfor %}
   ],
   "mainEntityOfPage": {
@@ -86,7 +90,7 @@
                     <div class="carousel-inner">
                         {% for image in post.images.all %}
                             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                                <img src="{{ image.image.url }}" class="d-block w-100" style="height: 450px; object-fit: cover;" alt="{{ post.title }}">
+                                <img src="{{ image.get_url }}" class="d-block w-100" style="height: 450px; object-fit: cover;" alt="{{ post.title }}">
                             </div>
                         {% endfor %}
                     </div>

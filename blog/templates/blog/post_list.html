@@ -36,7 +36,7 @@
                                 <div class="carousel-inner">
                                     {% for img in post.images.all %}
                                         <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                                            <img src="{{ img.image.url }}" class="ll-card-img" alt="{{ post.title }}" loading="lazy">
+                                            <img src="{{ img.get_url }}" class="ll-card-img" alt="{{ post.title }}" loading="lazy">
                                         </div>
                                     {% empty %}
                                         <div class="carousel-item active">
@@ -68,7 +68,7 @@
                             </div>
                             <h2 class="ll-card-title">{{ post.title }}</h2>
                             <p class="text-secondary small mb-4">
-                                {{ post.content|truncatechars:120 }}
+                                {{ post.plain_content|truncatechars:120 }}
                             </p>
                             <div class="ll-card-footer">
                                 <div class="ll-owner">

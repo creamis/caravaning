@@ -17,7 +17,7 @@
                     <p class="text-muted small">Sé parte de la mayor comunidad de caravaning</p>
                 </div>
 
-                <form method="post" novalidate>
+                <form method="post" id="registerForm" novalidate>
                     {% csrf_token %}
                     
                     {% for field in form %}
@@ -41,7 +41,7 @@
                     {% endfor %}
 
                     <div class="d-grid gap-2 mt-4">
-                        <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold py-2" style="font-size: 0.95rem;">
+                        <button type="submit" id="submitBtn" class="btn btn-primary btn-lg rounded-pill fw-bold py-2" style="font-size: 0.95rem;">
                             Empezar mi viaje
                         </button>
                     </div>
@@ -49,11 +49,31 @@
 
                 <div class="text-center mt-4 pt-3 border-top">
                     <p class="text-muted small">¿Ya tienes una cuenta? 
-                        <a href="{% url 'users:login' %}" class="text-primary text-decoration-none fw-bold">Inicia sesión</a>
+                        <a href="{% url 'users:login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" class="text-primary text-decoration-none fw-bold">Inicia sesión</a>
                     </p>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Nota informativa de carga -->
+    <div id="loadingOverlay" class="position-fixed top-0 start-0 w-100 h-100 d-none align-items-center justify-content-center" style="background: rgba(255,255,255,0.8); z-index: 9999;">
+        <div class="text-center">
+            <div class="spinner-border text-primary mb-3" role="status"></div>
+            <p class="fw-bold text-dark">Preparando tu aventura...</p>
+        </div>
+    </div>
 </div>
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    const btn = document.getElementById('submitBtn');
+    const overlay = document.getElementById('loadingOverlay');
+    
+    btn.disabled = true;
+    overlay.classList.remove('d-none');
+    overlay.classList.add('d-flex');
+});
+</script>
+
 {% endblock %}
