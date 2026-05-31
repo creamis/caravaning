@@ -72,7 +72,7 @@
                         <div class="mt-auto">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="text-muted small">Precio ref.</span>
-                                <span class="h5 fw-bold text-dark mb-0 price-element" data-price="{{ product.price }}">€{{ product.price }}</span>
+                                <span class="h5 fw-bold text-dark mb-0">{{ product.price }} €</span>
                             </div>
                             <a href="{{ product.affiliate_url }}" 
                                target="_blank" 
@@ -157,19 +157,4 @@
     }
 </style>
 
-<script>
-    // Reutilizamos tu función de formateo de precios
-    document.addEventListener('DOMContentLoaded', function() {
-        const priceElements = document.querySelectorAll('.price-element');
-        priceElements.forEach(function(element) {
-            const priceValue = element.getAttribute('data-price');
-            if (priceValue) {
-                element.textContent = new Intl.NumberFormat('es-ES', {
-                    style: 'currency',
-                    currency: 'EUR'
-                }).format(priceValue);
-            }
-        });
-    });
-</script>
 {% endblock %}
