@@ -1,5 +1,6 @@
 # blog/models.py
 import html
+import re
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -53,7 +54,9 @@ class Post(models.Model):
         if not self.content:
             return ""
         # Convertimos entidades HTML a caracteres reales, quitamos etiquetas y limpiamos espacios especiales
-        text = strip_tags(html.unescape(self.content))
+        content = html.unescape(self.content)
+        content = re.sub(r'<(style|script)\b[^>]*>.*?</\1>', '', content, flags=re.IGNORECASE | re.DOTALL)
+        text = strip_tags(content)
         return html.unescape(text).replace('\xa0', ' ').replace('&nbsp;', ' ').strip()
 
     def __str__(self):
