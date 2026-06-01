@@ -18,6 +18,20 @@
         <p class="text-muted">Seleccionamos los mejores productos de Amazon para tu próxima aventura.</p>
     </div>
 
+    <div class="alert alert-light border rounded-4 shadow-sm mb-4" role="note">
+        <div class="d-flex gap-3 align-items-start">
+            <i class="bi bi-info-circle text-success fs-4 flex-shrink-0"></i>
+            <div>
+                <p class="fw-bold text-dark mb-1">Transparencia de afiliados</p>
+                <p class="text-muted small mb-0">
+                    Algunos enlaces de esta tienda son enlaces de afiliado. Si compras desde ellos,
+                    Caravaning Project puede recibir una comisión sin coste adicional para ti.
+                    Consulta nuestra <a href="{% url 'pages:affiliates' %}" class="text-success fw-semibold">divulgación de afiliados</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         {% for product in products %}
             <div class="col">

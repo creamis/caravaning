@@ -5,22 +5,32 @@
 {% block content %}
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-lg-8 bg-white p-5 rounded-4 shadow-sm">
+        <div class="col-lg-9 bg-white p-5 rounded-4 shadow-sm">
             <h1 class="text-success fw-bold mb-4">Sobre Nosotros</h1>
-            <p class="lead">Bienvenido a <strong>Caravaning Project</strong>, el punto de encuentro definitivo para los entusiastas de la vida sobre ruedas.</p>
+            <p class="lead">Caravaning Project es un punto de encuentro para quienes viajan, compran, venden, alquilan o equipan caravanas, autocaravanas y campers.</p>
             <hr class="my-4">
-            
-            <h2 class="h4 fw-bold">Nuestra Misión</h2>
-            <p>Nuestra misión es conectar a la comunidad de caravaning en España y más allá. Facilitamos un espacio seguro y sencillo para la compra, venta y alquiler de vehículos, además de ser una fuente de inspiración para descubrir nuevos destinos y equipar tu casa con ruedas con los mejores accesorios.</p>
 
-            <h2 class="h4 fw-bold mt-4">¿Por qué elegirnos?</h2>
-            <ul>
-                <li><strong>Pasión:</strong> Somos viajeros como tú y entendemos lo que buscas.</li>
-                <li><strong>Comunidad:</strong> Fomentamos el intercambio de experiencias y consejos.</li>
-                <li><strong>Simplicidad:</strong> Una plataforma moderna diseñada para que encuentres lo que necesitas en pocos clics.</li>
-            </ul>
+            <section class="mb-4">
+                <h2 class="h4 fw-bold">Nuestra misión</h2>
+                <p>Queremos ayudar a la comunidad caravaning a encontrar información práctica, destinos interesantes, anuncios útiles y accesorios que resuelvan necesidades reales antes, durante y después de cada viaje.</p>
+            </section>
 
-            <p class="mt-4">¡Gracias por formar parte de este viaje!</p>
+            <section class="mb-4">
+                <h2 class="h4 fw-bold">Qué encontrarás aquí</h2>
+                <ul>
+                    <li><strong>Anuncios:</strong> vehículos y oportunidades para compra, venta o alquiler.</li>
+                    <li><strong>Blog:</strong> consejos de viaje, mantenimiento, seguridad, rutas y vida camper.</li>
+                    <li><strong>Destinos:</strong> lugares compartidos por la comunidad para inspirar nuevas escapadas.</li>
+                    <li><strong>Tienda:</strong> accesorios recomendados para viajar con más comodidad y autonomía.</li>
+                </ul>
+            </section>
+
+            <section class="mb-4">
+                <h2 class="h4 fw-bold">Cómo recomendamos productos</h2>
+                <p>Priorizamos productos vinculados con problemas concretos del viaje: descanso, energía, frío, calor, cocina, seguridad, almacenamiento y mantenimiento. Cuando una recomendación puede generar comisión, lo indicamos en nuestra <a href="{% url 'pages:affiliates' %}">divulgación de afiliados</a>.</p>
+            </section>
+
+            <p class="mt-4 mb-0">Gracias por formar parte de esta comunidad sobre ruedas.</p>
         </div>
     </div>
 </div>
