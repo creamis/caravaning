@@ -3,6 +3,7 @@ from .models import Category, Product, ProductImage
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
+    fields = ('image', 'image_url')
     extra = 5
     max_num = 5 # Límite de 5 imágenes
 
@@ -21,7 +22,7 @@ class ProductAdmin(admin.ModelAdmin):
     date_hierarchy = 'created_at' # Permite navegar por fecha de creación
     inlines = [ProductImageInline]
     fieldsets = (
-        (None, {'fields': ('name', 'slug', 'category', 'brand', 'description', 'price', 'affiliate_url', 'button_text', 'is_active')}),
+        (None, {'fields': ('name', 'slug', 'category', 'brand', 'description', 'image', 'image_url', 'price', 'affiliate_url', 'button_text', 'is_active')}),
         ('Fechas', {'fields': ('created_at',), 'classes': ('collapse',)}),
     )
     readonly_fields = ('created_at',) # created_at no debe ser editable

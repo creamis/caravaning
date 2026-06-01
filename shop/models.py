@@ -24,6 +24,7 @@ class Product(models.Model):
     brand = models.CharField(max_length=100, blank=True, verbose_name="Marca")
     description = models.TextField(verbose_name="Descripción")
     image = models.ImageField(upload_to='shop_products/', verbose_name="Imagen Principal", null=True, blank=True)
+    image_url = models.URLField(max_length=500, blank=True, null=True, verbose_name="URL de imagen principal")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio aproximado (€)")
     affiliate_url = models.URLField(max_length=1000, verbose_name="Enlace de afiliado")
     button_text = models.CharField(max_length=50, default="Ver oferta en Amazon", verbose_name="Texto del botón")
@@ -39,13 +40,26 @@ class Product(models.Model):
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
+    def get_image_url(self):
+        """Retorna la imagen principal, priorizando la subida local."""
+        if self.image:
+            return self.image.url
+        return self.image_url
+
     def __str__(self):
         return self.name
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='shop_products/', verbose_name="Imagen")
+    image = models.ImageField(upload_to='shop_products/', verbose_name="Imagen", null=True, blank=True)
+    image_url = models.URLField(max_length=500, blank=True, null=True, verbose_name="URL de imagen externa")
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def get_url(self):
+        """Retorna la imagen de galeria, priorizando la subida local."""
+        if self.image:
+            return self.image.url
+        return self.image_url
 
     def __str__(self):
         return f"Imagen para {self.product.name}"

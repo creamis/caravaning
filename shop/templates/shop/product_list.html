@@ -28,12 +28,12 @@
                             <div class="carousel-inner">
                                 {% for pi in product.images.all %}
                                     <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                                        <img src="{{ pi.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: contain; padding: 1.5rem; background: #fff;">
+                                        <img src="{{ pi.get_url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: contain; padding: 1.5rem; background: #fff;">
                                     </div>
                                 {% empty %}
-                                    {% if product.image %}
+                                    {% if product.get_image_url %}
                                         <div class="carousel-item active">
-                                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: contain; padding: 1.5rem; background: #fff;">
+                                            <img src="{{ product.get_image_url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: contain; padding: 1.5rem; background: #fff;">
                                         </div>
                                     {% endif %}
                                 {% endfor %}
@@ -76,7 +76,7 @@
                             </div>
                             <a href="{{ product.affiliate_url }}" 
                                target="_blank" 
-                               rel="nofollow" 
+                               rel="nofollow sponsored noopener"
                                class="btn btn-warning w-100 rounded-pill fw-bold shadow-sm py-2">
                                 <i class="bi bi-cart3 me-2"></i>{{ product.button_text }}
                             </a>
