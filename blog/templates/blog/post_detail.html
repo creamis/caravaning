@@ -1,6 +1,6 @@
 
 {% extends "base.html" %}
-{% load static %}
+{% load static affiliate_links %}
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block meta_description %}{% if post.meta_description %}{{ post.meta_description }}{% else %}{{ post.content|striptags|truncatewords:30 }}{% endif %}{% endblock %}
@@ -110,9 +110,21 @@
             {% endif %}
 
             <!-- Contenido del Post -->
+            {% if post.content|contains_amazon_link %}
+                <div class="alert alert-light border rounded-4 shadow-sm mb-4" role="note">
+                    <div class="d-flex gap-3 align-items-start">
+                        <i class="bi bi-info-circle text-success fs-4 flex-shrink-0"></i>
+                        <p class="text-muted small mb-0">
+                            Este artículo puede incluir enlaces de afiliado. En calidad de Afiliado de Amazon,
+                            obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables,
+                            sin coste adicional para ti.
+                        </p>
+                    </div>
+                </div>
+            {% endif %}
             <div class="hp-content-block bg-white p-4 p-md-5 rounded-4 shadow-sm border mb-4">
                 <div class="hp-post-content text-secondary" style="line-height: 1.8; font-size: 1.1rem;">
-                    {{ post.content|safe }}
+                    {{ post.content|amazon_affiliate_content }}
                 </div>
             </div>
 

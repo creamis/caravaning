@@ -17,6 +17,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['caravaning.pythonanywhere.com', 'localhost', '127.0.0.1']
 
+# Amazon Afiliados
+AMAZON_ASSOCIATE_TAG = 'caravaning0a-21'
+AMAZON_MARKETPLACE_HOSTS = ('amazon.es', 'www.amazon.es')
+
 
 # Application definition
 

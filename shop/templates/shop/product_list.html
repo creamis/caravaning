@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static affiliate_links %}
 
 {% block title %}Tienda Caravaning - Accesorios Recomendados{% endblock %}
 
@@ -26,6 +26,7 @@
                 <p class="text-muted small mb-0">
                     Algunos enlaces de esta tienda son enlaces de afiliado. Si compras desde ellos,
                     Caravaning Project puede recibir una comisión sin coste adicional para ti.
+                    En calidad de Afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables.
                     Consulta nuestra <a href="{% url 'pages:affiliates' %}" class="text-success fw-semibold">divulgación de afiliados</a>.
                 </p>
             </div>
@@ -85,10 +86,15 @@
 
                         <div class="mt-auto">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="text-muted small">Precio ref.</span>
-                                <span class="h5 fw-bold text-dark mb-0">{{ product.price }} €</span>
+                                {% if product.affiliate_url|is_amazon_marketplace_url %}
+                                    <span class="text-muted small">Precio</span>
+                                    <span class="h6 fw-bold text-dark mb-0">Consultar en Amazon</span>
+                                {% else %}
+                                    <span class="text-muted small">Precio ref.</span>
+                                    <span class="h5 fw-bold text-dark mb-0">{{ product.price }} €</span>
+                                {% endif %}
                             </div>
-                            <a href="{{ product.affiliate_url }}" 
+                            <a href="{{ product.affiliate_url|amazon_affiliate_url }}" 
                                target="_blank" 
                                rel="nofollow sponsored noopener"
                                class="btn btn-warning w-100 rounded-pill fw-bold shadow-sm py-2">
