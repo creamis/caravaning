@@ -98,7 +98,7 @@
                                target="_blank" 
                                rel="nofollow sponsored noopener"
                                class="btn btn-warning w-100 rounded-pill fw-bold shadow-sm py-2">
-                                <i class="bi bi-cart3 me-2"></i>{{ product.button_text }}
+                                <i class="bi bi-cart3 me-2"></i>{% if product.affiliate_url|is_amazon_marketplace_url %}Ver oferta en Amazon{% else %}{{ product.button_text }}{% endif %}
                             </a>
                         </div>
                     </div>
