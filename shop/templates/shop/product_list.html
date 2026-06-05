@@ -33,6 +33,64 @@
         </div>
     </div>
 
+    <form method="get" action="{% url 'shop:product_list' %}" class="shop-filter-bar mb-4" role="search">
+        <div class="row g-2 align-items-center">
+            <div class="col-12 col-lg">
+                <label for="shop-search" class="visually-hidden">Buscar productos</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0">
+                        <i class="bi bi-search text-muted"></i>
+                    </span>
+                    <input
+                        type="search"
+                        id="shop-search"
+                        name="q"
+                        value="{{ search_query }}"
+                        class="form-control border-start-0"
+                        placeholder="Buscar accesorios, marca o necesidad"
+                    >
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <label for="shop-category" class="visually-hidden">Categoría</label>
+                <select id="shop-category" name="category" class="form-select">
+                    <option value="">Todas las categorías</option>
+                    {% for category in categories %}
+                        <option value="{{ category.slug }}" {% if category.slug == active_category_slug %}selected{% endif %}>
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12 col-md-auto">
+                <button type="submit" class="btn btn-success w-100 shop-filter-submit">
+                    <i class="bi bi-sliders me-1"></i>Filtrar
+                </button>
+            </div>
+            {% if search_query or active_category_slug %}
+                <div class="col-12 col-md-auto">
+                    <a href="{% url 'shop:product_list' %}" class="btn btn-outline-secondary w-100 shop-filter-clear">
+                        Limpiar
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+        {% if categories %}
+            <div class="shop-category-chips mt-3 pt-3 border-top">
+                <a href="{% url 'shop:product_list' %}{% if search_query %}?q={{ search_query|urlencode }}{% endif %}"
+                   class="shop-category-chip {% if not active_category_slug %}active{% endif %}">
+                    Todas
+                </a>
+                {% for category in categories %}
+                    <a href="{% url 'shop:product_list' %}?category={{ category.slug }}{% if search_query %}&q={{ search_query|urlencode }}{% endif %}"
+                       class="shop-category-chip {% if category.slug == active_category_slug %}active{% endif %}">
+                        {{ category.name }}
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </form>
+
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         {% for product in products %}
             <div class="col">
@@ -104,6 +162,17 @@
                     </div>
                 </div>
             </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="shop-empty-state text-center bg-white border rounded-4 p-5 shadow-sm">
+                    <i class="bi bi-search text-muted opacity-50 display-6"></i>
+                    <h2 class="h5 fw-bold text-dark mt-3 mb-2">No hay productos con esos filtros</h2>
+                    <p class="text-muted mb-3">Prueba con otra categoría o una búsqueda más general.</p>
+                    <a href="{% url 'shop:product_list' %}" class="btn btn-success rounded-pill px-4">
+                        Ver toda la tienda
+                    </a>
+                </div>
+            </div>
         {% endfor %}
     </div>
 </div>
@@ -136,6 +205,53 @@
     }
     .product-image-container:hover .custom-carousel-icon {
         background-color: rgba(0,0,0,0.5);
+    }
+    .shop-filter-bar {
+        background: #ffffff;
+        border: 1px solid rgba(0,0,0,0.08);
+        border-radius: 16px;
+        padding: 1rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+    .shop-filter-bar .form-control,
+    .shop-filter-bar .form-select,
+    .shop-filter-bar .input-group-text {
+        min-height: 46px;
+        border-color: rgba(0,0,0,0.12);
+    }
+    .shop-filter-bar .form-control:focus,
+    .shop-filter-bar .form-select:focus {
+        border-color: #16a34a;
+        box-shadow: 0 0 0 0.2rem rgba(22, 163, 74, 0.12);
+    }
+    .shop-filter-submit,
+    .shop-filter-clear {
+        min-height: 46px;
+    }
+    .shop-category-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    .shop-category-chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 36px;
+        padding: 0.45rem 0.85rem;
+        border-radius: 999px;
+        background: #f8fafc;
+        border: 1px solid rgba(0,0,0,0.08);
+        color: #374151;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+    .shop-category-chip:hover,
+    .shop-category-chip.active {
+        background: #16a34a;
+        border-color: #16a34a;
+        color: #ffffff;
     }
     .ll-back-btn-mobile {
         display: inline-flex;
