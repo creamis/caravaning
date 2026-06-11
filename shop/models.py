@@ -61,6 +61,9 @@ class Product(models.Model):
 
     @property
     def cta_text(self):
+        if self.display_merchant.lower() == "amazon" or "amazon." in self.affiliate_url.lower():
+            return "Ver en Amazon"
+
         generic_labels = {"Ver oferta en Amazon", "Ver producto"}
         if self.button_text and self.button_text not in generic_labels:
             return self.button_text
