@@ -15,14 +15,16 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'brand', 'price', 'is_active', 'created_at')
-    list_filter = ('category', 'is_active', 'brand')
-    search_fields = ('name', 'description', 'brand')
+    list_display = ('name', 'category', 'brand', 'merchant_name', 'price', 'is_affiliate', 'is_active', 'created_at')
+    list_filter = ('category', 'merchant_name', 'is_affiliate', 'is_active', 'brand')
+    search_fields = ('name', 'description', 'brand', 'merchant_name', 'recommendation_reason', 'best_for')
     prepopulated_fields = {'slug': ('name',)} # Rellena automáticamente el slug
     date_hierarchy = 'created_at' # Permite navegar por fecha de creación
     inlines = [ProductImageInline]
     fieldsets = (
-        (None, {'fields': ('name', 'slug', 'category', 'brand', 'description', 'image', 'image_url', 'price', 'affiliate_url', 'button_text', 'is_active')}),
+        (None, {'fields': ('name', 'slug', 'category', 'brand', 'merchant_name', 'description', 'recommendation_reason', 'best_for')}),
+        ('Imagen', {'fields': ('image', 'image_url')}),
+        ('Enlace y precio', {'fields': ('price', 'price_note', 'affiliate_url', 'button_text', 'is_affiliate', 'is_active')}),
         ('Fechas', {'fields': ('created_at',), 'classes': ('collapse',)}),
     )
     readonly_fields = ('created_at',) # created_at no debe ser editable
