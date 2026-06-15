@@ -1,16 +1,10 @@
 User-agent: *
 
-# No indexar el panel de administración
+# No rastrear el panel de administracion.
 Disallow: /admin/
 
-# No indexar páginas de usuario privadas o de sesión
-Disallow: /users/login/
-Disallow: /users/register/
-Disallow: /users/profile/
-Disallow: /messaging/
-
-# Permitir todo lo demás (Anuncios, Blog, Destinos, Tienda)
+# Permitir todo lo demas. Las paginas privadas usan meta noindex.
 Allow: /
 
-# Enlace al sitemap (Asegúrate de cambiar 'tu-dominio.com' por el real en producción)
-Sitemap: https://tu-dominio.com/sitemap.xml
+# Sitemap publico
+Sitemap: https://www.caravaning-project.online/sitemap.xml
