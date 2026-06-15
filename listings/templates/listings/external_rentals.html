@@ -1,133 +1,620 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Alquiler de Caravanas y Autocaravanas{% endblock %}
+{% block title %}Alquiler de Autocaravanas y Campers con CamperDays{% endblock %}
+{% block meta_description %}Compara alquileres de autocaravanas, campers y caravanas con CamperDays para preparar tu próxima escapada caravaning.{% endblock %}
+{% block meta_keywords %}CamperDays, alquiler autocaravana, alquiler camper, alquiler caravana, comparar alquiler camper, vacaciones en autocaravana{% endblock %}
+{% block og_title %}Alquiler de autocaravanas y campers con CamperDays{% endblock %}
+{% block og_description %}Encuentra y compara opciones de alquiler para viajar en camper, caravana o autocaravana con CamperDays.{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <div class="d-lg-none d-flex align-items-center justify-content-between mb-3 px-3">
-        <a href="{% url 'home' %}" class="ll-back-btn-mobile" aria-label="Volver al inicio">
-            <i class="bi bi-arrow-left"></i>
-        </a>
-        <div class="ll-page-icon-mobile">
-            <i class="bi bi-house-fill"></i>
-        </div>
-    </div>
-    <!-- Hero Section -->
-    <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold text-dark mb-3">Alquiler de Caravanas y Autocaravanas</h1>
-        <p class="lead text-muted mx-auto" style="max-width: 800px;">
-            Alquilar es una forma flexible y segura de vivir la experiencia caravaning. Reunimos plataformas
-            especializadas y colaboradores de confianza para que puedas rentabilizar tu vehículo o encontrar
-            la caravana, autocaravana o camper ideal para tu próxima escapada.
-        </p>
-    </div>
-
-    <!-- Sección Propietarios: Yescapa -->
-    <div class="row align-items-center bg-white rounded-4 shadow-sm p-4 p-lg-5 mb-5 border border-primary-subtle">
-        <div class="col-lg-6">
-            <div class="badge bg-primary mb-3 px-3 py-2 rounded-pill">RECOMENDADO PARA PROPIETARIOS</div>
-            <h2 class="fw-bold mb-4">Rentabiliza tu caravana con Yescapa</h2>
-            <p class="text-muted">
-                Si tienes una caravana, autocaravana o camper y quieres sacar un ingreso extra de forma segura, 
-                <strong>Yescapa</strong> es la plataforma líder en Europa para el alquiler entre particulares.
-            </p>
-            <ul class="list-unstyled my-4">
-                <li class="mb-3 d-flex align-items-start">
-                    <i class="bi bi-shield-check text-success fs-4 me-3"></i>
-                    <div><strong>Seguro a todo riesgo:</strong> Tu vehículo está cubierto durante cada alquiler por una póliza específica.</div>
-                </li>
-                <li class="mb-3 d-flex align-items-start">
-                    <i class="bi bi-person-vcard text-success fs-4 me-3"></i>
-                    <div><strong>Usuarios verificados:</strong> Yescapa revisa la identidad y documentos de todos los viajeros.</div>
-                </li>
-                <li class="mb-3 d-flex align-items-start">
-                    <i class="bi bi-cash-stack text-success fs-4 me-3"></i>
-                    <div><strong>Pagos garantizados:</strong> Gestión profesional de pagos y depósitos de garantía.</div>
-                </li>
-            </ul>
-            <a href="https://www.yescapa.es" target="_blank" class="btn btn-primary btn-lg px-5 rounded-pill shadow-sm">
-                Publicar en Yescapa <i class="bi bi-box-arrow-up-right ms-2"></i>
+{% with camperdays_url="https://www.awin1.com/cread.php?awinmid=52113&awinaffid=2917197&clickref=external_rentals_camperdays&clickref2=external_rentals_hero&clickref3=external_rentals_trip_beach&clickref4=external_rentals_trip_mountain&clickref5=external_rentals_trip_road&clickref6=external_rentals_footer&ued=https%3A%2F%2Fwww.camperdays.es%2F" %}
+<div class="external-rentals-page">
+    <div class="container py-4 py-lg-5">
+        <div class="d-lg-none d-flex align-items-center justify-content-between mb-3 px-1">
+            <a href="{% url 'home' %}" class="ll-back-btn-mobile" aria-label="Volver al inicio">
+                <i class="bi bi-arrow-left"></i>
             </a>
-        </div>
-        <div class="col-lg-6 mt-4 mt-lg-0">
-            <img src="https://plus.unsplash.com/premium_photo-1663100056711-91ad124ae40f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=800" alt="Yescapa Alquiler" class="img-fluid rounded-4 shadow">
-        </div>
-    </div>
-
-    <!-- Sección Viajeros: Otras Plataformas -->
-    <h3 class="fw-bold text-center mb-5">¿Buscas alquilar para tus próximas vacaciones?</h3>
-    <div class="row g-4">
-        <!-- Indie Campers -->
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm hover-lift">
-                <div class="card-body p-4">
-                    <div class="mb-3 text-primary"><i class="bi bi-globe2 fs-1"></i></div>
-                    <h4 class="fw-bold">Indie Campers</h4>
-                    <p class="text-muted small">Ideal para quienes buscan una flota propia, moderna y asistencia 24/7 en toda Europa.</p>
-                    <ul class="ps-3 small text-muted mb-4">
-                        <li>Modelos exclusivos propios</li>
-                        <li>Recogida en múltiples países</li>
-                        <li>Soporte técnico premium</li>
-                    </ul>
-                    <a href="https://indiecampers.com" target="_blank" class="btn btn-outline-primary w-100 rounded-pill">Ver ofertas</a>
-                </div>
+            <div class="ll-page-icon-mobile">
+                <i class="bi bi-house-fill"></i>
             </div>
         </div>
 
-        <!-- Roadsurfer -->
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm hover-lift">
-                <div class="card-body p-4">
-                    <div class="mb-3 text-warning"><i class="bi bi-stars fs-1"></i></div>
-                    <h4 class="fw-bold">Roadsurfer</h4>
-                    <p class="text-muted small">Famosos por su estilo "Vanlife" y sus vehículos perfectamente equipados y coloridos.</p>
-                    <ul class="ps-3 small text-muted mb-4">
-                        <li>Kilometraje ilimitado</li>
-                        <li>Mascotas bienvenidas</li>
-                        <li>Flota muy joven y cuidada</li>
-                    </ul>
-                    <a href="https://roadsurfer.com" target="_blank" class="btn btn-outline-primary w-100 rounded-pill">Ver ofertas</a>
+        <section class="cd-hero mb-5">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-7">
+                    <div class="cd-hero-copy">
+                        <span class="cd-kicker">CAMPERDAYS · ALQUILER EXTERNO</span>
+                        <h1>Compara autocaravanas y campers para tu próxima ruta</h1>
+                        <p>
+                            Te llevamos a CamperDays para buscar vehículos por destino y fechas, comparar opciones
+                            disponibles y preparar una escapada con más libertad desde el primer clic.
+                        </p>
+
+                        <div class="cd-search-box" aria-label="Resumen de búsqueda en CamperDays">
+                            <div class="cd-search-field">
+                                <span>Destino</span>
+                                <strong>España, Europa o mundo</strong>
+                            </div>
+                            <div class="cd-search-field">
+                                <span>Fechas</span>
+                                <strong>Escapada o gran viaje</strong>
+                            </div>
+                            <a href="{{ camperdays_url }}" target="_blank" rel="sponsored noopener noreferrer" class="cd-search-submit">
+                                Buscar en CamperDays
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+
+                        <div class="cd-trust-row" aria-label="Datos destacados de CamperDays">
+                            <div>
+                                <strong>+150</strong>
+                                <span>empresas verificadas</span>
+                            </div>
+                            <div>
+                                <strong>+700</strong>
+                                <span>estaciones de alquiler</span>
+                            </div>
+                            <div>
+                                <strong>13</strong>
+                                <span>años de experiencia</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="cd-route-panel">
+                        <div class="cd-route-header">
+                            <span>Ruta sugerida</span>
+                            <strong>Primera experiencia camper</strong>
+                        </div>
+                        <div class="cd-map-window">
+                            <div class="cd-map-line"></div>
+                            <div class="cd-map-pin cd-map-pin-start">
+                                <i class="bi bi-geo-alt-fill"></i>
+                                Madrid
+                            </div>
+                            <div class="cd-map-pin cd-map-pin-mid">
+                                <i class="bi bi-tree-fill"></i>
+                                Sierra
+                            </div>
+                            <div class="cd-map-pin cd-map-pin-end">
+                                <i class="bi bi-water"></i>
+                                Costa
+                            </div>
+                        </div>
+                        <div class="cd-route-steps">
+                            <div>
+                                <span>01</span>
+                                <strong>Elige destino</strong>
+                            </div>
+                            <div>
+                                <span>02</span>
+                                <strong>Compara vehículos</strong>
+                            </div>
+                            <div>
+                                <span>03</span>
+                                <strong>Reserva y viaja</strong>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Camplify -->
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm hover-lift">
-                <div class="card-body p-4">
-                    <div class="mb-3 text-info"><i class="bi bi-people-fill fs-1"></i></div>
-                    <h4 class="fw-bold">Camplify</h4>
-                    <p class="text-muted small">Conecta con una comunidad local para alquilar vehículos únicos directamente a sus dueños.</p>
-                    <ul class="ps-3 small text-muted mb-4">
-                        <li>Experiencia comunitaria</li>
-                        <li>Precios muy competitivos</li>
-                        <li>Atención personalizada</li>
-                    </ul>
-                    <a href="https://www.camplify.es" target="_blank" class="btn btn-outline-primary w-100 rounded-pill">Ver ofertas</a>
+        <section class="cd-section-header">
+            <span>Viajes posibles</span>
+            <h2>Elige el tipo de aventura y salta a comparar</h2>
+        </section>
+
+        <section class="cd-trip-grid mb-5">
+            <a href="{{ camperdays_url }}" target="_blank" rel="sponsored noopener noreferrer" class="cd-trip-card cd-trip-beach">
+                <span>Sol y costa</span>
+                <strong>Rutas junto al Mediterráneo</strong>
+                <i class="bi bi-arrow-up-right"></i>
+            </a>
+            <a href="{{ camperdays_url }}" target="_blank" rel="sponsored noopener noreferrer" class="cd-trip-card cd-trip-mountain">
+                <span>Naturaleza</span>
+                <strong>Montaña, senderos y noches tranquilas</strong>
+                <i class="bi bi-arrow-up-right"></i>
+            </a>
+            <a href="{{ camperdays_url }}" target="_blank" rel="sponsored noopener noreferrer" class="cd-trip-card cd-trip-road">
+                <span>Road trip</span>
+                <strong>Varios destinos, una casa sobre ruedas</strong>
+                <i class="bi bi-arrow-up-right"></i>
+            </a>
+        </section>
+
+        <section class="cd-benefits mb-5">
+            <div class="cd-benefits-copy">
+                <span class="cd-kicker">ANTES DE RESERVAR</span>
+                <h2>Compara con calma y elige el vehículo que encaja con tu viaje</h2>
+                <p>
+                    La elección cambia mucho según la ruta, las fechas, el número de viajeros y el nivel de confort
+                    que necesites. Revisa las condiciones finales en CamperDays antes de confirmar la reserva.
+                </p>
+            </div>
+            <div class="cd-benefits-list">
+                <div>
+                    <i class="bi bi-check2-circle"></i>
+                    <span>Compara vehículos disponibles, precios aproximados, equipamiento y condiciones de alquiler.</span>
+                </div>
+                <div>
+                    <i class="bi bi-check2-circle"></i>
+                    <span>Filtra según el tipo de escapada: pareja, familia, mascota, costa, montaña o road trip.</span>
+                </div>
+                <div>
+                    <i class="bi bi-check2-circle"></i>
+                    <span>Lee bien franquicia, política de cancelación, kilómetros incluidos y lugar de recogida.</span>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <div class="mt-5 text-center p-4 bg-light rounded-4">
-        <p class="mb-0 text-muted fst-italic">
-            * Los enlaces proporcionados son de afiliación. Al reservar a través de ellos, apoyas a Caravaning Project sin coste adicional para ti.
+        <section class="cd-final-cta">
+            <div>
+                <span>Listo para comparar</span>
+                <h2>Busca disponibilidad en CamperDays</h2>
+                <p>Consulta destinos, fechas, condiciones y vehículos directamente en la plataforma.</p>
+            </div>
+            <a href="{{ camperdays_url }}" target="_blank" rel="sponsored noopener noreferrer" class="cd-final-button">
+                Ir a CamperDays
+                <i class="bi bi-box-arrow-up-right"></i>
+            </a>
+        </section>
+
+        <p class="cd-affiliate-note">
+            Algunos enlaces pueden ser de afiliado. Si reservas a través de ellos, Caravaning Project puede recibir
+            una comisión sin coste adicional para ti.
         </p>
     </div>
 </div>
 
 <style>
-    .hover-lift {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    .external-rentals-page {
+        --cd-ink: #18212f;
+        --cd-muted: #647083;
+        --cd-orange: #ff5a1f;
+        --cd-orange-dark: #dc3f0d;
+        --cd-teal: #0d746f;
+        --cd-sky: #dbeafe;
+        --cd-paper: #fffaf3;
+        color: var(--cd-ink);
+        background:
+            linear-gradient(180deg, #fffaf3 0%, #ffffff 44%, #f4f8fb 100%);
+        margin-top: -1rem;
     }
-    .hover-lift:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
+
+    .cd-hero {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(24, 33, 47, 0.08);
+        border-radius: 8px;
+        background:
+            linear-gradient(120deg, rgba(255, 250, 243, 0.98) 0%, rgba(255, 255, 255, 0.96) 48%, rgba(219, 234, 254, 0.72) 100%),
+            url("https://images.unsplash.com/photo-1533577116850-9cc66cad8a9b?auto=format&fit=crop&q=80&w=1600");
+        background-position: center;
+        background-size: cover;
+        box-shadow: 0 22px 70px rgba(30, 43, 63, 0.12);
+        padding: 2rem;
     }
-    .bg-primary-subtle {
-        background-color: #e7f1ff !important;
+
+    .cd-hero-copy {
+        max-width: 760px;
     }
+
+    .cd-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        color: var(--cd-orange-dark);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
+
+    .cd-kicker::before {
+        content: "";
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--cd-orange);
+    }
+
+    .cd-hero h1 {
+        max-width: 720px;
+        font-size: 4rem;
+        line-height: 1.02;
+        font-weight: 850;
+        letter-spacing: 0;
+        margin-bottom: 1.25rem;
+    }
+
+    .cd-hero p {
+        max-width: 650px;
+        color: var(--cd-muted);
+        font-size: 1.08rem;
+        line-height: 1.75;
+        margin-bottom: 1.5rem;
+    }
+
+    .cd-search-box {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 0.75rem;
+        align-items: stretch;
+        max-width: 850px;
+        border: 1px solid rgba(24, 33, 47, 0.1);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.94);
+        padding: 0.65rem;
+        box-shadow: 0 18px 45px rgba(30, 43, 63, 0.11);
+    }
+
+    .cd-search-field {
+        min-width: 0;
+        border-right: 1px solid rgba(24, 33, 47, 0.08);
+        padding: 0.65rem 0.85rem;
+    }
+
+    .cd-search-field span,
+    .cd-route-header span,
+    .cd-trip-card span,
+    .cd-section-header span,
+    .cd-final-cta span {
+        display: block;
+        color: #7a8493;
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0;
+        text-transform: uppercase;
+    }
+
+    .cd-search-field strong {
+        display: block;
+        margin-top: 0.2rem;
+        color: var(--cd-ink);
+        font-size: 1rem;
+    }
+
+    .cd-search-submit,
+    .cd-final-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+        border: 0;
+        border-radius: 8px;
+        background: var(--cd-orange);
+        color: #fff;
+        font-weight: 800;
+        text-decoration: none;
+        padding: 0.95rem 1.15rem;
+        white-space: nowrap;
+        transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cd-search-submit:hover,
+    .cd-final-button:hover {
+        background: var(--cd-orange-dark);
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 16px 28px rgba(220, 63, 13, 0.22);
+    }
+
+    .cd-trust-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+        max-width: 720px;
+        margin-top: 1.5rem;
+    }
+
+    .cd-trust-row div {
+        border-left: 3px solid var(--cd-orange);
+        background: rgba(255, 255, 255, 0.72);
+        border-radius: 8px;
+        padding: 0.8rem 1rem;
+    }
+
+    .cd-trust-row strong {
+        display: block;
+        color: var(--cd-ink);
+        font-size: 1.45rem;
+        line-height: 1;
+    }
+
+    .cd-trust-row span {
+        display: block;
+        color: var(--cd-muted);
+        font-size: 0.88rem;
+        margin-top: 0.35rem;
+    }
+
+    .cd-route-panel {
+        border: 1px solid rgba(24, 33, 47, 0.12);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 24px 60px rgba(24, 33, 47, 0.16);
+        overflow: hidden;
+    }
+
+    .cd-route-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        border-bottom: 1px solid rgba(24, 33, 47, 0.08);
+        padding: 1.1rem 1.2rem;
+    }
+
+    .cd-route-header strong {
+        color: var(--cd-teal);
+        font-size: 0.95rem;
+    }
+
+    .cd-map-window {
+        position: relative;
+        min-height: 330px;
+        background:
+            linear-gradient(180deg, rgba(13, 116, 111, 0.04), rgba(255, 90, 31, 0.08)),
+            url("https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&q=80&w=1200");
+        background-position: center;
+        background-size: cover;
+    }
+
+    .cd-map-window::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(24, 33, 47, 0.28));
+    }
+
+    .cd-map-line {
+        position: absolute;
+        left: 20%;
+        top: 58%;
+        z-index: 2;
+        width: 58%;
+        height: 3px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.85);
+        transform: rotate(-15deg);
+    }
+
+    .cd-map-pin {
+        position: absolute;
+        z-index: 3;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        border-radius: 999px;
+        background: #fff;
+        color: var(--cd-ink);
+        font-size: 0.82rem;
+        font-weight: 800;
+        padding: 0.55rem 0.75rem;
+        box-shadow: 0 12px 28px rgba(24, 33, 47, 0.2);
+    }
+
+    .cd-map-pin i {
+        color: var(--cd-orange);
+    }
+
+    .cd-map-pin-start {
+        left: 12%;
+        bottom: 24%;
+    }
+
+    .cd-map-pin-mid {
+        left: 43%;
+        top: 31%;
+    }
+
+    .cd-map-pin-end {
+        right: 10%;
+        bottom: 36%;
+    }
+
+    .cd-route-steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+    }
+
+    .cd-route-steps div {
+        border-right: 1px solid rgba(24, 33, 47, 0.08);
+        padding: 1rem;
+    }
+
+    .cd-route-steps div:last-child {
+        border-right: 0;
+    }
+
+    .cd-route-steps span {
+        display: block;
+        color: var(--cd-orange);
+        font-size: 0.8rem;
+        font-weight: 900;
+        margin-bottom: 0.25rem;
+    }
+
+    .cd-route-steps strong {
+        display: block;
+        font-size: 0.9rem;
+        line-height: 1.25;
+    }
+
+    .cd-section-header {
+        max-width: 760px;
+        margin-bottom: 1.25rem;
+    }
+
+    .cd-section-header h2 {
+        font-size: 2.35rem;
+        font-weight: 850;
+        letter-spacing: 0;
+        margin: 0.35rem 0 0;
+    }
+
+    .cd-trip-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+    }
+
+    .cd-trip-card {
+        position: relative;
+        min-height: 260px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        overflow: hidden;
+        border-radius: 8px;
+        color: #fff;
+        text-decoration: none;
+        padding: 1.25rem;
+        background-position: center;
+        background-size: cover;
+        isolation: isolate;
+    }
+
+    .cd-trip-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: linear-gradient(180deg, rgba(24, 33, 47, 0.08) 0%, rgba(24, 33, 47, 0.72) 100%);
+    }
+
+    .cd-trip-card strong {
+        max-width: 320px;
+        font-size: 1.35rem;
+        line-height: 1.15;
+        margin-top: 0.35rem;
+    }
+
+    .cd-trip-card i {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        color: #fff;
+    }
+
+    .cd-trip-card:hover {
+        color: #fff;
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px rgba(24, 33, 47, 0.18);
+    }
+
+    .cd-trip-beach {
+        background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=900");
+    }
+
+    .cd-trip-mountain {
+        background-image: url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&q=80&w=900");
+    }
+
+    .cd-trip-road {
+        background-image: url("https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&q=80&w=900");
+    }
+
+    .cd-benefits {
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+        gap: 2rem;
+        align-items: center;
+        border: 1px solid rgba(24, 33, 47, 0.08);
+        border-radius: 8px;
+        background: #fff;
+        padding: 2rem;
+        box-shadow: 0 18px 50px rgba(24, 33, 47, 0.08);
+    }
+
+    .cd-benefits-copy h2 {
+        max-width: 620px;
+        font-size: 2.25rem;
+        font-weight: 850;
+        letter-spacing: 0;
+        margin-bottom: 1rem;
+    }
+
+    .cd-benefits-copy p {
+        color: var(--cd-muted);
+        line-height: 1.75;
+        margin-bottom: 0;
+    }
+
+    .cd-benefits-list {
+        display: grid;
+        gap: 0.8rem;
+    }
+
+    .cd-benefits-list div {
+        display: flex;
+        gap: 0.8rem;
+        align-items: flex-start;
+        border: 1px solid rgba(24, 33, 47, 0.08);
+        border-radius: 8px;
+        background: #f8fbfd;
+        padding: 1rem;
+    }
+
+    .cd-benefits-list i {
+        color: var(--cd-teal);
+        font-size: 1.25rem;
+        line-height: 1.25;
+    }
+
+    .cd-benefits-list span {
+        color: #334155;
+        line-height: 1.55;
+    }
+
+    .cd-final-cta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.25rem;
+        border-radius: 8px;
+        background: var(--cd-ink);
+        color: #fff;
+        padding: 1.5rem;
+    }
+
+    .cd-final-cta h2 {
+        font-size: 2rem;
+        font-weight: 850;
+        margin: 0.25rem 0;
+    }
+
+    .cd-final-cta p {
+        color: rgba(255, 255, 255, 0.76);
+        margin: 0;
+    }
+
+    .cd-final-button {
+        flex: 0 0 auto;
+    }
+
+    .cd-affiliate-note {
+        max-width: 760px;
+        color: var(--cd-muted);
+        font-size: 0.9rem;
+        line-height: 1.6;
+        text-align: center;
+        margin: 1rem auto 0;
+    }
+
     .ll-back-btn-mobile {
         display: inline-flex;
         align-items: center;
@@ -141,14 +628,13 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         transition: all 0.2s ease;
     }
+
     .ll-back-btn-mobile:hover {
         background: #fff;
         transform: scale(1.05);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
-    .ll-back-btn-mobile:active {
-        transform: scale(0.95);
-    }
+
     .ll-page-icon-mobile {
         display: flex;
         align-items: center;
@@ -156,15 +642,87 @@
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        background: rgba(34, 197, 94, 0.1);
-        color: #16a34a;
+        background: rgba(255, 90, 31, 0.1);
+        color: var(--cd-orange);
         font-size: 20px;
     }
-    @media (max-width: 768px) {
-        .text-center.mb-5 {
-            padding-left: 1rem;
-            padding-right: 1rem;
+
+    @media (max-width: 991.98px) {
+        .cd-hero {
+            padding: 1.25rem;
+        }
+
+        .cd-hero h1 {
+            font-size: 3rem;
+        }
+
+        .cd-section-header h2,
+        .cd-benefits-copy h2 {
+            font-size: 2rem;
+        }
+
+        .cd-final-cta h2 {
+            font-size: 1.8rem;
+        }
+
+        .cd-search-box,
+        .cd-benefits,
+        .cd-final-cta {
+            grid-template-columns: 1fr;
+        }
+
+        .cd-search-box {
+            display: grid;
+        }
+
+        .cd-search-field {
+            border-right: 0;
+            border-bottom: 1px solid rgba(24, 33, 47, 0.08);
+        }
+
+        .cd-trust-row,
+        .cd-trip-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .cd-final-cta {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .cd-final-button,
+        .cd-search-submit {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 575.98px) {
+        .cd-hero h1 {
+            font-size: 2.35rem;
+        }
+
+        .cd-section-header h2,
+        .cd-benefits-copy h2 {
+            font-size: 1.7rem;
+        }
+
+        .cd-final-cta h2 {
+            font-size: 1.55rem;
+        }
+
+        .cd-route-steps {
+            grid-template-columns: 1fr;
+        }
+
+        .cd-route-steps div {
+            border-right: 0;
+            border-bottom: 1px solid rgba(24, 33, 47, 0.08);
+        }
+
+        .cd-route-steps div:last-child {
+            border-bottom: 0;
         }
     }
 </style>
+{% endwith %}
 {% endblock %}
