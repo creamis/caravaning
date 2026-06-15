@@ -18,7 +18,9 @@
     <meta name="keywords" content="{% block meta_keywords %}caravanas, autocaravanas, campers, caravaning, alquiler caravanas, venta caravanas, destinos caravaning, comunidad caravaning{% endblock %}">
     <meta name="author" content="Caravaning Project">
     <meta name="robots" content="{% block meta_robots %}index, follow{% endblock %}">
-    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    {% block canonical_url %}
+    <link rel="canonical" href="https://www.caravaning-project.online{{ request.path }}">
+    {% endblock %}
     
     <style>
         /* Fix global para evitar scroll horizontal en cualquier circunstancia */
@@ -31,7 +33,7 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:url" content="{% block og_url %}https://www.caravaning-project.online{{ request.path }}{% endblock %}">
     <meta property="og:title" content="{% block og_title %}Caravaning Project{% endblock %}">
     <meta property="og:description" content="{% block og_description %}Tu plataforma de confianza para la comunidad de caravaning.{% endblock %}">
     <meta property="og:image" content="{% block og_image %}{% static 'images/vanlife1.png' %}{% endblock %}">
