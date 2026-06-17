@@ -7,11 +7,13 @@ from django.contrib.sitemaps.views import sitemap
 from django.contrib.auth import views as auth_views # Importar las vistas de autenticación de Django
 from . import views
 from .sitemaps import sitemaps
+from pages.views import CampingView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Rutas de las aplicaciones
     path('', views.index, name='home'),
+    path('camping/', CampingView.as_view(), name='camping'),
     path('blog/', include('blog.urls', namespace='blog')),
     path('listings/', include('listings.urls', namespace='listings')),
     path('users/', include('users.urls', namespace='users')),

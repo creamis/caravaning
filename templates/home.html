@@ -3,11 +3,11 @@
 
 {% load humanize %} {# Necesario para el filtro intcomma #}
 {% block title %}Caravaning Project - Compra, Vende y Alquila Caravanas | Comunidad Caravaning{% endblock %}
-{% block meta_description %}Encuentra tu próxima aventura en caravaning. Compra y vende caravanas, autocaravanas y campers. Alquila con CamperDays. Descubre destinos increíbles y únete a la comunidad.{% endblock %}
-{% block meta_keywords %}caravanas, autocaravanas, campers, caravaning, venta caravanas, alquiler caravanas, comprar caravana, vender caravana, destinos caravaning, comunidad caravaning, viajes en caravana{% endblock %}
+{% block meta_description %}Encuentra tu próxima aventura en caravaning. Compra y vende caravanas, autocaravanas y campers. Descubre campings, destinos, alquileres y consejos de viaje.{% endblock %}
+{% block meta_keywords %}caravanas, autocaravanas, campers, caravaning, camping, campings, campings autocaravanas, venta caravanas, alquiler caravanas, comprar caravana, vender caravana, destinos caravaning, comunidad caravaning, viajes en caravana{% endblock %}
 {% block og_type %}website{% endblock %}
 {% block og_title %}Caravaning Project - Tu Comunidad de Caravaning{% endblock %}
-{% block og_description %}La mayor plataforma de caravaning: compra, vende, alquila caravanas y descubre los mejores destinos para tu aventura.{% endblock %}
+{% block og_description %}La mayor plataforma de caravaning: compra, vende, alquila caravanas y descubre campings, destinos y consejos para tu aventura.{% endblock %}
 
 {% block content %}
 <style>
@@ -81,7 +81,8 @@
             background: rgba(255,255,255,0.97);
             border-radius: 13px;
             overflow: hidden;
-            max-width: 460px;
+            max-width: 660px;
+            min-height: 64px;
             margin: 0 auto 18px;
             text-decoration: none;
             box-shadow: 0 8px 24px rgba(0,0,0,0.2);
@@ -102,15 +103,24 @@
 
         .dh-hero-search-text {
             flex: 1;
-            padding: 14px 4px;
+            min-width: 0;
+            padding: 14px 16px 14px 4px;
             font-size: 14px;
             color: #9ca3af;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .dh-hero-search-btn {
+            align-self: stretch;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
             background: #16a34a;
             color: white;
-            padding: 14px 22px;
+            padding: 0 34px;
             font-size: 14px;
             font-weight: 600;
         }
@@ -296,6 +306,10 @@
             background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 55%, #1e3a8a 100%);
         }
 
+        .dh-banner.camping {
+            background: linear-gradient(135deg, #0f766e 0%, #0f5f59 55%, #134e4a 100%);
+        }
+
         .dh-banner::before {
             content: '';
             position: absolute;
@@ -427,6 +441,7 @@
 
         .dh-banner.venta .dh-banner-btn   { color: #15803d; }
         .dh-banner.alquiler .dh-banner-btn { color: #1e40af; }
+        .dh-banner.camping .dh-banner-btn  { color: #0f766e; }
 
         .dh-banner-note {
             font-size: 11px;
@@ -862,14 +877,14 @@
                     <p class="dh-hero-eyebrow">Bienvenido a Caravaning Project</p>
                     <h1 class="dh-hero-title">Caravaning Project</h1>
                     <p class="dh-hero-sub">
-                        Descubre, vende, compra, alquila y vive la experiencia de viajar en autocaravana,caravana o camper.<br>
+                        Descubre, vende, compra, alquila y vive la experiencia de viajar en autocaravana, caravana, camper o camping.<br>
                         Tu aventura comienza aquí.
                     </p>
                     <a href="{% url 'listings:listing_list' %}?listing_type=SALE" class="dh-hero-search" aria-label="Buscar anuncios">
                         <span class="dh-hero-search-icon">
                             <i class="bi bi-search"></i>
                         </span>
-                        <span class="dh-hero-search-text">Buscar caravanas, destinos, accesorios…</span>
+                        <span class="dh-hero-search-text">Buscar caravanas, campings, destinos, accesorios…</span>
                         <span class="dh-hero-search-btn">Buscar</span>
                     </a>
                     <div class="dh-hero-ctas">
@@ -924,7 +939,7 @@
                         <div class="dh-step-num">3</div>
                         <div class="dh-step-icon">🗺️</div>
                         <div class="dh-step-title">¡A la aventura!</div>
-                        <div class="dh-step-desc">Descubre los mejores destinos para caravaning y empieza a planificar tu próxima ruta.</div>
+                        <div class="dh-step-desc">Descubre campings, destinos y consejos para caravaning antes de empezar tu próxima ruta.</div>
                     </div>
                 </div>
             </div>
@@ -975,6 +990,25 @@
                     </div>
                 </div>
 
+                <!-- Campings -->
+                <div class="dh-banner camping">
+                    <div class="dh-banner-left">
+                        <p class="dh-banner-eyebrow">Campings y parcelas</p>
+                        <h3 class="dh-banner-title">Prepara tu estancia en camping</h3>
+                        <p class="dh-banner-desc">Consulta criterios para elegir campings adaptados a autocaravanas, campers y caravanas: accesos, parcelas, servicios y planes cercanos.</p>
+                        <div class="dh-banner-badges">
+                            <span class="dh-banner-badge">Parcelas</span>
+                            <span class="dh-banner-badge">Bungalows</span>
+                            <span class="dh-banner-badge">Servicios camper</span>
+                        </div>
+                    </div>
+                    <div class="dh-banner-right">
+                        <div class="dh-banner-icon"><i class="bi bi-tree"></i></div>
+                        <a href="{% url 'camping' %}" class="dh-banner-btn">Ver apartado camping</a>
+                        <p class="dh-banner-note">Guías y destinos para planificar mejor</p>
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -1013,7 +1047,7 @@
             <!-- Search bar -->
             <a href="{% url 'listings:listing_list' %}?listing_type=SALE" class="m-search" aria-label="Buscar anuncios">
                 <i class="bi bi-search" style="font-size:15px;color:#9ca3af;"></i>
-                <span>Buscar caravanas, destinos…</span>
+                <span>Buscar caravanas, campings, destinos…</span>
             </a>
 
             <!-- Categories -->
@@ -1034,10 +1068,20 @@
                     <p class="m-cat-title">Destinos</p>
                     <p class="m-cat-desc">Lugares increíbles</p>
                 </a>
+                <a href="{% url 'camping' %}" class="m-cat-card" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=400&h=300&fit=crop');">
+                    <div class="m-cat-icon"><i class="bi bi-tree"></i></div>
+                    <p class="m-cat-title">Campings</p>
+                    <p class="m-cat-desc">Parcelas y rutas</p>
+                </a>
                 <a href="{% url 'shop:product_list' %}" class="m-cat-card" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://plus.unsplash.com/premium_photo-1681488262364-8aeb1b6aac56?q=80&w=400&h=300&fit=crop');">
                     <div class="m-cat-icon"><i class="bi bi-bag"></i></div>
                     <p class="m-cat-title">Tienda</p>
                     <p class="m-cat-desc">Accesorios premium</p>
+                </a>
+                <a href="{% url 'blog:post_list' %}" class="m-cat-card" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://plus.unsplash.com/premium_photo-1726862932006-c6e2f8434266?q=80&w=400&h=300&fit=crop');">
+                    <div class="m-cat-icon"><i class="bi bi-journal-text"></i></div>
+                    <p class="m-cat-title">Blog</p>
+                    <p class="m-cat-desc">Guías y noticias</p>
                 </a>
             </div>
 
@@ -1046,6 +1090,9 @@
             <div class="m-quicklinks">
                 <a href="{% url 'blog:post_list' %}" class="m-quicklink blog">
                     <i class="bi bi-journal-text"></i> Blog
+                </a>
+                <a href="{% url 'camping' %}" class="m-quicklink" style="color:#374151;">
+                    <i class="bi bi-tree" style="color:#0f766e;"></i> Campings
                 </a>
                 <a href="{% url 'listings:listing_list' %}?featured=true" class="m-quicklink featured">
                     <i class="bi bi-star"></i> Destacados

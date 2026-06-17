@@ -17,3 +17,6 @@ class CookiesView(TemplateView):
 
 class AffiliatesView(TemplateView):
     template_name = 'pages/affiliates.html'
+
+class CampingView(TemplateView):
+    template_name = 'pages/camping.html'

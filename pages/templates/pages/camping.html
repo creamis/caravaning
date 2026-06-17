@@ -1,0 +1,437 @@
+{% extends "base.html" %}
+
+{% block title %}Campings para autocaravanas, campers y caravanas | Caravaning Project{% endblock %}
+{% block meta_description %}Guías de camping para viajar en autocaravana, camper o caravana: parcelas, bungalows, rutas, servicios útiles y consejos para elegir camping en España.{% endblock %}
+{% block meta_keywords %}campings autocaravanas, camping camper, campings para caravanas, parcelas camping, bungalows camping, rutas camping España, caravaning camping{% endblock %}
+{% block og_type %}website{% endblock %}
+{% block og_title %}Campings y rutas para viajar sobre ruedas{% endblock %}
+{% block og_description %}Encuentra ideas, criterios y recursos para elegir campings, parcelas y destinos adaptados a viajes en autocaravana, camper o caravana.{% endblock %}
+{% block canonical_url %}
+<link rel="canonical" href="https://www.caravaning-project.online/camping/">
+{% endblock %}
+
+{% block content %}
+<style>
+    .camping-page {
+        padding-bottom: 42px;
+    }
+
+    .camping-hero {
+        min-height: 390px;
+        border-radius: 20px;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        background:
+            linear-gradient(90deg, rgba(17,24,39,0.72) 0%, rgba(17,24,39,0.32) 58%, rgba(17,24,39,0.16) 100%),
+            url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;
+        margin-bottom: 30px;
+    }
+
+    .camping-hero-content {
+        max-width: 720px;
+        padding: 46px;
+        color: #ffffff;
+    }
+
+    .camping-eyebrow {
+        font-size: 12px;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: rgba(255,255,255,0.76);
+        margin-bottom: 10px;
+    }
+
+    .camping-title {
+        font-size: 2.55rem;
+        line-height: 1.12;
+        font-weight: 800;
+        margin-bottom: 16px;
+        color: #ffffff;
+        text-shadow: 0 2px 12px rgba(0,0,0,0.35);
+    }
+
+    .camping-lead {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: rgba(255,255,255,0.9);
+        margin-bottom: 22px;
+    }
+
+    .camping-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .camping-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 12px;
+        padding: 12px 18px;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .camping-btn-primary {
+        background: #16a34a;
+        color: #ffffff;
+        box-shadow: 0 8px 22px rgba(22,163,74,0.32);
+    }
+
+    .camping-btn-primary:hover {
+        color: #ffffff;
+        background: #15803d;
+    }
+
+    .camping-btn-secondary {
+        background: rgba(255,255,255,0.16);
+        color: #ffffff;
+        border: 1px solid rgba(255,255,255,0.42);
+        backdrop-filter: blur(10px);
+    }
+
+    .camping-btn-secondary:hover {
+        color: #ffffff;
+        background: rgba(255,255,255,0.24);
+    }
+
+    .camping-section {
+        margin-bottom: 34px;
+    }
+
+    .camping-section-head {
+        max-width: 760px;
+        margin-bottom: 18px;
+    }
+
+    .camping-section-title {
+        font-size: 1.45rem;
+        font-weight: 800;
+        color: #111827;
+        margin-bottom: 8px;
+    }
+
+    .camping-section-copy {
+        color: #6b7280;
+        line-height: 1.72;
+        margin: 0;
+    }
+
+    .camping-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+
+    .camping-panel {
+        background: #ffffff;
+        border: 1px solid rgba(0,0,0,0.07);
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 3px 14px rgba(0,0,0,0.05);
+        height: 100%;
+    }
+
+    .camping-panel-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ecfdf5;
+        color: #15803d;
+        font-size: 22px;
+        margin-bottom: 16px;
+    }
+
+    .camping-panel h2,
+    .camping-panel h3 {
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: #111827;
+        margin-bottom: 10px;
+    }
+
+    .camping-panel p {
+        color: #6b7280;
+        line-height: 1.68;
+        margin-bottom: 0;
+    }
+
+    .camping-feature {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+        gap: 24px;
+        align-items: stretch;
+        background: #ffffff;
+        border: 1px solid rgba(0,0,0,0.07);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 3px 14px rgba(0,0,0,0.05);
+    }
+
+    .camping-feature-copy {
+        padding: 30px;
+    }
+
+    .camping-feature-copy h2 {
+        font-size: 1.45rem;
+        font-weight: 800;
+        margin-bottom: 12px;
+        color: #111827;
+    }
+
+    .camping-feature-copy p {
+        color: #6b7280;
+        line-height: 1.72;
+    }
+
+    .camping-checks {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin: 20px 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .camping-checks li {
+        display: flex;
+        gap: 9px;
+        align-items: flex-start;
+        color: #374151;
+        font-size: 14px;
+        line-height: 1.55;
+    }
+
+    .camping-checks i {
+        color: #16a34a;
+        margin-top: 2px;
+    }
+
+    .camping-feature-image {
+        min-height: 320px;
+        background:
+            linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.18)),
+            url('https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?q=80&w=900&auto=format&fit=crop') center/cover no-repeat;
+    }
+
+    .camping-link-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+    }
+
+    .camping-link {
+        min-height: 150px;
+        border-radius: 16px;
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        text-decoration: none;
+        color: #ffffff;
+        overflow: hidden;
+        position: relative;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .camping-link::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.68) 100%);
+    }
+
+    .camping-link span,
+    .camping-link strong {
+        position: relative;
+    }
+
+    .camping-link strong {
+        font-size: 1rem;
+        margin-bottom: 4px;
+    }
+
+    .camping-link span {
+        color: rgba(255,255,255,0.82);
+        font-size: 13px;
+    }
+
+    .camping-final {
+        background: #0f172a;
+        color: #ffffff;
+        border-radius: 20px;
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+    }
+
+    .camping-final h2 {
+        font-size: 1.35rem;
+        font-weight: 800;
+        margin-bottom: 8px;
+        color: #ffffff;
+    }
+
+    .camping-final p {
+        color: rgba(255,255,255,0.76);
+        margin: 0;
+        line-height: 1.65;
+    }
+
+    @media (max-width: 992px) {
+        .camping-grid,
+        .camping-link-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .camping-feature {
+            grid-template-columns: 1fr;
+        }
+
+        .camping-feature-image {
+            min-height: 240px;
+            order: -1;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .camping-page {
+            padding: 0 0 24px;
+        }
+
+        .camping-hero {
+            border-radius: 0;
+            min-height: 360px;
+            margin-left: -1rem;
+            margin-right: -1rem;
+        }
+
+        .camping-hero-content {
+            padding: 34px 24px;
+        }
+
+        .camping-title {
+            font-size: 2rem;
+        }
+
+        .camping-actions,
+        .camping-final {
+            align-items: stretch;
+            flex-direction: column;
+        }
+
+        .camping-btn {
+            justify-content: center;
+        }
+
+        .camping-checks {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="camping-page">
+    <section class="camping-hero">
+        <div class="camping-hero-content">
+            <p class="camping-eyebrow">Campings, parcelas y rutas</p>
+            <h1 class="camping-title">Campings para viajar en autocaravana, camper o caravana</h1>
+            <p class="camping-lead">Ideas y criterios prácticos para elegir campings con buenos accesos, parcelas cómodas, servicios útiles y planes cerca de la ruta.</p>
+            <div class="camping-actions">
+                <a href="{% url 'destinations:destination_list' %}" class="camping-btn camping-btn-primary">
+                    <i class="bi bi-map"></i>
+                    Ver destinos
+                </a>
+                <a href="{% url 'blog:post_list' %}" class="camping-btn camping-btn-secondary">
+                    <i class="bi bi-journal-text"></i>
+                    Leer guias
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="camping-section">
+        <div class="camping-section-head">
+            <h2 class="camping-section-title">Un apartado pensado para preparar la estancia</h2>
+            <p class="camping-section-copy">Viajar sobre ruedas no termina al aparcar. En Caravaning Project reunimos recomendaciones para valorar campings, planificar etapas y escoger servicios que encajan con familias, parejas, viajeros con mascota y escapadas de fin de semana.</p>
+        </div>
+        <div class="camping-grid">
+            <article class="camping-panel">
+                <div class="camping-panel-icon"><i class="bi bi-signpost-2"></i></div>
+                <h2>Campings bien conectados</h2>
+                <p>Priorizamos accesos sencillos, ubicación cercana a rutas y opciones prácticas para llegar con autocaravana, camper o conjunto coche-caravana.</p>
+            </article>
+            <article class="camping-panel">
+                <div class="camping-panel-icon"><i class="bi bi-plugin"></i></div>
+                <h2>Servicios para viajar comodo</h2>
+                <p>Nos fijamos en electricidad, agua, vaciado, baños, lavandería, sombra, seguridad y servicios que facilitan una estancia tranquila.</p>
+            </article>
+            <article class="camping-panel">
+                <div class="camping-panel-icon"><i class="bi bi-house-heart"></i></div>
+                <h2>Parcelas y bungalows</h2>
+                <p>También damos espacio a alternativas como bungalows, glamping y parcelas para quien combina camping tradicional con viaje en ruta.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="camping-section">
+        <div class="camping-feature">
+            <div class="camping-feature-copy">
+                <h2>Qué miramos antes de recomendar un camping</h2>
+                <p>Un buen camping para caravaning no depende solo del paisaje. Conviene revisar el tipo de parcela, el acceso, las normas de entrada, los servicios para vehículos vivienda y los planes cercanos para no convertir la llegada en una improvisación.</p>
+                <ul class="camping-checks">
+                    <li><i class="bi bi-check-circle-fill"></i> Parcelas niveladas y con espacio de maniobra.</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Tomas eléctricas y puntos de agua claros.</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Servicios de vaciado para aguas grises y negras.</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Acceso razonable para vehiculos largos.</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Opciones cercanas de compra, playa, montaña o rutas.</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Condiciones transparentes para mascotas y temporada alta.</li>
+                </ul>
+            </div>
+            <div class="camping-feature-image" role="img" aria-label="Parcela de camping entre árboles"></div>
+        </div>
+    </section>
+
+    <section class="camping-section">
+        <div class="camping-section-head">
+            <h2 class="camping-section-title">Explora contenido relacionado</h2>
+            <p class="camping-section-copy">Este apartado conecta la parte editorial con destinos, alquileres y equipamiento para que la planificación sea más completa.</p>
+        </div>
+        <div class="camping-link-grid">
+            <a href="{% url 'destinations:destination_list' %}" class="camping-link" style="background-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=800&auto=format&fit=crop');">
+                <strong>Destinos para escapadas</strong>
+                <span>Rutas, áreas y lugares compartidos por la comunidad.</span>
+            </a>
+            <a href="{% url 'listings:external_rentals' %}" class="camping-link" style="background-image: url('https://images.unsplash.com/photo-1515876305430-f06edab8282a?q=80&w=800&auto=format&fit=crop');">
+                <strong>Alquiler para viajar</strong>
+                <span>Compara opciones antes de reservar fechas y ruta.</span>
+            </a>
+            <a href="{% url 'shop:product_list' %}" class="camping-link" style="background-image: url('https://images.unsplash.com/photo-1504851149312-7a075b496cc7?q=80&w=800&auto=format&fit=crop');">
+                <strong>Equipamiento de camping</strong>
+                <span>Cocina, descanso, energía, confort y accesorios útiles.</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="camping-final">
+        <div>
+            <h2>Más campings y guías en camino</h2>
+            <p>Seguiremos ampliando esta sección con rutas, comparativas y consejos para elegir camping en España con criterios prácticos de caravaning.</p>
+        </div>
+        <a href="{% url 'pages:contact' %}" class="camping-btn camping-btn-primary">
+            <i class="bi bi-envelope"></i>
+            Sugerir camping
+        </a>
+    </section>
+</div>
+{% endblock %}

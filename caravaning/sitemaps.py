@@ -13,6 +13,7 @@ class StaticViewSitemap(Sitemap):
     def items(self):
         return [
             "home",
+            "camping",
             "blog:post_list",
             "listings:listing_list",
             "listings:external_rentals",
