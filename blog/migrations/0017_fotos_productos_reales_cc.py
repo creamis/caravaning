@@ -34,10 +34,10 @@ def replace_images(apps, schema_editor):
     if not post:
         return
 
-    # Reemplaza, en orden, las 20 imágenes que genera la migración 0016.
+    # Reemplaza las imágenes del contenido, en orden, sin asumir campos que no existen.
     content = post.content
     cursor = 0
-    for name, new_url in REAL_PRODUCT_IMAGES:
+    for _name, new_url in REAL_PRODUCT_IMAGES:
         img_start = content.find('<img src="', cursor)
         if img_start == -1:
             break
@@ -51,12 +51,12 @@ def replace_images(apps, schema_editor):
     post.content = content
     post.save(update_fields=["content", "updated_at"])
 
-    # La galería queda formada únicamente por fotos reales con licencia reutilizable.
+    # PostImage solo admite post, image e image_url en el modelo actual.
     PostImage.objects.filter(post=post).delete()
     cover = "https://commons.wikimedia.org/wiki/Special:Redirect/file/Volkswagen-Combi-T2-Adventure-Awaits-byRundvald.jpg"
-    PostImage.objects.create(post=post, image_url=cover, alt_text="Volkswagen T2 camper en un entorno de camping")
-    for name, url in REAL_PRODUCT_IMAGES:
-        PostImage.objects.get_or_create(post=post, image_url=url, defaults={"alt_text": name})
+    PostImage.objects.create(post=post, image_url=cover)
+    for _name, url in REAL_PRODUCT_IMAGES:
+        PostImage.objects.get_or_create(post=post, image_url=url)
 
     credits = """
 <hr>
