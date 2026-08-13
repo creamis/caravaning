@@ -9,11 +9,11 @@ def create_post(apps, schema_editor):
     author = User.objects.order_by("id").first()
     if not author:
         return
+
     post, created = Post.objects.get_or_create(
         slug=SLUG,
         defaults={
             "title": "Cómo organizar una autocaravana con poco espacio",
-            "excerpt": "Ideas prácticas para aprovechar cada rincón de una camper o autocaravana sin convertir el habitáculo en un rompecabezas.",
             "content": """<h2>Cómo organizar una autocaravana con poco espacio</h2>
 <p>En una camper o autocaravana cada centímetro cuenta. Una buena organización permite viajar con lo necesario sin llenar el habitáculo de objetos y facilita encontrar todo cuando estamos de ruta.</p>
 <h3>1. Aprovecha los espacios verticales</h3><p>Puertas, paredes y laterales de armarios pueden convertirse en zonas de almacenamiento. Los organizadores colgantes y pequeños ganchos permiten guardar objetos de uso frecuente sin ocupar las zonas de paso.</p>
