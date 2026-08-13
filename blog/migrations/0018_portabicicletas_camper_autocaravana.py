@@ -18,7 +18,7 @@ PRODUCTS = [
         "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/1977_Toyota_Truck_with_Chinook_camper%2C_front_right%2C_4-11-2021.jpg",
         "alt": "Camper con portabicicletas trasero",
         "type": "trasero para furgonetas camper",
-        "text": "El Thule Elite Van XT está pensado para determinadas furgonetas y se instala en las puertas traseras sin necesidad de perforarlas en las configuraciones compatibles. Es especialmente interesante si quieres transportar dos bicicletas y conservar un acceso cómodo a las puertas. Thule indica una capacidad máxima de 35 kg en determinadas versiones, pero la compatibilidad depende del vehículo.",
+        "text": "El Thule Elite Van XT está pensado para determinadas furgonetas y se instala en las puertas traseras sin necesidad de perforarlas en las configuraciones compatibles. Es especialmente interesante si quieres transportar dos bicicletas y conservar un acceso cómodo a las puertas. La capacidad máxima depende de la versión y del vehículo.",
     },
     {
         "name": "Peruzzo Pure Instinct para 2 bicicletas",
@@ -34,7 +34,7 @@ PRODUCTS = [
         "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Atera_Strada_DL2_Fahrradtr%C3%A4ger.jpg",
         "alt": "Portabicicletas Atera Strada de enganche",
         "type": "de bola de remolque",
-        "text": "Atera Strada es otra familia de portabicicletas de enganche conocida por sus soluciones para dos o más bicicletas. Puede ser una alternativa interesante para quienes prefieren una plataforma baja y cómoda para cargar las bicicletas. Comprueba siempre el número de bicicletas, el peso máximo y las dimensiones permitidas.",
+        "text": "Atera Strada es otra familia de portabicicletas de enganche conocida por sus soluciones para dos o más bicicletas. Puede resultar interesante para quienes prefieren una plataforma baja y cómoda para cargar las bicicletas. Comprueba siempre el número de bicicletas, el peso máximo y las dimensiones permitidas.",
     },
     {
         "name": "Menabo Mistral para transporte trasero",
@@ -77,14 +77,14 @@ def build_post(apps, schema_editor):
     post.status = "PUBLISHED"
 
     cover = "https://commons.wikimedia.org/wiki/Special:Redirect/file/1977_Toyota_Truck_with_Chinook_camper%2C_front_right%2C_4-11-2021.jpg"
-    body = f'''
+    body = """
 <p><strong>Si viajas en camper o autocaravana y también quieres llevar bicicletas, el portabicicletas deja de ser un accesorio secundario y se convierte en parte del equipamiento del viaje.</strong> El problema es que no todos los sistemas sirven para todos los vehículos: hay modelos para pared trasera, puertas de furgoneta, bola de remolque y otras configuraciones específicas.</p>
 <p>En esta guía hemos reunido cinco opciones y familias de producto que merece la pena mirar en Amazon España. No nos fijamos únicamente en el precio: también importa la compatibilidad, el peso de las bicicletas, el acceso a las puertas y la facilidad de carga.</p>
 <div style="margin:24px 0;padding:18px;border-radius:16px;background:#f5f5f5;"><strong>🚲 Antes de comprar:</strong> comprueba siempre el modelo exacto de tu camper/autocaravana, el número y peso de las bicicletas, la carga máxima del sistema y las instrucciones del fabricante. En bicicletas eléctricas, el peso de cada unidad es especialmente importante.</div>
 <h2>¿Qué tipo de portabicicletas necesitas?</h2>
 <p>La primera decisión es el sistema de montaje. En una autocaravana suele ser habitual el montaje trasero específico para vehículos recreativos. En una furgoneta camper pueden existir soluciones para puertas traseras. Si tienes una bola de remolque homologada, una plataforma de enganche puede ser una opción muy cómoda.</p>
 <p>También conviene pensar en cómo utilizas las bicicletas. Dos bicicletas ligeras para excursiones ocasionales no plantean las mismas exigencias que dos bicicletas eléctricas pesadas utilizadas durante todo el año.</p>
-'''
+"""
 
     for index, product in enumerate(PRODUCTS, start=1):
         link = amazon_url(product["query"])
@@ -109,17 +109,13 @@ def build_post(apps, schema_editor):
 <p>Si transportas e-bikes, revisa especialmente el peso. También es recomendable retirar las baterías durante el transporte cuando el fabricante de la bicicleta y del portabicicletas así lo indiquen.</p>
 <h3>5. Matrícula, luces y carga trasera</h3>
 <p>La instalación puede afectar a la visibilidad de la matrícula y de las luces. Si el sistema las tapa, puede ser necesario utilizar una solución homologada de repetición de matrícula y alumbrado. Consulta siempre la normativa aplicable y las instrucciones del fabricante antes de circular.</p>
-
 <h2>¿Portabicicletas de pared o de bola?</h2>
 <p>Para una autocaravana con puntos de fijación compatibles, un sistema trasero específico puede integrarse muy bien con el vehículo. En cambio, una plataforma de bola suele ser muy cómoda para cargar las bicicletas a una altura más baja y puede ser especialmente interesante para bicicletas pesadas.</p>
 <p>En una furgoneta camper, los sistemas específicos para puertas traseras pueden ser una solución limpia, pero la compatibilidad con el modelo exacto de furgoneta es fundamental.</p>
-
 <h2>Nuestra recomendación</h2>
 <p>Si ya tienes una autocaravana preparada para un sistema trasero, empezaría buscando una solución específica de fabricantes especializados como Fiamma. Si tienes una furgoneta camper compatible con un sistema de puerta trasera, merece la pena mirar opciones como Thule. Y si dispones de bola de remolque homologada, compararía plataformas de enganche antes de decidirme.</p>
 <p>La mejor compra no es necesariamente el portabicicletas más barato: es el que encaja correctamente con tu vehículo, soporta tus bicicletas y te permite utilizarlas sin convertir cada parada en una operación de ingeniería.</p>
-
 <div style="margin:30px 0;padding:16px;border:1px solid #ddd;border-radius:12px;"><strong>Nota de afiliación:</strong> Algunos enlaces de este artículo son enlaces de afiliado. Si realizas una compra después de acceder a ellos, Caravaning Project puede recibir una comisión sin que esto suponga un coste adicional para ti. Los precios y la disponibilidad pueden cambiar.</div>
-
 <h2>Preguntas frecuentes</h2>
 <h3>¿Puedo llevar bicicletas eléctricas en cualquier portabicicletas?</h3>
 <p>No. Debes comprobar el peso máximo permitido por bicicleta y la capacidad total del sistema. Algunos modelos están preparados para e-bikes y otros no.</p>
@@ -129,19 +125,16 @@ def build_post(apps, schema_editor):
 <p>Depende de las instrucciones de la bicicleta, del fabricante del portabicicletas y de las condiciones del transporte. Comprueba siempre las recomendaciones de ambos fabricantes.</p>
 <h3>¿Puedo abrir las puertas con las bicicletas montadas?</h3>
 <p>Depende completamente del sistema y del vehículo. Algunas soluciones están diseñadas precisamente para mantener el acceso, mientras que otras requieren retirar o bascular el portabicicletas.</p>
-
 <h2>Conclusión</h2>
 <p>Llevar las bicicletas contigo cambia por completo las posibilidades de una escapada en camper o autocaravana. Una ruta junto al mar, una vía verde o una visita a un pueblo cercano pueden estar a solo unos kilómetros del camping.</p>
 <p>Antes de comprar, mide, pesa y comprueba la compatibilidad. Después, elige el sistema que mejor encaje con tu forma de viajar.</p>
-
 <hr>
 <h3>📷 Créditos de las fotografías</h3>
-<p>Las imágenes utilizadas en esta guía proceden de Wikimedia Commons y se emplean como fotografías ilustrativas del tipo de sistema descrito. La fotografía de la camper con portabicicletas es una imagen de dominio público; otras fotografías proceden de Wikimedia Commons bajo licencias Creative Commons. Las imágenes no implican que el producto mostrado sea exactamente el producto enlazado en Amazon.</p>
+<p>Las imágenes utilizadas en esta guía proceden de Wikimedia Commons y se emplean como fotografías ilustrativas del tipo de sistema descrito. Las imágenes no implican que el producto mostrado sea exactamente el producto enlazado en Amazon.</p>
 '''
 
     post.content = body
     post.save()
-
     PostImage.objects.filter(post=post).delete()
     PostImage.objects.create(post=post, image_url=cover)
     for product in PRODUCTS:
@@ -153,5 +146,8 @@ def reverse_build_post(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-    dependencies = [("blog", "0017_fotos_productos_reales_cc")]
+    # This migration was originally numbered 0018, but the repository already
+    # contains later blog migrations through 0030. Pointing to 0030 removes the
+    # parallel migration branch and lets Django build one linear graph.
+    dependencies = [("blog", "0030_imagenes_estacionales_caravaning")]
     operations = [migrations.RunPython(build_post, reverse_build_post)]
