@@ -7,16 +7,16 @@ PRODUCTS = [
     {
         "name": "Fiamma Carry-Bike para autocaravana y camper",
         "query": "Fiamma Carry-Bike autocaravana camper",
-        "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Fahrradtr%C3%A4ger.JPG",
-        "alt": "Portabicicletas montado en un vehículo recreativo",
+        "image": "https://m.media-amazon.com/images/I/61OwXeRNDRL._AC_SL1500_.jpg",
+        "alt": "Fiamma Carry-Bike Pro para autocaravana y camper",
         "type": "trasero para autocaravana o camper",
         "text": "Los sistemas Carry-Bike de Fiamma son una referencia habitual en el mundo del caravaning. La clave es elegir la versión compatible con la pared trasera y la distribución de tu vehículo. Antes de comprar, comprueba el modelo exacto, la distancia entre puntos de fijación y la carga máxima admitida.",
     },
     {
         "name": "Thule Elite Van XT",
         "query": "Thule Elite Van XT portabicicletas camper",
-        "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/1977_Toyota_Truck_with_Chinook_camper%2C_front_right%2C_4-11-2021.jpg",
-        "alt": "Camper con portabicicletas trasero",
+        "image": "https://shop.freizeit-wittke.eu/media/image/product/198266/lg/thule-fahrradtraeger-elite-van-xt-fuer-fiat-ducato-ab-bj-2007-schwarz.jpg",
+        "alt": "Thule Elite Van XT instalado en una furgoneta camper",
         "type": "trasero para furgonetas camper",
         "text": "El Thule Elite Van XT está pensado para determinadas furgonetas y se instala en las puertas traseras sin necesidad de perforarlas en las configuraciones compatibles. Es especialmente interesante si quieres transportar dos bicicletas y conservar un acceso cómodo a las puertas. La capacidad máxima depende de la versión y del vehículo.",
     },
@@ -76,7 +76,7 @@ def build_post(apps, schema_editor):
     post.meta_description = "Guía para elegir portabicicletas para camper y autocaravana. Comparamos opciones traseras, de bola y para furgoneta y explicamos qué debes comprobar antes de comprar."
     post.status = "PUBLISHED"
 
-    cover = "https://commons.wikimedia.org/wiki/Special:Redirect/file/1977_Toyota_Truck_with_Chinook_camper%2C_front_right%2C_4-11-2021.jpg"
+    cover = "https://shop.freizeit-wittke.eu/media/image/product/198266/lg/thule-fahrradtraeger-elite-van-xt-fuer-fiat-ducato-ab-bj-2007-schwarz.jpg"
     body = """
 <p><strong>Si viajas en camper o autocaravana y también quieres llevar bicicletas, el portabicicletas deja de ser un accesorio secundario y se convierte en parte del equipamiento del viaje.</strong> El problema es que no todos los sistemas sirven para todos los vehículos: hay modelos para pared trasera, puertas de furgoneta, bola de remolque y otras configuraciones específicas.</p>
 <p>En esta guía hemos reunido cinco opciones y familias de producto que merece la pena mirar en Amazon España. No nos fijamos únicamente en el precio: también importa la compatibilidad, el peso de las bicicletas, el acceso a las puertas y la facilidad de carga.</p>
@@ -130,7 +130,7 @@ def build_post(apps, schema_editor):
 <p>Antes de comprar, mide, pesa y comprueba la compatibilidad. Después, elige el sistema que mejor encaje con tu forma de viajar.</p>
 <hr>
 <h3>📷 Créditos de las fotografías</h3>
-<p>Las imágenes utilizadas en esta guía proceden de Wikimedia Commons y se emplean como fotografías ilustrativas del tipo de sistema descrito. Las imágenes no implican que el producto mostrado sea exactamente el producto enlazado en Amazon.</p>
+<p>Las imágenes utilizadas en esta guía proceden de fuentes públicas y páginas de producto y se emplean como fotografías ilustrativas del tipo de sistema descrito. Las imágenes no implican que el producto mostrado sea exactamente el producto enlazado en Amazon.</p>
 '''
 
     post.content = body
