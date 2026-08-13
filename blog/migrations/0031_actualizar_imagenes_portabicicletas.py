@@ -17,12 +17,10 @@ def update_images(apps, schema_editor):
     if not post:
         return
 
-    # Replace the two outdated images inside the published article.
     post.content = post.content.replace(OLD_FIAMMA, NEW_FIAMMA)
     post.content = post.content.replace(OLD_THULE, NEW_THULE)
     post.save(update_fields=["content"])
 
-    # Remove the old gallery entries and add the current product photographs.
     PostImage.objects.filter(post=post, image_url=OLD_FIAMMA).delete()
     PostImage.objects.filter(post=post, image_url=OLD_THULE).delete()
 
@@ -47,7 +45,12 @@ def reverse_update_images(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-    dependencies = [("blog", "0030_imagenes_estacionales_caravaning")]
+    # This migration joins the two existing branches: 0018 (the article)
+    # and 0030 (the latest blog migration already present in production).
+    dependencies = [
+        ("blog", "0018_portabicicletas_camper_autocaravana"),
+        ("blog", "0030_imagenes_estacionales_caravaning"),
+    ]
 
     operations = [
         migrations.RunPython(update_images, reverse_update_images),
