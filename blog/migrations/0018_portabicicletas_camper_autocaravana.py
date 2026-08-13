@@ -23,8 +23,8 @@ PRODUCTS = [
     {
         "name": "Peruzzo Pure Instinct para 2 bicicletas",
         "query": "Peruzzo Pure Instinct 2 bicicletas portabicicletas",
-        "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Atera_Strada_DL2_Fahrradtr%C3%A4ger.jpg",
-        "alt": "Portabicicletas de dos bicicletas sobre enganche de remolque",
+        "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Kuat_Bike_Rack.jpg",
+        "alt": "Portabicicletas de plataforma montado en la parte trasera de un vehículo",
         "type": "de bola de remolque",
         "text": "Los portabicicletas de bola son una opción muy interesante cuando la camper o el vehículo tractor dispone de enganche homologado. Suelen ser fáciles de cargar y permiten transportar bicicletas pesadas, incluidas muchas eléctricas, siempre que el conjunto respete la capacidad del portabicicletas y la carga vertical del enganche.",
     },
@@ -136,7 +136,7 @@ def build_post(apps, schema_editor):
 
 <hr>
 <h3>📷 Créditos de las fotografías</h3>
-<p>Las imágenes utilizadas en esta guía proceden de Wikimedia Commons y se emplean como fotografías ilustrativas del tipo de sistema descrito. La fotografía de la camper con portabicicletas es una imagen de dominio público; la fotografía del portabicicletas de enganche procede de Wikimedia Commons y está disponible bajo una licencia Creative Commons. Las imágenes no implican que el producto mostrado sea exactamente el producto enlazado en Amazon.</p>
+<p>Las imágenes utilizadas en esta guía proceden de Wikimedia Commons y se emplean como fotografías ilustrativas del tipo de sistema descrito. La fotografía de la camper con portabicicletas es una imagen de dominio público; otras fotografías proceden de Wikimedia Commons bajo licencias Creative Commons. Las imágenes no implican que el producto mostrado sea exactamente el producto enlazado en Amazon.</p>
 '''
 
     post.content = body
