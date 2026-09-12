@@ -1,8 +1,15 @@
 from django.db import migrations
 
 POST_SLUG = "guia-instalacion-solar-autocaravanas"
+AMAZON_TAG = "caravaning0a-21"
 
-CONTENT = """
+
+def amazon_search(query):
+    from urllib.parse import quote_plus
+    return f"https://www.amazon.es/s?k={quote_plus(query)}&tag={AMAZON_TAG}"
+
+
+CONTENT = f"""
 <p>Instalar placas solares en una autocaravana puede darte mucha más autonomía, pero una buena instalación empieza antes de subir al techo: hay que calcular el consumo, dimensionar paneles, regulador y batería, proteger correctamente el cableado y planificar la fijación y el paso de cables.</p>
 
 <p>Esta guía explica el proceso de forma práctica para entender qué necesitas y en qué orden debes plantearlo. Si no tienes experiencia trabajando con instalaciones eléctricas de 12 V, baterías o pasos estancos en el techo, es recomendable que la parte crítica de la instalación la revise un profesional.</p>
@@ -23,6 +30,7 @@ CONTENT = """
 <li><strong>Pasacables y sellado:</strong> permiten entrar desde el techo al habitáculo evitando filtraciones.</li>
 <li><strong>Inversor, si lo necesitas:</strong> convierte los 12 V de la batería en 230 V para determinados aparatos. No es imprescindible en todas las instalaciones.</li>
 </ul>
+<p><a href="{amazon_search('kit placa solar autocaravana 200W')}" target="_blank" rel="nofollow sponsored noopener"><strong>Ver kits de placas solares para autocaravana en Amazon →</strong></a></p>
 
 <h2>3. ¿Panel rígido o flexible?</h2>
 <p>Los paneles rígidos son una opción habitual en autocaravanas porque son resistentes y, montados con separación respecto al techo, permiten circulación de aire por debajo. Los flexibles son más ligeros y bajos, pero su montaje y disipación térmica requieren especial atención.</p>
@@ -35,16 +43,19 @@ CONTENT = """
 <h2>5. Fijación y sellado del panel</h2>
 <p>La fijación debe ser compatible con el tipo de techo y con las indicaciones del fabricante del panel, los soportes y el adhesivo o sistema de anclaje empleado. La preparación de la superficie es fundamental: limpiar, desengrasar y respetar imprimaciones y tiempos de curado cuando correspondan.</p>
 <p>El paso de cables debe quedar completamente estanco. Una instalación que produce perfectamente pero permite entrar agua por el techo termina siendo una mala instalación.</p>
+<p><a href="{amazon_search('pasacables solar techo autocaravana')}" target="_blank" rel="nofollow sponsored noopener"><strong>Ver pasacables para instalaciones solares en Amazon →</strong></a></p>
 
 <h2>6. Conexión eléctrica: el orden importa</h2>
 <p>Consulta siempre el manual específico de tu regulador. En muchos sistemas el regulador necesita detectar primero la tensión de la batería antes de recibir energía del panel. No asumas que todos los equipos se conectan exactamente igual.</p>
 <p>Como esquema conceptual, la energía sigue este recorrido:</p>
 <p><strong>Panel solar → regulador MPPT/PWM → batería auxiliar → consumos de 12 V e inversor, si existe.</strong></p>
 <p>Las protecciones deben colocarse y dimensionarse según el sistema. Especialmente cerca de la batería, un cortocircuito puede entregar corrientes muy elevadas, por lo que no conviene improvisar fusibles ni secciones de cable.</p>
+<p><a href="{amazon_search('conectores MC4 cable solar')}" target="_blank" rel="nofollow sponsored noopener"><strong>Ver conectores MC4 y cable solar en Amazon →</strong></a></p>
 
 <h2>7. Elegir correctamente el regulador MPPT</h2>
 <p>No basta con mirar los vatios del panel. Comprueba la tensión de circuito abierto (Voc), corriente y potencia del conjunto de paneles y compáralas con los límites de entrada y salida indicados por el fabricante del regulador. Deja margen para condiciones de baja temperatura, que pueden elevar la tensión del panel.</p>
 <p>Si instalas dos paneles, la conexión en serie o en paralelo cambia la tensión y la corriente que verá el regulador. Debe decidirse a partir de las especificaciones concretas de los paneles y del MPPT.</p>
+<p><a href="{amazon_search('regulador MPPT solar autocaravana')}" target="_blank" rel="nofollow sponsored noopener"><strong>Ver reguladores MPPT para sistemas solares en Amazon →</strong></a></p>
 
 <h2>8. Batería AGM/GEL o LiFePO4</h2>
 <p>La batería debe elegirse junto con el resto del sistema. Las baterías LiFePO4 ofrecen una elevada capacidad utilizable y buena vida útil, pero requieren un sistema de carga compatible y un BMS adecuado. Si sustituyes una batería de plomo por litio, comprueba también cargador de red, alternador/booster y regulador solar, no solamente la placa.</p>
@@ -72,6 +83,8 @@ CONTENT = """
 <h2>Conclusión</h2>
 <p>Una instalación solar bien dimensionada puede mantener cargada la batería auxiliar y aumentar considerablemente la autonomía de una autocaravana. El secreto no está en instalar la placa más grande posible, sino en equilibrar <strong>consumo, producción solar, regulador, batería, cableado y protecciones</strong>.</p>
 <p>Planifica primero, mide dos veces antes de tocar el techo y trata la seguridad eléctrica y la estanqueidad como partes centrales de la instalación.</p>
+
+<p><small><strong>Nota de afiliación:</strong> este artículo contiene enlaces de afiliado de Amazon. Si compras a través de ellos, Caravaning Project puede recibir una comisión sin coste adicional para ti.</small></p>
 """
 
 IMAGES = [
