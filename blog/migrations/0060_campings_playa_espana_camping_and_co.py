@@ -35,9 +35,9 @@ CAMPINGS = [
         "Muy cerca de la playa y bien situado para conocer Cambrils y la Costa Dorada. También permite combinar la estancia con excursiones y planes familiares por la provincia de Tarragona.",
     ),
     (
-        "King's Camping - Palamós (Girona)",
-        "https://es.camping-and-co.com/camping-kings-camping",
-        "A unos 200 metros de la playa de La Fosca, en Palamós. Su ubicación encaja muy bien en una escapada que combine playa, paseos, bicicleta y visitas a diferentes rincones de la Costa Brava.",
+        "Camping La Sirena - L'Estartit (Girona)",
+        "https://es.camping-and-co.com/camping-la-sirena",
+        "Una opción costera en L'Estartit, junto al entorno natural del Ter Vell y muy cerca de la playa. Encaja especialmente bien para combinar mar, naturaleza y excursiones por esta zona de la Costa Brava.",
     ),
     (
         "Camping Playa y Fiesta - Mont-roig del Camp (Tarragona)",
@@ -45,9 +45,9 @@ CAMPINGS = [
         "Situado en la Costa Dorada y a poca distancia del mar, ofrece una base costera para disfrutar de la playa y recorrer localidades del litoral de Tarragona.",
     ),
     (
-        "Camping Costa Blanca - El Campello (Alicante)",
-        "https://es.camping-and-co.com/camping-costa-blanca",
-        "Una opción mediterránea en El Campello para quienes buscan combinar playa con visitas por la provincia de Alicante. La disponibilidad puede variar mucho según las fechas, por lo que conviene consultar el calendario antes de organizar la escapada.",
+        "Camping Alegria del Mar - Benicarló (Castellón)",
+        "https://es.camping-and-co.com/camping-alegria-del-mar",
+        "Situado junto al Mediterráneo en Benicarló, es una alternativa interesante para ampliar la ruta hacia la costa de Castellón. Su cercanía al mar permite combinar playa con escapadas por el litoral y localidades próximas como Peñíscola.",
     ),
 ]
 
@@ -92,11 +92,11 @@ def create_post(apps, schema_editor):
             author = User.objects.order_by("id").first()
         if not author:
             return
-        post = Post.objects.create(
+        Post.objects.create(
             slug=POST_SLUG,
             title="7 campings de playa en España para camper, caravana o autocaravana",
             content=CONTENT,
-            meta_description="Descubre 7 campings de playa en España para preparar una escapada en camper, caravana o autocaravana por la Costa Brava, Costa Dorada y Costa Blanca.",
+            meta_description="Descubre 7 campings de playa en España para preparar una escapada en camper, caravana o autocaravana por la Costa Brava, Costa Dorada y el Mediterráneo.",
             status="PUBLISHED",
             author=author,
         )
@@ -104,7 +104,7 @@ def create_post(apps, schema_editor):
 
     post.title = "7 campings de playa en España para camper, caravana o autocaravana"
     post.content = CONTENT
-    post.meta_description = "Descubre 7 campings de playa en España para preparar una escapada en camper, caravana o autocaravana por la Costa Brava, Costa Dorada y Costa Blanca."
+    post.meta_description = "Descubre 7 campings de playa en España para preparar una escapada en camper, caravana o autocaravana por la Costa Brava, Costa Dorada y el Mediterráneo."
     post.status = "PUBLISHED"
     post.save(update_fields=["title", "content", "meta_description", "status"])
 
