@@ -6,10 +6,10 @@ POST_SLUG = "alquiler-camper-valencia"
 # PythonAnywhere ya sirve /static/ correctamente, por lo que evitamos depender
 # de la configuración de /media/ para estas imágenes editoriales.
 STATIC_IMAGES = [
-    "/static/images/blog/camperdays/valencia/valencia_hero.webp",
-    "/static/images/blog/camperdays/valencia/valencia_playa.webp",
-    "/static/images/blog/camperdays/valencia/valencia_albufera.webp",
-    "/static/images/blog/camperdays/valencia/valencia_ruta.webp",
+    "/static/images/blog/camperdays/valencia/valencia_hero.jpg",
+    "/static/images/blog/camperdays/valencia/valencia_playa.jpg",
+    "/static/images/blog/camperdays/valencia/valencia_albufera.jpg",
+    "/static/images/blog/camperdays/valencia/valencia_ruta.jpg",
 ]
 
 
