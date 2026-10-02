@@ -20,12 +20,19 @@
 
                 <form method="post" id="loginForm">
                     {% csrf_token %}
+                    {% if next %}
+                    <input type="hidden" name="next" value="{{ next }}">
+                    {% endif %}
                     
                     {% if form.non_field_errors %}
                         <div class="alert alert-danger small rounded-3">
                             {% for error in form.non_field_errors %}{{ error }}{% endfor %}
                         </div>
                     {% endif %}
+
+                    <div id="loginError"
+                         class="alert alert-danger small rounded-3 d-none">
+                    </div>
 
                     <div class="mb-4">
                         <label for="{{ form.username.id_for_label }}" class="form-label small fw-bold text-secondary">Usuario</label>
@@ -54,7 +61,7 @@
 
                 <div class="text-center mt-4 pt-3 border-top">
                     <p class="text-muted small mb-1">¿Aún no tienes cuenta? 
-                        <a href="{% url 'users:register' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" class="text-primary text-decoration-none fw-bold">Regístrate gratis</a>
+                        <a href="{% url 'users:register' %}{% if next %}?next={{ next|urlencode }}{% endif %}" class="text-primary text-decoration-none fw-bold">Regístrate gratis</a>
                     </p>
                 </div>
             </div>
@@ -70,18 +77,68 @@
     </div>
 </div>
 
+
+
+
 <script>
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-    const btn = document.getElementById('submitBtn');
-    const overlay = document.getElementById('loadingOverlay');
-    
-    // Evitar doble envío
-    btn.disabled = true;
-    overlay.classList.remove('d-none');
-    overlay.classList.add('d-flex');
-    
-    // El formulario se enviará normalmente tras este proceso
-});
+(function () {
+    const form = document.getElementById("loginForm");
+    const overlay = document.getElementById("loadingOverlay");
+    const errorBox = document.getElementById("loginError");
+    const submitBtn = document.getElementById("submitBtn");
+
+    function stopLoading() {
+        submitBtn.disabled = false;
+        overlay.classList.add("d-none");
+        overlay.classList.remove("d-flex");
+    }
+
+    function leaveLogin(destination) {
+        const target = new URL(destination, window.location.origin).href;
+
+        if (document.referrer === target && window.history.length > 1) {
+            window.history.back();
+        } else {
+            window.location.replace(target);
+        }
+    }
+
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        errorBox.classList.add("d-none");
+        submitBtn.disabled = true;
+        overlay.classList.remove("d-none");
+        overlay.classList.add("d-flex");
+
+        try {
+            const response = await fetch(window.location.href, {
+                method: "POST",
+                body: new FormData(form),
+                credentials: "same-origin",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                throw new Error(
+                    data.error || "No se pudo iniciar sesión."
+                );
+            }
+
+            sessionStorage.setItem("caravaning-auth", "1");
+            leaveLogin(data.destination);
+
+        } catch (error) {
+            errorBox.textContent = error.message;
+            errorBox.classList.remove("d-none");
+            stopLoading();
+        }
+    });
+})();
 </script>
 
 <style>

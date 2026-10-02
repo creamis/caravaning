@@ -48,3 +48,57 @@ class ProductListView(ListView):
         context['active_category_slug'] = self.category_slug
         context['active_merchant_name'] = self.merchant_name
         return context
+
+
+from django.contrib.auth.mixins import UserPassesTestMixin
+
+
+class ProductPreviewView(UserPassesTestMixin, ProductListView):
+    """Vista privada de productos en revisión."""
+
+    raise_exception = True
+
+    def test_func(self):
+        usuario = self.request.user
+        return usuario.is_authenticated and usuario.is_staff
+
+    def get_queryset(self):
+        # Inicializa los filtros que utiliza la plantilla.
+        self.search_query = ""
+        self.category_slug = ""
+        self.merchant_name = ""
+
+        return (
+            Product.objects
+            .filter(pk__in=[1, 2, 3, 4, 5, 6, 7, 18, 19, 20], is_active=False)
+            .select_related("category")
+            .prefetch_related("images")
+            .order_by("pk")
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Filtros correspondientes a los borradores de la vista previa.
+        borradores = Product.objects.filter(
+            pk__in=[1, 2, 3, 4, 5, 6, 7, 18, 19, 20],
+            is_active=False
+        )
+
+        context["categories"] = (
+            Category.objects
+            .filter(products__in=borradores)
+            .distinct()
+            .order_by("name")
+        )
+
+        context["merchants"] = (
+            borradores
+            .exclude(merchant_name="")
+            .values_list("merchant_name", flat=True)
+            .distinct()
+            .order_by("merchant_name")
+        )
+
+        context["is_preview"] = True
+        return context

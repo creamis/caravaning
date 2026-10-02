@@ -1,0 +1,435 @@
+{% extends 'base.html' %}
+
+{% block title %}Experiencias y actividades para tu viaje | Caravaning Project{% endblock %}
+
+{% block content %}
+
+<style>
+    .experiences-page {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 24px 18px 60px;
+    }
+
+    /* HERO */
+    .experiences-hero {
+        min-height: 500px;
+        border-radius: 24px;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        background:
+            linear-gradient(90deg,
+                rgba(7, 25, 35, .84) 0%,
+                rgba(7, 25, 35, .55) 48%,
+                rgba(7, 25, 35, .18) 100%),
+            url('/media/experiences/hero-experiencias.webp')
+            center/cover no-repeat;
+        margin-bottom: 46px;
+    }
+
+    .experiences-hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 720px;
+        padding: 54px;
+        color: #fff;
+    }
+
+    .experiences-badge {
+        display: inline-block;
+        padding: 8px 14px;
+        margin-bottom: 16px;
+        border-radius: 999px;
+        background: rgba(255,255,255,.16);
+        border: 1px solid rgba(255,255,255,.28);
+        backdrop-filter: blur(6px);
+        font-size: .78rem;
+        font-weight: 800;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .experiences-hero h1 {
+        font-size: clamp(2.3rem, 5vw, 4.4rem);
+        line-height: .98;
+        font-weight: 900;
+        margin-bottom: 20px;
+        letter-spacing: -.04em;
+    }
+
+    .experiences-hero p {
+        max-width: 610px;
+        font-size: 1.08rem;
+        line-height: 1.7;
+        color: rgba(255,255,255,.92);
+        margin-bottom: 26px;
+    }
+
+    .experiences-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 13px 20px;
+        border-radius: 12px;
+        background: #fff;
+        color: #17202a;
+        text-decoration: none;
+        font-weight: 800;
+        transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .experiences-btn:hover {
+        color: #17202a;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(0,0,0,.20);
+    }
+
+    /* TITULOS */
+    .experiences-heading {
+        max-width: 720px;
+        margin-bottom: 26px;
+    }
+
+    .experiences-heading span {
+        color: #16856b;
+        font-size: .8rem;
+        font-weight: 900;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .experiences-heading h2 {
+        margin-top: 6px;
+        margin-bottom: 8px;
+        font-weight: 900;
+        letter-spacing: -.025em;
+    }
+
+    .experiences-heading p {
+        color: #667085;
+        margin: 0;
+        line-height: 1.65;
+    }
+
+    /* CATEGORIAS */
+    .experiences-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-bottom: 55px;
+    }
+
+    .experience-card {
+        min-height: 285px;
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-end;
+        padding: 24px;
+        background-position: center;
+        background-size: cover;
+        box-shadow: 0 8px 28px rgba(15,23,42,.13);
+        transition: transform .22s ease, box-shadow .22s ease;
+    }
+
+    .experience-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(to bottom,
+                rgba(8,22,37,.04) 15%,
+                rgba(8,22,37,.24) 52%,
+                rgba(8,22,37,.92) 100%);
+    }
+
+    .experience-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 14px 34px rgba(15,23,42,.20);
+    }
+
+    .experience-card-content {
+        position: relative;
+        z-index: 2;
+        color: white;
+    }
+
+    .experience-icon {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 11px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.94);
+        font-size: 1.45rem;
+    }
+
+    .experience-card h3 {
+        color: white;
+        font-size: 1.25rem;
+        font-weight: 850;
+        margin-bottom: 6px;
+        text-shadow: 0 2px 7px rgba(0,0,0,.35);
+    }
+
+    .experience-card p {
+        color: rgba(255,255,255,.90);
+        margin: 0;
+        line-height: 1.5;
+        font-size: .92rem;
+    }
+
+    /* VIAJE */
+    .route-experiences {
+        border-radius: 24px;
+        padding: 42px;
+        background:
+            linear-gradient(135deg, #eef9f5 0%, #f8fbfa 100%);
+        border: 1px solid #dcefe8;
+        display: grid;
+        grid-template-columns: 1.25fr .75fr;
+        gap: 32px;
+        align-items: center;
+    }
+
+    .route-experiences h2 {
+        font-weight: 900;
+        letter-spacing: -.025em;
+        margin-bottom: 12px;
+    }
+
+    .route-experiences p {
+        color: #52606d;
+        line-height: 1.7;
+        margin-bottom: 0;
+    }
+
+    .route-path {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 9px;
+        flex-wrap: wrap;
+    }
+
+    .route-step {
+        background: white;
+        border-radius: 14px;
+        padding: 12px 15px;
+        font-weight: 750;
+        box-shadow: 0 5px 16px rgba(15,23,42,.07);
+        white-space: nowrap;
+    }
+
+    .route-arrow {
+        color: #16856b;
+        font-weight: 900;
+    }
+
+    @media (max-width: 992px) {
+        .experiences-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .route-experiences {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .experiences-page {
+            padding: 12px 12px 45px;
+        }
+
+        .experiences-hero {
+            min-height: 470px;
+            border-radius: 20px;
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .experiences-hero-content {
+            padding: 30px 24px;
+        }
+
+        .experiences-hero h1 {
+            font-size: 2.6rem;
+        }
+
+        .experiences-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .experience-card {
+            min-height: 245px;
+            padding: 18px;
+        }
+
+        .experience-card h3 {
+            font-size: 1.05rem;
+        }
+
+        .experience-card p {
+            font-size: .82rem;
+        }
+
+        .route-experiences {
+            padding: 28px 22px;
+        }
+    }
+
+    @media (max-width: 430px) {
+        .experiences-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .experience-card {
+            min-height: 260px;
+        }
+    }
+</style>
+
+
+<div class="experiences-page">
+
+    <!-- HERO -->
+    <section class="experiences-hero">
+        <div class="experiences-hero-content">
+
+            <span class="experiences-badge">
+                Caravaning Project · Experiencias
+            </span>
+
+            <h1>
+                No visites un destino.<br>
+                Vívelo.
+            </h1>
+
+            <p>
+                Excursiones, naturaleza, gastronomía, cultura y actividades
+                para convertir cada parada de tu viaje en algo que merezca
+                la pena recordar.
+            </p>
+
+            <a href="#descubrir" class="experiences-btn">
+                Descubrir experiencias ↓
+            </a>
+
+        </div>
+    </section>
+
+
+    <!-- CATEGORIAS -->
+    <section id="descubrir">
+
+        <div class="experiences-heading">
+            <span>Elige cómo quieres disfrutar</span>
+
+            <h2>Experiencias para cada tipo de viajero</h2>
+
+            <p>
+                Porque una buena ruta no consiste solamente en llegar.
+                También importa todo lo que haces cuando aparcas.
+            </p>
+        </div>
+
+
+        <div class="experiences-grid">
+
+            <div class="experience-card"
+                 style="background-image:url('/media/experiences/naturaleza-aventura.webp');">
+                <div class="experience-card-content">
+                    <div class="experience-icon">🌲</div>
+                    <h3>Naturaleza y aventura</h3>
+                    <p>Montañas, parques naturales y experiencias al aire libre.</p>
+                </div>
+            </div>
+
+
+            <div class="experience-card"
+                 style="background-image:url('/media/experiences/excursiones.webp');">
+                <div class="experience-card-content">
+                    <div class="experience-icon">🥾</div>
+                    <h3>Excursiones</h3>
+                    <p>Descubre lugares increíbles más allá de la carretera.</p>
+                </div>
+            </div>
+
+
+            <div class="experience-card"
+                 style="background-image:url('/media/experiences/cultura.webp');">
+                <div class="experience-card-content">
+                    <div class="experience-icon">🏛️</div>
+                    <h3>Cultura</h3>
+                    <p>Ciudades, historia, monumentos y rincones con carácter.</p>
+                </div>
+            </div>
+
+
+            <div class="experience-card"
+                 style="background-image:url('/media/experiences/gastronomia.webp');">
+                <div class="experience-card-content">
+                    <div class="experience-icon">🍷</div>
+                    <h3>Gastronomía</h3>
+                    <p>Descubre un destino también a través de sus sabores.</p>
+                </div>
+            </div>
+
+
+            <div class="experience-card"
+                 style="background-image:url('/media/experiences/actividades-acuaticas.webp');">
+                <div class="experience-card-content">
+                    <div class="experience-icon">🛶</div>
+                    <h3>Actividades acuáticas</h3>
+                    <p>Kayak, costa, ríos y aventuras donde el agua manda.</p>
+                </div>
+            </div>
+
+
+            <div class="experience-card"
+                 style="background-image:url('/media/experiences/en-familia.webp');">
+                <div class="experience-card-content">
+                    <div class="experience-icon">👨‍👩‍👧</div>
+                    <h3>En familia</h3>
+                    <p>Planes para que los pequeños también recuerden el viaje.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONEXION CON EL VIAJE -->
+    <section class="route-experiences">
+
+        <div>
+            <h2>Tu ruta es mucho más que kilómetros</h2>
+
+            <p>
+                Estamos seleccionando experiencias que encajen realmente
+                con cada destino de Caravaning Project. Así podrás descubrir
+                dónde ir, cómo llegar, dónde dormir y qué hacer durante
+                cada etapa del viaje.
+            </p>
+        </div>
+
+        <div class="route-path">
+            <div class="route-step">🚐 Ruta</div>
+            <div class="route-arrow">→</div>
+            <div class="route-step">📍 Destino</div>
+            <div class="route-arrow">→</div>
+            <div class="route-step">🎟️ Experiencia</div>
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

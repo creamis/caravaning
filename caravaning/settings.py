@@ -10,10 +10,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_=50m7nb*i6p*p@d#@d4+2rpj+#5ind=owvcb+s%r-d58s(8fe'
+
+# Configuración privada de seguridad
+SECRET_KEY_FILE = Path.home() / ".caravaning_secret"
+
+SECRET_KEY = SECRET_KEY_FILE.read_text().strip().split("=", 1)[1]
+
+SECRET_KEY_FALLBACKS = []
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'caravaning.pythonanywhere.com',
@@ -24,13 +31,14 @@ ALLOWED_HOSTS = [
 ]
 
 # Amazon Afiliados
-AMAZON_ASSOCIATE_TAG = 'caravaning0a-21'
+AMAZON_ASSOCIATE_TAG = 'caravaning0b-21'
 AMAZON_MARKETPLACE_HOSTS = ('amazon.es', 'www.amazon.es')
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'community',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,6 +55,8 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'shop.apps.ShopConfig',
     'pages.apps.PagesConfig',
+    'ferries.apps.FerriesConfig',
+    'experiences.apps.ExperiencesConfig',
     'messaging.apps.MessagingConfig',
     'widget_tweaks',
     'ckeditor',
@@ -58,6 +68,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'caravaning.middleware.HTMLNoStoreMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -172,3 +183,45 @@ CKEDITOR_CONFIGS = {
         'removePlugins': 'exportpdf',
     },
 }
+ALOHACAMP_AFFILIATE_URL = "https://r.alohacamp.com/caravaning"
+
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SECURE = True
+
+
+# Correo electrónico de Caravaning Project
+import os
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = "creacionesms@gmail.com"
+EMAIL_HOST_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD", "")
+
+if not EMAIL_HOST_PASSWORD:
+    _gmail_file = (
+        Path.home()
+        / ".config"
+        / "caravaning"
+        / "gmail_password"
+    )
+
+    if _gmail_file.is_file():
+        EMAIL_HOST_PASSWORD = (
+            _gmail_file.read_text(encoding="utf-8").strip()
+        )
+
+DEFAULT_FROM_EMAIL = (
+    "Caravaning Project <creacionesms@gmail.com>"
+)
+
+EMAIL_TIMEOUT = 15
+
+
+# HTTPS: HSTS inicial de cinco minutos
+SECURE_HSTS_SECONDS = 300
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+SECURE_HSTS_PRELOAD = False

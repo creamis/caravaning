@@ -1,0 +1,309 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+.my-community {
+    max-width: 1150px;
+    margin: 0 auto;
+}
+
+.my-community-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.my-community-card {
+    overflow: hidden;
+    border: 1px solid #e8eee9;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 6px 22px rgba(0,0,0,.055);
+    display: flex;
+    flex-direction: column;
+}
+
+.my-community-image {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    display: block;
+}
+
+.my-community-placeholder {
+    height: 230px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eaf1e8;
+    font-size: 65px;
+}
+
+.my-community-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.my-community-description {
+    color: #647067;
+    line-height: 1.6;
+}
+
+.my-community-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.my-community-actions .btn {
+    border-radius: 10px;
+}
+
+@media (max-width: 767px) {
+    .my-community-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .my-community-image,
+    .my-community-placeholder {
+        height: 210px;
+    }
+
+    .my-community-body {
+        padding: 19px;
+    }
+
+    .my-community-actions .btn {
+        flex: 1;
+    }
+}
+</style>
+
+<main class="container py-5 my-community">
+
+    <div class="d-flex justify-content-between
+                align-items-center flex-wrap gap-3 mb-4">
+
+        <h1 class="mb-0">Mis publicaciones</h1>
+
+        <a href="{% url 'community:create' %}"
+           class="btn btn-success">
+            + Compartir mi aventura
+        </a>
+
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if 'error' in message.tags %}alert-danger{% else %}alert-success{% endif %} rounded-3"
+                 role="status">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div id="community-action-feedback"
+         class="alert d-none"
+         role="status"
+         aria-live="polite"></div>
+
+    <div class="my-community-grid" id="community-publications">
+
+        {% for publication in publications %}
+
+            <article class="my-community-card"
+                     id="publication-{{ publication.pk }}">
+
+                {% with photo=publication.images.first %}
+                    {% if photo and photo.image %}
+                        <img
+                            src="{{ photo.image.url }}"
+                            alt="{{ publication.title }}"
+                            class="my-community-image"
+                            loading="lazy"
+                        >
+                    {% else %}
+                        <div class="my-community-placeholder"
+                             aria-label="Publicación sin fotografía">
+                            🚐
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <div class="my-community-body">
+
+                    <div class="d-flex justify-content-between
+                                align-items-start gap-2 mb-3">
+
+                        <span class="badge bg-light text-success border">
+                            {{ publication.get_publication_type_display }}
+                        </span>
+
+                        {% if publication.status == "PUBLISHED" %}
+                            <span class="badge bg-success">
+                                Publicada
+                            </span>
+                        {% elif publication.status == "REJECTED" %}
+                            <span class="badge bg-danger">
+                                No aprobada
+                            </span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">
+                                Pendiente
+                            </span>
+                        {% endif %}
+
+                    </div>
+
+                    <h2 class="h4 fw-bold">
+                        {{ publication.title }}
+                    </h2>
+
+                    {% if publication.location %}
+                        <p class="small text-muted mb-2">
+                            📍 {{ publication.location }}
+                        </p>
+                    {% endif %}
+
+                    <p class="my-community-description">
+                        {{ publication.description|striptags|truncatewords:32 }}
+                    </p>
+
+                    <p class="small text-muted mb-0">
+                        📅 {{ publication.created_at|date:"d/m/Y" }}
+                    </p>
+
+                    <div class="my-community-actions">
+
+                        {% if publication.status == "PUBLISHED" %}
+                            <a
+                                href="{% if publication.publication_type == 'EVENT' %}{% url 'community:event_detail' publication.slug %}{% else %}{% url 'community:detail' publication.slug %}{% endif %}"
+                                class="btn btn-outline-success btn-sm"
+                            >
+                                Ver
+                            </a>
+                        {% endif %}
+
+                        {% if publication.publication_type != "EVENT" %}
+
+                            <a
+                                href="{% url 'community:edit' publication.slug %}"
+                                class="btn btn-outline-primary btn-sm"
+                            >
+                                ✏️ Editar
+                            </a>
+
+                            <form
+                                method="post"
+                                action="{% url 'community:delete' publication.slug %}"
+                                class="community-delete-form"
+                                data-title="{{ publication.title }}"
+                            >
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-outline-danger btn-sm"
+                                >
+                                    🗑️ Eliminar
+                                </button>
+                            </form>
+
+                        {% else %}
+
+                            <a
+                                href="{% url 'community:my_events' %}"
+                                class="btn btn-outline-secondary btn-sm"
+                            >
+                                Gestionar quedada
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        {% empty %}
+
+            <div class="alert alert-light border">
+                Todavía no has compartido ninguna aventura.
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</main>
+
+<script>
+document.querySelectorAll(".community-delete-form").forEach(form => {
+
+    form.addEventListener("submit", async event => {
+        event.preventDefault();
+
+        const title = form.dataset.title;
+
+        if (!confirm(
+            `¿Seguro que quieres eliminar "${title}"? ` +
+            "Esta acción no se puede deshacer."
+        )) {
+            return;
+        }
+
+        const button = form.querySelector("button");
+        const feedback = document.getElementById(
+            "community-action-feedback"
+        );
+
+        button.disabled = true;
+        button.textContent = "Eliminando...";
+
+        try {
+            const response = await fetch(form.action, {
+                method: "POST",
+                body: new FormData(form),
+                credentials: "same-origin",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                throw new Error(
+                    data.error || "No se pudo eliminar la publicación."
+                );
+            }
+
+            form.closest(".my-community-card").remove();
+
+            feedback.textContent = data.message;
+            feedback.className = "alert alert-success";
+
+        } catch (error) {
+            feedback.textContent = error.message;
+            feedback.className = "alert alert-danger";
+
+            button.disabled = false;
+            button.textContent = "🗑️ Eliminar";
+        }
+
+        feedback.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest"
+        });
+    });
+
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+.community-category {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 35px 18px 70px;
+}
+
+.community-category-header {
+    background: linear-gradient(135deg, #294d38, #658b67);
+    color: white;
+    border-radius: 22px;
+    padding: 38px 30px;
+    margin-bottom: 30px;
+}
+
+.community-category-header a {
+    color: #e8f5e8;
+}
+
+.community-category h1 {
+    font-weight: 800;
+    margin: 14px 0;
+}
+
+.community-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 25px;
+}
+
+.community-toolbar a {
+    display: inline-block;
+    padding: 9px 16px;
+    border: 1px solid #d4dfd4;
+    border-radius: 24px;
+    text-decoration: none;
+    color: #31563d;
+}
+
+.community-toolbar a.active {
+    background: #31563d;
+    color: white;
+}
+
+.community-publications {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.community-publication {
+    border-radius: 18px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 5px 20px rgba(0,0,0,.07);
+}
+
+.community-publication img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.community-publication-body {
+    padding: 21px;
+}
+
+.community-publication h2 {
+    font-size: 1.2rem;
+    font-weight: 750;
+}
+
+.community-publication-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 15px;
+    color: #657367;
+    font-size: .9rem;
+}
+
+.community-empty {
+    background: #f0f5ee;
+    padding: 35px;
+    border-radius: 18px;
+    text-align: center;
+}
+
+@media (max-width: 850px) {
+    .community-publications {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 560px) {
+    .community-category {
+        padding: 15px 12px 45px;
+    }
+
+    .community-category-header {
+        padding: 30px 20px;
+    }
+
+    .community-publications {
+        grid-template-columns: 1fr;
+    }
+}
+
+.community-event-info {
+    margin-top: 18px;
+    padding: 15px;
+    background: #f0f6ef;
+    border-radius: 14px;
+}
+
+.community-event-info p {
+    margin-bottom: 9px;
+    color: #31563d;
+    font-size: .95rem;
+}
+
+.community-event-info p:last-of-type {
+    margin-bottom: 12px;
+}
+
+</style>
+
+<main class="community-category">
+
+    <header class="community-category-header">
+        <a href="{% url 'community:home' %}">
+            ← Volver a La Comunidad
+        </a>
+
+        <h1>{{ category_title }}</h1>
+
+        <p>
+            Descubre las publicaciones de nuestra
+            comunidad viajera.
+        </p>
+    </header>
+
+    <div class="community-toolbar">
+        <strong>Explora las publicaciones</strong>
+
+        <nav aria-label="Ordenar publicaciones">
+            <a
+                href="?orden=populares"
+                class="{% if current_order == 'populares' %}active{% endif %}"
+            >
+                ❤️ Más populares
+            </a>
+
+            <a
+                href="?orden=recientes"
+                class="{% if current_order == 'recientes' %}active{% endif %}"
+            >
+                🕒 Recientes
+            </a>
+        </nav>
+    </div>
+
+    {% if publications %}
+
+    <div class="community-publications">
+
+        {% for publication in publications %}
+
+        <article class="community-publication">
+
+            {% with photo=publication.images.first %}
+                {% if photo and photo.image %}
+                <img
+                    src="{{ photo.image.url }}"
+                    alt="{{ publication.title }}"
+                    loading="lazy"
+                >
+                {% endif %}
+            {% endwith %}
+
+            <div class="community-publication-body">
+
+                {% if publication.is_official %}
+                <small>✓ Caravaning Project</small>
+                {% endif %}
+
+                <h2><a href="{% if category == 'eventos' %}{% url 'community:event_detail' publication.slug %}{% else %}{% url 'community:detail' publication.slug %}{% endif %}" style="color:inherit;text-decoration:none">{{ publication.title }}</a></h2>
+
+                <p>
+                    {{ publication.description|truncatewords:30 }}
+                </p>
+
+                {% if publication.location %}
+                <p>📍 {{ publication.location }}</p>
+                {% endif %}
+
+                {% if publication.publication_type == "EVENT" %}
+
+                <!-- community-event-extra -->
+                {% with event=publication.event_details %}
+
+                    <div class="community-event-info">
+
+                        <p>
+                            📅 {{ event.starts_at|date:"d/m/Y" }}
+                            
+                        </p>
+
+                        <p>
+                            👥 {{ event.registrations.count }}
+                            participantes
+
+                            {% if event.capacity %}
+                                / {{ event.capacity }} plazas
+                            {% else %}
+                                · Sin límite de plazas
+                            {% endif %}
+                        </p>
+
+                        {% if event.starts_at > now %}
+                            <span class="badge bg-success mb-3">
+                                Próxima quedada
+                            </span>
+                        {% else %}
+                            <span class="badge bg-secondary mb-3">
+                                Evento finalizado
+                            </span>
+                        {% endif %}
+
+                    </div>
+
+                    <a
+                        href="{% url 'community:event_detail' publication.slug %}"
+                        class="btn btn-success rounded-pill w-100 mt-2"
+                    >
+                        Ver evento y apuntarme
+                    </a>
+
+                {% endwith %}
+
+                {% else %}
+
+                <div class="community-publication-meta">
+                    <span>❤️ {{ publication.total_likes }}</span>
+                    <span>💬 {{ publication.total_comments }}</span>
+                    <span>
+                        {{ publication.created_at|date:"d/m/Y" }}
+                    </span>
+                </div>
+
+                {% endif %}
+
+            </div>
+        </article>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="community-empty">
+        <h2>¡Aquí comienza la aventura!</h2>
+        <p>
+            Todavía no tenemos publicaciones
+            en esta categoría.
+        </p>
+    </div>
+
+    {% endif %}
+
+</main>
+
+{% endblock %}

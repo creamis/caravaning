@@ -1,0 +1,507 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+.community-detail {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 16px 70px;
+}
+
+.community-back {
+    display: inline-block;
+    margin-bottom: 24px;
+    color: #365c42;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.community-article {
+    background: #fff;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 6px 25px rgba(0,0,0,.06);
+}
+
+.community-article-body {
+    padding: 32px;
+}
+
+.community-detail h1 {
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 15px 0;
+}
+
+.community-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: #637165;
+    font-size: .9rem;
+    margin-bottom: 25px;
+}
+
+.community-photo {
+    display: block;
+    width: 100%;
+    max-height: 540px;
+    object-fit: cover;
+}
+
+.community-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 12px;
+}
+
+.community-gallery img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.community-description {
+    white-space: pre-line;
+    line-height: 1.8;
+    font-size: 1.05rem;
+    overflow-wrap: anywhere;
+}
+
+.community-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding-top: 24px;
+    margin-top: 28px;
+    border-top: 1px solid #e3e9e2;
+}
+
+.community-like {
+    border: 1px solid #cbd9cb;
+    border-radius: 25px;
+    padding: 11px 19px;
+    background: #f3f8f2;
+    color: #365b3c;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.community-like.liked {
+    background: #fff0f0;
+    color: #ba3d4b;
+    border-color: #e8bfc4;
+}
+
+.community-comments {
+    margin-top: 35px;
+}
+
+.community-comment {
+    background: #f5f8f3;
+    padding: 19px;
+    border-radius: 15px;
+    margin-bottom: 12px;
+}
+
+.community-comment p {
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+.community-comment-form {
+    margin-top: 25px;
+    padding: 25px;
+    background: #edf4ec;
+    border-radius: 17px;
+}
+
+.community-comment-form textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 13px;
+    border: 1px solid #cad8c9;
+    border-radius: 12px;
+    resize: vertical;
+}
+
+.community-submit {
+    background: #315d3d;
+    color: white;
+    border: 0;
+    padding: 12px 24px;
+    border-radius: 24px;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .community-detail {
+        padding: 16px 12px 45px;
+    }
+
+    .community-article-body {
+        padding: 21px;
+    }
+
+    .community-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .community-gallery img {
+        height: 230px;
+    }
+}
+</style>
+
+<main class="community-detail">
+
+    <a
+        class="community-back"
+        href="{% url 'community:home' %}"
+    >
+        ← Volver a La Comunidad
+    </a>
+
+    <article class="community-article">
+
+        {% with cover=publication.images.first %}
+            {% if cover and cover.image %}
+            <img
+                class="community-photo"
+                src="{{ cover.image.url }}"
+                alt="{{ publication.title }}"
+            >
+            {% endif %}
+        {% endwith %}
+
+        <div class="community-article-body">
+
+            <small>
+                {{ publication.get_publication_type_display }}
+            </small>
+
+            {% if publication.is_official %}
+            <p>✓ Publicación oficial de Caravaning Project</p>
+            {% endif %}
+
+            <h1>{{ publication.title }}</h1>
+
+            <div class="community-meta">
+                <span>
+                    👤 <a href="{% url 'users:public_profile' publication.author.username %}"
+                          class="text-decoration-none fw-semibold"
+                          style="color:#2f7048;">
+                        {{ publication.author.username }}
+                    </a>
+                </span>
+
+                <span>
+                    📅 {{ publication.created_at|date:"d/m/Y" }}
+                </span>
+
+                {% if publication.location %}
+                <span>📍 {{ publication.location }}</span>
+                {% endif %}
+            </div>
+
+            <div class="community-description">
+                {{ publication.description }}
+            </div>
+
+            {% if publication.images.count > 1 %}
+            <div class="community-gallery">
+                {% for photo in publication.images.all %}
+                    {% if not forloop.first %}
+                    <img
+                        src="{{ photo.image.url }}"
+                        alt="{{ photo.caption|default:publication.title }}"
+                        loading="lazy"
+                    >
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="community-actions">
+
+                {% if user.is_authenticated %}
+
+                <form
+                    method="post"
+                    action="{% url 'community:like' publication.slug %}"
+                    id="communityLikeForm"
+                >
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="community-like {% if has_liked %}liked{% endif %}"
+                        id="communityLikeButton"
+                        aria-pressed="{% if has_liked %}true{% else %}false{% endif %}"
+                    >
+                        {% if has_liked %}
+                            ❤️ Te gusta
+                        {% else %}
+                            ♡ Me gusta
+                        {% endif %}
+
+                        ({{ publication.total_likes }})
+                    </button>
+                </form>
+
+                {% else %}
+
+                <a href="{% url 'users:login' %}">
+                    ♡ Me gusta
+                    ({{ publication.total_likes }})
+                </a>
+
+                {% endif %}
+
+                <span>
+                    💬 {{ publication.total_comments }}
+                    comentarios
+                </span>
+
+            </div>
+
+        </div>
+    </article>
+
+    <section class="community-comments" id="comentarios">
+
+        
+<h2>Comentarios</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if 'error' in message.tags %}alert-danger{% else %}alert-success{% endif %} rounded-3 my-3"
+                     role="status">
+                    {% if 'success' in message.tags %}
+                        <strong>✅ ¡Comentario recibido!</strong><br>
+                    {% endif %}
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+
+        {% for comment in comments %}
+
+        <div class="community-comment">
+
+            <strong>
+                <a href="{% url 'users:public_profile' comment.author.username %}"
+                   class="text-decoration-none"
+                   style="color:#2f7048;">
+                    {{ comment.author.username }}
+                </a>
+            </strong>
+
+            <small>
+                {{ comment.created_at|date:"d/m/Y H:i" }}
+            </small>
+
+            <p>{{ comment.content }}</p>
+
+        </div>
+
+        {% empty %}
+
+        <p>
+            Todavía no hay comentarios aprobados.
+            ¡Sé el primero en participar!
+        </p>
+
+        {% endfor %}
+
+        {% if user.is_authenticated %}
+
+        <form
+            class="community-comment-form"
+            id="communityCommentForm"
+            method="post"
+            action="{% url 'community:comment' publication.slug %}"
+        >
+
+            {% csrf_token %}
+
+            <h3>Deja tu comentario</h3>
+
+            <textarea
+                name="content"
+                maxlength="2000"
+                required
+                placeholder="Comparte tu opinión o pregunta..."
+            ></textarea>
+
+            <div
+                id="communityCommentFeedback"
+                role="status"
+                aria-live="polite"
+                class="mt-3"
+                hidden
+            ></div>
+
+            <button class="community-submit" type="submit">
+                Enviar comentario
+            </button>
+
+            <p class="small mt-2">
+                Los comentarios se revisan antes
+                de publicarse.
+            </p>
+
+        </form>
+
+        {% else %}
+
+        <div class="community-comment-form">
+            <p>
+                Para comentar necesitas iniciar sesión.
+            </p>
+
+            <a href="{% url 'users:login' %}?next={{ request.path|urlencode }}%23comentarios">
+                Iniciar sesión
+            </a>
+            <span class="mx-2">o</span>
+            <a href="{% url 'users:register' %}?next={{ request.path|urlencode }}%23comentarios">
+                Crear una cuenta
+            </a>
+        </div>
+
+        {% endif %}
+
+    </section>
+
+</main>
+
+
+<!-- community-ajax-script-v1 -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const likeForm = document.getElementById("communityLikeForm");
+    const likeButton = document.getElementById("communityLikeButton");
+
+    if (likeForm && likeButton) {
+        likeForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            if (likeButton.disabled) return;
+            likeButton.disabled = true;
+
+            try {
+                const response = await fetch(likeForm.action, {
+                    method: "POST",
+                    body: new FormData(likeForm),
+                    credentials: "same-origin",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "Accept": "application/json"
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error("No se pudo actualizar Me gusta.");
+                }
+
+                const data = await response.json();
+
+                likeButton.classList.toggle("liked", data.liked);
+                likeButton.setAttribute(
+                    "aria-pressed",
+                    String(data.liked)
+                );
+
+                likeButton.textContent =
+                    (data.liked ? "❤️ Te gusta" : "♡ Me gusta")
+                    + " (" + data.count + ")";
+
+            } catch (error) {
+                alert(
+                    "No se pudo guardar tu Me gusta. "
+                    + "Inténtalo de nuevo."
+                );
+            } finally {
+                likeButton.disabled = false;
+            }
+        });
+    }
+
+    const commentForm = document.getElementById(
+        "communityCommentForm"
+    );
+
+    const feedback = document.getElementById(
+        "communityCommentFeedback"
+    );
+
+    if (commentForm && feedback) {
+        commentForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const button = commentForm.querySelector(
+                'button[type="submit"]'
+            );
+
+            if (button.disabled) return;
+
+            button.disabled = true;
+            feedback.hidden = true;
+
+            try {
+                const response = await fetch(commentForm.action, {
+                    method: "POST",
+                    body: new FormData(commentForm),
+                    credentials: "same-origin",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "Accept": "application/json"
+                    }
+                });
+
+                const contentType =
+                    response.headers.get("content-type") || "";
+
+                if (!contentType.includes("application/json")) {
+                    throw new Error(
+                        "Tu sesión puede haber caducado. "
+                        + "Inicia sesión e inténtalo de nuevo."
+                    );
+                }
+
+                const data = await response.json();
+
+                feedback.hidden = false;
+                feedback.className = data.success
+                    ? "alert alert-success mt-3"
+                    : "alert alert-danger mt-3";
+
+                feedback.textContent = data.message;
+
+                if (data.success) {
+                    commentForm.querySelector(
+                        'textarea[name="content"]'
+                    ).value = "";
+                }
+
+            } catch (error) {
+                feedback.hidden = false;
+                feedback.className = "alert alert-danger mt-3";
+                feedback.textContent =
+                    error.message ||
+                    "No se pudo enviar el comentario.";
+            } finally {
+                button.disabled = false;
+            }
+        });
+    }
+});
+</script>
+
+{% endblock %}

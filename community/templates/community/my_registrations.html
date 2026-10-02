@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.reg-page {
+    max-width: 1050px;
+    margin: 30px auto 80px;
+    padding: 0 16px;
+}
+
+.reg-heading {
+    margin-bottom: 30px;
+}
+
+.reg-heading h1 {
+    font-weight: 800;
+    color: #294d38;
+}
+
+.reg-card {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 5px 25px rgba(0,0,0,.07);
+    margin-bottom: 20px;
+}
+
+.reg-card img {
+    width: 100%;
+    height: 100%;
+    min-height: 220px;
+    object-fit: cover;
+}
+
+.reg-placeholder {
+    min-height: 220px;
+    background: #e5eee4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 55px;
+}
+
+.reg-body {
+    padding: 25px;
+}
+
+.reg-body h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.reg-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.reg-actions form {
+    margin: 0;
+}
+
+@media (max-width: 650px) {
+    .reg-card {
+        grid-template-columns: 1fr;
+    }
+
+    .reg-card img,
+    .reg-placeholder {
+        height: 200px;
+        min-height: 200px;
+    }
+
+    .reg-body {
+        padding: 20px;
+    }
+
+    .reg-actions .btn {
+        width: 100%;
+    }
+
+    .reg-actions form {
+        width: 100%;
+    }
+}
+</style>
+
+<main class="reg-page">
+
+    <div class="reg-heading">
+        <h1>🚐 Mis inscripciones</h1>
+
+        <p class="text-muted">
+            Consulta las quedadas a las que te has apuntado.
+        </p>
+    </div>
+
+    {% for registration in registrations %}
+
+        {% with event=registration.event %}
+
+        <article class="reg-card">
+
+            {% with photo=event.publication.images.first %}
+
+                {% if photo and photo.image %}
+                    <img
+                        src="{{ photo.image.url }}"
+                        alt="{{ event.publication.title }}"
+                        loading="lazy"
+                    >
+                {% else %}
+                    <div class="reg-placeholder">🚐</div>
+                {% endif %}
+
+            {% endwith %}
+
+            <div class="reg-body">
+
+                {% if event.starts_at > now %}
+                    <span class="badge bg-success mb-3">
+                        Inscripción confirmada
+                    </span>
+                {% else %}
+                    <span class="badge bg-secondary mb-3">
+                        Evento finalizado
+                    </span>
+                {% endif %}
+
+                <h2>{{ event.publication.title }}</h2>
+
+                <p class="text-muted mb-2">
+                    📅 {{ event.starts_at|date:"d/m/Y" }}
+                    
+                </p>
+
+                <p class="text-muted mb-2">
+                    📍 {{ event.publication.location }}
+                </p>
+
+                <p class="text-muted mb-2">
+                    🚐 {{ event.registrations.count }}
+                    participantes
+
+                    {% if event.capacity %}
+                        de {{ event.capacity }} plazas
+                    {% endif %}
+                </p>
+
+                <div class="reg-actions">
+
+                    <a
+                        href="{% url 'community:event_detail' event.publication.slug %}"
+                        class="btn btn-success rounded-pill"
+                    >
+                        Ver evento
+                    </a>
+
+                    {% if event.starts_at > now %}
+
+                        <form
+                            method="post"
+                            action="{% url 'community:event_unregister' event.publication.slug %}"
+                        >
+                            {% csrf_token %}
+
+                            <input
+                                type="hidden"
+                                name="next"
+                                value="my_registrations"
+                            >
+
+                            <button
+                                type="submit"
+                                class="btn btn-outline-danger rounded-pill"
+                                onclick="return confirm('¿Cancelar tu inscripción?')"
+                            >
+                                Cancelar inscripción
+                            </button>
+
+                        </form>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </article>
+
+        {% endwith %}
+
+    {% empty %}
+
+        <div class="text-center bg-light rounded-4 p-5">
+
+            <h2>🌿 Todavía no tienes inscripciones</h2>
+
+            <p>
+                Explora las próximas quedadas
+                y encuentra tu siguiente aventura.
+            </p>
+
+            <a
+                href="{% url 'community:category' 'eventos' %}"
+                class="btn btn-success rounded-pill"
+            >
+                Explorar eventos
+            </a>
+
+        </div>
+
+    {% endfor %}
+
+</main>
+
+{% endblock %}

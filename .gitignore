@@ -9,3 +9,52 @@ venv/
 # Archivos de sistema
 .DS_Store
 Thumbs.db
+# Producción / collectstatic
+staticfiles/
+
+# Backups y archivos temporales
+*.bak
+*.bak-*
+*.bak_*
+*.before_navigation
+*_backup_*.py
+
+# Archivos comprimidos de trabajo
+*.zip
+
+# Datos y auditorías temporales
+auditoria_*.csv
+catalogo_*.csv
+lote_importacion_*.csv
+productos_listos_para_verificar.csv
+revision_imagenes_tienda.csv
+copia_producto_*.json
+
+# Scripts auxiliares de importación/auditoría
+analizar_catalogo.py
+clasificar_catalogo.py
+preparar_importacion.py
+preparar_marcas.py
+importar_lote.py
+importar_segundo_lote.py
+importar_ultimo_lote.py
+ultimo_lote.py
+inventario_tienda.py
+
+# Credenciales locales adicionales
+.caravaning_secret
+gmail_password
+*.bak2
+
+# Recursos temporales sueltos en raíz
+/alohacamp-portada.webp
+/seguridad-*.webp
+/seguridad-articulo-55-respaldo.html
+
+# Contenido generado por usuarios
+media/community/
+media/profile_pics/
+
+# Imagen auxiliar de revisión de tienda
+media/shop_products/revision_15_productos.jpg
+media/listing_images/

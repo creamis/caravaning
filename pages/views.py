@@ -20,3 +20,13 @@ class AffiliatesView(TemplateView):
 
 class CampingView(TemplateView):
     template_name = 'pages/camping.html'
+
+
+class AlohaCampView(TemplateView):
+    template_name = 'pages/alohacamp.html'
+
+    def get_context_data(self, **kwargs):
+        from django.conf import settings
+        context = super().get_context_data(**kwargs)
+        context['alohacamp_affiliate_url'] = settings.ALOHACAMP_AFFILIATE_URL
+        return context

@@ -1,0 +1,315 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+.community-create {
+    max-width: 820px;
+    margin: 30px auto 70px;
+    padding: 0 16px;
+}
+
+.community-create-header {
+    background: linear-gradient(135deg, #294c38, #638969);
+    color: white;
+    border-radius: 22px;
+    padding: 35px;
+    margin-bottom: 25px;
+}
+
+.community-create-form {
+    padding: 32px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0,0,0,.07);
+}
+
+.community-field {
+    margin-bottom: 22px;
+}
+
+.community-field label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.community-field input,
+.community-field select,
+.community-field textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd8cc;
+    border-radius: 11px;
+}
+
+.community-preview {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.community-preview img {
+    width: 100%;
+    height: 145px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.community-submit {
+    background: #315b3d;
+    color: white;
+    padding: 14px 27px;
+    border: 0;
+    border-radius: 25px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.community-error {
+    color: #b42318;
+    font-size: .9rem;
+    margin-top: 5px;
+}
+
+@media (max-width: 600px) {
+    .community-create {
+        margin-top: 15px;
+    }
+
+    .community-create-header,
+    .community-create-form {
+        padding: 22px;
+    }
+
+    .community-preview {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .community-preview img {
+        height: 120px;
+    }
+}
+</style>
+
+<main class="community-create">
+
+    <header class="community-create-header">
+        <h1>🚐 Comparte tu aventura</h1>
+
+        <p>
+            Cuéntanos tu ruta, enséñanos tu vehículo
+            o comparte una experiencia inolvidable.
+        </p>
+    </header>
+
+    <form
+        class="community-create-form"
+        method="post"
+        enctype="multipart/form-data"
+    >
+
+        {% csrf_token %}
+        <input
+            type="hidden"
+            name="submission_token"
+            value="{{ submission_token }}"
+        >
+
+
+        {% if form.non_field_errors %}
+        <div class="community-error">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        {% for field in form %}
+
+        <div class="community-field">
+
+            <label for="{{ field.id_for_label }}">
+                {{ field.label }}
+            </label>
+
+            {{ field }}
+
+            {% if field.help_text %}
+            <small>{{ field.help_text }}</small>
+            {% endif %}
+
+            {% for error in field.errors %}
+            <div class="community-error">
+                {{ error }}
+            </div>
+            {% endfor %}
+
+            {% if field.name == "images" %}
+
+            <p
+                id="image-counter"
+                class="small mt-2"
+                aria-live="polite"
+            >
+                Ninguna fotografía seleccionada.
+            </p>
+
+            <div
+                id="image-preview"
+                class="community-preview"
+            ></div>
+
+            {% endif %}
+
+        </div>
+
+        {% endfor %}
+
+        <p class="text-muted small">
+            Tu publicación se revisará antes
+            de aparecer en La Comunidad.
+        </p>
+
+        <button
+            class="community-submit"
+            type="submit"
+        >
+            Enviar mi aventura
+        </button>
+
+    </form>
+
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const input = document.querySelector(
+        'input[name="images"]'
+    );
+
+    const preview = document.getElementById(
+        "image-preview"
+    );
+
+    const counter = document.getElementById(
+        "image-counter"
+    );
+
+    if (!input) return;
+
+    input.addEventListener("change", function () {
+        preview.innerHTML = "";
+
+        const files = Array.from(input.files);
+
+        if (files.length > 10) {
+            alert("Puedes seleccionar un máximo de 10 fotografías.");
+            input.value = "";
+            counter.textContent = "Ninguna fotografía seleccionada.";
+            return;
+        }
+
+        const validTypes = [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+        ];
+
+        if (files.some(
+            file => file.size > 5 * 1024 * 1024 ||
+                    !validTypes.includes(file.type)
+        )) {
+            alert(
+                "Solo se admiten JPG, PNG y WebP "
+                + "de hasta 5 MB."
+            );
+
+            input.value = "";
+            counter.textContent = "Ninguna fotografía seleccionada.";
+            return;
+        }
+
+        counter.textContent =
+            files.length + " de 10 fotografías seleccionadas.";
+
+        files.forEach(function (file) {
+            const url = URL.createObjectURL(file);
+
+            const image = document.createElement("img");
+
+            image.src = url;
+            image.alt = file.name;
+
+            image.onload = function () {
+                URL.revokeObjectURL(url);
+            };
+
+            preview.appendChild(image);
+        });
+    });
+});
+</script>
+
+
+<!-- community-submit-guard-v1 -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector(
+        ".community-create-form, .event-form"
+    );
+
+    if (!form) return;
+
+    const button = form.querySelector(
+        'button[type="submit"]'
+    );
+
+    if (!button) return;
+
+    const originalText = button.textContent;
+
+    const feedback = document.createElement("p");
+    feedback.setAttribute("role", "status");
+    feedback.setAttribute("aria-live", "polite");
+    feedback.className = "small mt-3";
+    feedback.hidden = true;
+
+    button.insertAdjacentElement("afterend", feedback);
+
+    let sending = false;
+
+    form.addEventListener("submit", function (event) {
+        if (sending) {
+            event.preventDefault();
+            return;
+        }
+
+        if (!form.checkValidity()) {
+            return;
+        }
+
+        sending = true;
+        button.disabled = true;
+        button.setAttribute("aria-busy", "true");
+
+        button.textContent = "Enviando propuesta...";
+        feedback.textContent =
+            "Subiendo fotografías y guardando. " +
+            "Espera a que termine el envío.";
+        feedback.hidden = false;
+    });
+
+    // Recuperar el botón al volver atrás desde el navegador.
+    window.addEventListener("pageshow", function (event) {
+        if (event.persisted) {
+            sending = false;
+            button.disabled = false;
+            button.removeAttribute("aria-busy");
+            button.textContent = originalText;
+            feedback.hidden = true;
+        }
+    });
+});
+</script>
+
+{% endblock %}

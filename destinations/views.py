@@ -29,7 +29,12 @@ class DestinationDetailView(DetailView):
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return redirect('users:login')
+            from django.contrib.auth.views import redirect_to_login
+
+            return redirect_to_login(
+                request.get_full_path() + "#comentarios",
+                login_url=reverse("users:login")
+            )
         
         self.object = self.get_object()
         form = ReviewForm(request.POST)

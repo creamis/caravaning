@@ -170,6 +170,251 @@
             color: white;
         }
 
+
+        /* ---- SMART TRIP / ESCAPADA SUGERIDA ---- */
+
+        .dh-trip {
+            background: #fff;
+            border: 1px solid rgba(15, 23, 42, .07);
+            border-radius: 22px;
+            padding: 24px;
+            box-shadow: 0 8px 30px rgba(15, 23, 42, .07);
+        }
+
+        .dh-trip-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 18px;
+        }
+
+        .dh-trip-kicker {
+            display: block;
+            margin-bottom: 5px;
+            color: #0f766e;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .10em;
+        }
+
+        .dh-trip-title {
+            margin: 0;
+            color: #17252a;
+            font-size: 1.55rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .dh-trip-location {
+            margin: 7px 0 0;
+            color: #64748b;
+            font-size: .88rem;
+        }
+
+        .dh-trip-new {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: #f0fdfa;
+            color: #0f766e;
+            font-size: .80rem;
+            font-weight: 700;
+        }
+
+        .dh-trip-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .dh-trip-card {
+            position: relative;
+            min-height: 245px;
+            overflow: hidden;
+            border-radius: 17px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-position: center;
+            background-size: cover;
+            text-decoration: none;
+            box-shadow: 0 5px 18px rgba(15, 23, 42, .10);
+            transition: transform .22s ease, box-shadow .22s ease;
+        }
+
+        .dh-trip-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(15, 23, 42, .16);
+        }
+
+        .dh-trip-badge {
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.92);
+            color: #263238;
+            font-size: .72rem;
+            font-weight: 800;
+            backdrop-filter: blur(6px);
+        }
+
+        .dh-trip-card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            color: #fff;
+            text-shadow: 0 2px 5px rgba(0,0,0,.45);
+        }
+
+        .dh-trip-card-content strong {
+            font-size: 1.05rem;
+            line-height: 1.2;
+        }
+
+        .dh-trip-card-content span {
+            font-size: .79rem;
+            line-height: 1.35;
+            font-weight: 600;
+            opacity: .96;
+        }
+
+        .dh-trip-ferry {
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 15px 18px;
+            border-radius: 14px;
+            background: #f0f9ff;
+            color: #075985;
+            text-decoration: none;
+            font-size: .86rem;
+            font-weight: 700;
+        }
+
+        .dh-trip-ferry:hover {
+            color: #075985;
+            background: #e0f2fe;
+        }
+
+
+
+        /* ---- BUSCADOR GLOBAL HOME ---- */
+
+        .dh-global-search {
+            width: min(680px, 100%);
+            margin: 22px auto 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 7px 6px 16px;
+            background: rgba(255,255,255,.97);
+            border-radius: 15px;
+            box-shadow: 0 8px 28px rgba(0,0,0,.16);
+        }
+
+        .dh-global-search > i {
+            color: #64748b;
+            font-size: 1rem;
+        }
+
+        .dh-global-search input {
+            flex: 1;
+            min-width: 0;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            padding: 10px 2px;
+            color: #0f172a;
+            font-size: .9rem;
+        }
+
+        .dh-global-search button {
+            border: 0;
+            border-radius: 10px;
+            padding: 10px 18px;
+            background: #0f766e;
+            color: white;
+            font-size: .78rem;
+            font-weight: 700;
+        }
+
+        .m-global-search {
+            min-height: 50px;
+            padding: 0 16px;
+            gap: 12px;
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, .08);
+            border-radius: 16px;
+            box-shadow: 0 5px 18px rgba(15, 23, 42, .07);
+        }
+
+        .m-global-search > i {
+            flex: 0 0 auto;
+            font-size: 16px !important;
+            color: #64748b !important;
+        }
+
+        .m-global-search input {
+            width: 100%;
+            min-width: 0;
+            height: 48px;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            box-shadow: none;
+            color: #1e293b;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 400;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .m-global-search input:focus {
+            outline: 0;
+            border: 0;
+            box-shadow: none;
+        }
+
+        .m-global-search input::placeholder {
+            color: #94a3b8;
+            opacity: 1;
+        }
+
+        .m-global-search:focus-within {
+            border-color: rgba(15, 118, 110, .35);
+            box-shadow: 0 6px 20px rgba(15, 118, 110, .10);
+        }
+
+        /* ---- HERO ORIENTADO A VIAJES ---- */
+
+        .dh-hero-travel-title {
+            max-width: 720px;
+            margin: 6px auto 14px;
+            color: #fff;
+            font-size: clamp(1.45rem, 2.5vw, 2.15rem);
+            line-height: 1.12;
+            font-weight: 800;
+            letter-spacing: -.025em;
+            text-shadow: 0 2px 12px rgba(0,0,0,.22);
+        }
+
+        #escapada-sugerida {
+            scroll-margin-top: 90px;
+        }
+
         /* ---- STATS ---- */
         .dh-stats {
             display: grid;
@@ -280,6 +525,158 @@
             line-height: 1.65;
         }
 
+
+        /* ---- JOURNEY / TU VIAJE EMPIEZA AQUÍ ---- */
+
+        .dh-journey {
+            padding: 10px 0 4px;
+        }
+
+        .dh-journey-heading {
+            margin-bottom: 20px;
+        }
+
+        .dh-journey-kicker {
+            display: block;
+            text-align: center;
+            margin-bottom: 5px;
+            color: #0f766e;
+            font-size: .68rem;
+            font-weight: 800;
+            letter-spacing: .12em;
+        }
+
+        .dh-step-link {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease,
+                border-color .2s ease;
+        }
+
+        .dh-step-link:hover {
+            color: inherit;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 26px rgba(15,23,42,.10);
+            border-color: rgba(15,118,110,.18);
+        }
+
+        .dh-step-action {
+            display: inline-block;
+            margin-top: 12px;
+            color: #0f766e;
+            font-size: .78rem;
+            font-weight: 700;
+        }
+
+
+        /* ---- SERVICIOS DE VIAJE ---- */
+
+        .dh-services {
+            margin-top: 34px;
+        }
+
+        .dh-services-heading {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .dh-services-kicker {
+            display: block;
+            margin-bottom: 5px;
+            color: #0f766e;
+            font-size: .68rem;
+            font-weight: 800;
+            letter-spacing: .12em;
+        }
+
+        /* ---- COMPRAVENTA SECUNDARIA ---- */
+
+        .dh-marketplace-mini {
+            margin-top: 28px;
+            padding: 22px 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+        }
+
+        .dh-marketplace-mini-icon {
+            width: 48px;
+            height: 48px;
+            flex: 0 0 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: #475569;
+            font-size: 1.2rem;
+        }
+
+        .dh-marketplace-mini-copy {
+            flex: 1;
+        }
+
+        .dh-marketplace-mini-kicker {
+            display: block;
+            margin-bottom: 3px;
+            color: #64748b;
+            font-size: .65rem;
+            font-weight: 800;
+            letter-spacing: .1em;
+        }
+
+        .dh-marketplace-mini h3 {
+            margin: 0 0 4px;
+            color: #0f172a;
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        .dh-marketplace-mini p {
+            margin: 0;
+            color: #64748b;
+            font-size: .78rem;
+        }
+
+        .dh-marketplace-mini-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .dh-marketplace-mini-primary,
+        .dh-marketplace-mini-secondary {
+            padding: 9px 14px;
+            border-radius: 10px;
+            font-size: .75rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .dh-marketplace-mini-primary {
+            background: #0f766e;
+            color: white;
+        }
+
+        .dh-marketplace-mini-secondary {
+            background: white;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+        }
+
+        .dh-marketplace-mini-primary:hover,
+        .dh-marketplace-mini-secondary:hover {
+            transform: translateY(-2px);
+        }
+
         /* ---- CTA BANNERS ---- */
         .dh-banners {
             display: flex;
@@ -309,6 +706,18 @@
         .dh-banner.camping {
             background: linear-gradient(135deg, #0f766e 0%, #0f5f59 55%, #134e4a 100%);
         }
+
+        .dh-banner.alohacamp {
+            background: linear-gradient(135deg, #36543d 0%, #263f2d 55%, #1b3022 100%);
+        }
+
+        .dh-banner.ferries {
+            background: linear-gradient(135deg, #075985 0%, #0c4a6e 55%, #083344 100%);
+        }
+
+
+
+
 
         .dh-banner::before {
             content: '';
@@ -442,6 +851,8 @@
         .dh-banner.venta .dh-banner-btn   { color: #15803d; }
         .dh-banner.alquiler .dh-banner-btn { color: #1e40af; }
         .dh-banner.camping .dh-banner-btn  { color: #0f766e; }
+        .dh-banner.alohacamp .dh-banner-btn { color: #36543d; }
+        .dh-banner.ferries .dh-banner-btn { color: #075985; }
 
         .dh-banner-note {
             font-size: 11px;
@@ -582,6 +993,193 @@
         .m-search span {
             font-size: 14px;
             color: #9ca3af;
+        }
+
+
+        /* ==================================================
+           BUSCADOR DESCUBRIMIENTO - MOBILE
+           ================================================== */
+
+        .m-discover-search {
+            position: relative;
+            overflow: hidden;
+            margin: 0 0 26px;
+            padding: 18px;
+            border: 1px solid rgba(15,118,110,.10);
+            border-radius: 22px;
+            background:
+                radial-gradient(
+                    circle at 100% 0%,
+                    rgba(20,184,166,.12),
+                    transparent 42%
+                ),
+                linear-gradient(
+                    145deg,
+                    #ffffff 0%,
+                    #f8fbfa 100%
+                );
+            box-shadow:
+                0 10px 30px rgba(15,23,42,.07),
+                0 1px 2px rgba(15,23,42,.03);
+        }
+
+        .m-discover-search::after {
+            content: "";
+            position: absolute;
+            width: 105px;
+            height: 105px;
+            right: -48px;
+            top: -48px;
+            border-radius: 50%;
+            border: 20px solid rgba(15,118,110,.045);
+            pointer-events: none;
+        }
+
+        .m-discover-heading {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .m-discover-icon {
+            width: 40px;
+            height: 40px;
+            flex: 0 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 13px;
+            background: #e7f6f3;
+            color: #0f766e;
+            font-size: 18px;
+        }
+
+        .m-discover-heading h2 {
+            margin: 0 0 3px;
+            color: #172033;
+            font-size: 15px;
+            line-height: 1.25;
+            font-weight: 750;
+            letter-spacing: -.15px;
+        }
+
+        .m-discover-heading p {
+            margin: 0;
+            color: #7b8797;
+            font-size: 11.5px;
+            line-height: 1.35;
+        }
+
+        .m-discover-form {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            min-height: 52px;
+            padding: 5px 6px 5px 15px;
+            border: 1px solid rgba(15,23,42,.08);
+            border-radius: 15px;
+            background: #ffffff;
+            box-shadow:
+                0 5px 15px rgba(15,23,42,.055),
+                inset 0 1px 0 rgba(255,255,255,.8);
+            transition:
+                border-color .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .m-discover-form:focus-within {
+            border-color: rgba(15,118,110,.38);
+            box-shadow:
+                0 7px 20px rgba(15,118,110,.09),
+                0 0 0 3px rgba(15,118,110,.055);
+        }
+
+        .m-discover-form > i {
+            flex: 0 0 auto;
+            margin-right: 10px;
+            color: #84909f;
+            font-size: 15px;
+        }
+
+        .m-discover-form input {
+            flex: 1;
+            min-width: 0;
+            height: 40px;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            box-shadow: none;
+            color: #1e293b;
+            font-family: inherit;
+            font-size: 13.5px;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .m-discover-form input::placeholder {
+            color: #9aa5b4;
+            opacity: 1;
+        }
+
+        .m-discover-form button {
+            width: 40px;
+            height: 40px;
+            flex: 0 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            border: 0;
+            border-radius: 11px;
+            background: #0f766e;
+            color: #ffffff;
+            font-size: 15px;
+            box-shadow: 0 4px 10px rgba(15,118,110,.20);
+        }
+
+        .m-discover-form button:active {
+            transform: scale(.96);
+        }
+
+        .m-search-suggestions {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .m-search-suggestions span {
+            margin-right: 1px;
+            color: #9aa5b4;
+            font-size: 10.5px;
+            font-weight: 600;
+        }
+
+        .m-search-suggestions a {
+            padding: 5px 9px;
+            border: 1px solid #e5e9ee;
+            border-radius: 999px;
+            background: rgba(255,255,255,.75);
+            color: #52606f;
+            text-decoration: none;
+            font-size: 10.5px;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .m-search-suggestions a:active {
+            background: #e7f6f3;
+            border-color: #c8e8e2;
+            color: #0f766e;
         }
 
         .m-label {
@@ -860,6 +1458,136 @@
     @media (min-width: 769px) {
         .mobile-shell { display: none !important; }
     }
+
+        /* ==========================================
+           INSPÍRATE PARA TU PRÓXIMA AVENTURA
+           ========================================== */
+
+        .m-inspire-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .m-inspire-card {
+            position: relative;
+            min-height: 185px;
+            border-radius: 18px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 14px;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, .10);
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .m-inspire-card:active {
+            transform: scale(.98);
+        }
+
+        .m-inspire-badge {
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 9px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.90);
+            color: #263238;
+            font-size: .70rem;
+            font-weight: 700;
+            backdrop-filter: blur(5px);
+        }
+
+        .m-inspire-content {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            color: white;
+            text-shadow: 0 1px 4px rgba(0,0,0,.35);
+        }
+
+        .m-inspire-content strong {
+            font-size: 1rem;
+            line-height: 1.15;
+        }
+
+        .m-inspire-content span {
+            font-size: .76rem;
+            font-weight: 600;
+            opacity: .94;
+        }
+
+        @media (max-width: 380px) {
+            .m-inspire-grid {
+                gap: 9px;
+            }
+
+            .m-inspire-card {
+                min-height: 170px;
+                padding: 11px;
+            }
+
+            .m-inspire-content strong {
+                font-size: .90rem;
+            }
+        }
+
+
+        .m-trip-head {
+            margin-top: 22px;
+            margin-bottom: 10px;
+            padding: 16px 17px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #f7faf8 0%, #edf7f3 100%);
+            border: 1px solid rgba(15,118,110,.12);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .m-trip-kicker {
+            display: block;
+            color: #0f766e;
+            font-size: .68rem;
+            font-weight: 800;
+            letter-spacing: .08em;
+            margin-bottom: 4px;
+        }
+
+        .m-trip-head h3 {
+            margin: 0;
+            color: #17252a;
+            font-size: 1.18rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .m-trip-head p {
+            margin: 5px 0 0;
+            color: #64748b;
+            font-size: .78rem;
+        }
+
+        .m-trip-refresh {
+            width: 38px;
+            height: 38px;
+            flex: 0 0 38px;
+            margin-left: 10px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            color: #0f766e;
+            box-shadow: 0 4px 14px rgba(15,23,42,.08);
+        }
+
 </style>
 
 
@@ -873,149 +1601,541 @@
             <!-- HERO -->
             <div class="dh-hero">
                 <div class="dh-hero-overlay"></div>
+
                 <div class="dh-hero-inner">
-                    <p class="dh-hero-eyebrow">Bienvenido a Caravaning Project</p>
-                    <h1 class="dh-hero-title">Caravaning Project</h1>
-                    <p class="dh-hero-sub">
-                        Descubre, vende, compra, alquila y vive la experiencia de viajar en autocaravana, caravana, camper o camping.<br>
-                        Tu aventura comienza aquí.
+
+                    <p class="dh-hero-eyebrow">
+                        VIAJA · DESCUBRE · VIVE
                     </p>
-                    <a href="{% url 'listings:listing_list' %}?listing_type=SALE" class="dh-hero-search" aria-label="Buscar anuncios">
-                        <span class="dh-hero-search-icon">
-                            <i class="bi bi-search"></i>
-                        </span>
-                        <span class="dh-hero-search-text">Buscar caravanas, campings, destinos, accesorios…</span>
-                        <span class="dh-hero-search-btn">Buscar</span>
-                    </a>
+
+                    <h1 class="dh-hero-title">
+                        Caravaning Project
+                    </h1>
+
+                    <h2 class="dh-hero-travel-title">
+                        Tu próxima aventura empieza mucho antes de arrancar
+                    </h2>
+
+                    <p class="dh-hero-sub">
+                        Descubre destinos, prepara tu ruta y encuentra dónde dormir,
+                        qué hacer y cómo viajar en camper, autocaravana o caravana.
+                    </p>
+
+                    <form action="{% url 'search' %}"
+                          method="get"
+                          class="dh-global-search">
+
+                        <i class="bi bi-search"></i>
+
+                        <input
+                            type="search"
+                            name="q"
+                            placeholder="Asturias, rutas, ferries, accesorios…"
+                            aria-label="Buscar en Caravaning Project"
+                            required>
+
+                        <button type="submit">
+                            Buscar
+                        </button>
+
+                    </form>
+
                     <div class="dh-hero-ctas">
-                        <a href="{% url 'listings:listing_list' %}?listing_type=SALE" class="dh-btn-primary">Ver anuncios</a>
-                        <a href="{% url 'listings:listing_create' %}" class="dh-btn-secondary">Publicar anuncio</a>
+
+                        <a href="{% url 'destinations:destination_list' %}"
+                           class="dh-btn-primary">
+                            <i class="bi bi-geo-alt-fill"></i>
+                            Explorar destinos
+                        </a>
+
+                        <a href="#escapada-sugerida"
+                           class="dh-btn-secondary">
+                            <i class="bi bi-stars"></i>
+                            Inspírame
+                        </a>
+
                     </div>
+
                 </div>
             </div>
 
-            <!-- STATS -->
-            <div class="dh-stats">
-                <div class="dh-stat-card">
-                    <div class="dh-stat-icon">🚐</div> {# Icono de furgoneta #}
-                    <div class="dh-stat-num">{{ active_listings_count|intcomma }}+</div>
-                    <div class="dh-stat-label">Anuncios activos</div>
-                </div>
-                <div class="dh-stat-card">
-                    <div class="dh-stat-icon">📍</div>
-                    <div class="dh-stat-num">{{ destinations_count|intcomma }}+</div>
-                    <div class="dh-stat-label">Destinos publicados</div>
-                </div>
-                <div class="dh-stat-card">
-                    <div class="dh-stat-icon">⭐</div>
-                    <div class="dh-stat-num">{{ average_rating }}/5</div>
-                    <div class="dh-stat-label">Valoración media</div>
-                </div>
-                <div class="dh-stat-card">
-                    <div class="dh-stat-icon">👥</div>
-                    <div class="dh-stat-num">{{ users_count|intcomma }}+</div>
-                    <div class="dh-stat-label">Usuarios registrados</div>
-                </div>
-            </div>
+            <!-- ESCAPADA INTELIGENTE DESKTOP -->
+            {% if suggested_trip %}
+            <section class="dh-trip" id="escapada-sugerida">
 
-            <!-- HOW IT WORKS -->
-            <div>
-                <h2 class="dh-section-title">¿Cómo funciona?</h2>
-                <p class="dh-section-sub">En tres pasos sencillos estás listo para tu próxima aventura</p>
-                <div class="dh-steps">
-                    <div class="dh-step">
-                        <div class="dh-step-num">1</div>
-                        <div class="dh-step-icon">🔍</div>
-                        <div class="dh-step-title">Explora los anuncios</div>
-                        <div class="dh-step-desc">Busca entre cientos de caravanas, autocaravanas y campers en venta o alquiler en toda España.</div>
+                <div class="dh-trip-head">
+                    <div>
+                        <span class="dh-trip-kicker">✨ ESCAPADA SUGERIDA</span>
+
+                        <h2 class="dh-trip-title">
+                            {{ suggested_trip.destination.title }}
+                        </h2>
+
+                        <p class="dh-trip-location">
+                            <i class="bi bi-geo-alt-fill"></i>
+                            {{ suggested_trip.destination.location }}
+                        </p>
                     </div>
-                    <div class="dh-step">
-                        <div class="dh-step-num">2</div>
-                        <div class="dh-step-icon">💬</div>
-                        <div class="dh-step-title">Contacta al vendedor</div>
-                        <div class="dh-step-desc">Escríbele directamente a través de nuestra plataforma de forma segura y sin intermediarios.</div>
-                    </div>
-                    <div class="dh-step">
-                        <div class="dh-step-num">3</div>
-                        <div class="dh-step-icon">🗺️</div>
-                        <div class="dh-step-title">¡A la aventura!</div>
-                        <div class="dh-step-desc">Descubre campings, destinos y consejos para caravaning antes de empezar tu próxima ruta.</div>
-                    </div>
+
+                    <a href="{% url 'home' %}" class="dh-trip-new">
+                        <i class="bi bi-shuffle"></i>
+                        Otra inspiración
+                    </a>
                 </div>
-            </div>
 
-            <!-- CTA BANNERS -->
-            <div class="dh-banners">
 
-                <!-- Venta -->
-                <div class="dh-banner venta">
-                    <div class="dh-banner-left">
-                        <p class="dh-banner-eyebrow">¿Tienes una caravana?</p>
-                        <h3 class="dh-banner-title">Vende tu caravana</h3>
-                        <p class="dh-banner-desc">Publica tu anuncio gratis y llega a miles de compradores interesados en toda España. Tarda menos de 5 minutos.</p>
-                        <div class="dh-banner-badges">
-                            <span class="dh-banner-badge">✓ Publicación gratuita</span>
-                            <span class="dh-banner-badge">✓ Sin comisiones</span>
-                            <span class="dh-banner-badge">✓ Gestión sencilla</span>
+                <div class="dh-trip-grid">
+
+                    <!-- DESTINO -->
+                    <a href="{{ suggested_trip.destination.get_absolute_url }}"
+                       class="dh-trip-card"
+                       {% if suggested_trip.destination.get_image_url %}
+                       style="background-image:
+                       linear-gradient(rgba(0,0,0,.06), rgba(0,0,0,.76)),
+                       url('{{ suggested_trip.destination.get_image_url }}');"
+                       {% endif %}>
+
+                        <div class="dh-trip-badge">
+                            <i class="bi bi-geo-alt-fill"></i>
+                            Descubre
                         </div>
-                    </div>
-                    <div class="dh-banner-right">
-                        <div class="dh-banner-icon">🏷️</div>
-                        {% if user.is_authenticated %}
-                            <a href="{% url 'listings:listing_create' %}" class="dh-banner-btn">Publicar anuncio gratis</a>
+
+                        <div class="dh-trip-card-content">
+                            <strong>
+                                {{ suggested_trip.destination.title }}
+                            </strong>
+                            <span>Conocer el destino →</span>
+                        </div>
+                    </a>
+
+
+                    <!-- EXPERIENCIA -->
+                    {% if suggested_trip.experience %}
+
+                        {% if suggested_trip.experience.pending %}
+
+                        <div class="dh-trip-card"
+                             style="background-image:
+                             linear-gradient(rgba(0,0,0,.06), rgba(0,0,0,.76)),
+                             url('{{ suggested_trip.experience.image }}');">
+
+                            <div class="dh-trip-badge">
+                                <i class="bi bi-compass"></i>
+                                Vive
+                            </div>
+
+                            <div class="dh-trip-card-content">
+                                <strong>
+                                    {{ suggested_trip.experience.title }}
+                                </strong>
+                                <span>Experiencias próximamente</span>
+                            </div>
+                        </div>
+
                         {% else %}
-                            <a href="{% url 'users:register' %}" class="dh-banner-btn">Publicar anuncio gratis</a>
+
+                        <a href="{{ suggested_trip.experience.url }}"
+                           target="_blank"
+                           rel="sponsored noopener"
+                           class="dh-trip-card"
+                           style="background-image:
+                           linear-gradient(rgba(0,0,0,.06), rgba(0,0,0,.76)),
+                           url('{{ suggested_trip.experience.image }}');">
+
+                            <div class="dh-trip-badge">
+                                <i class="bi bi-compass"></i>
+                                Vive
+                            </div>
+
+                            <div class="dh-trip-card-content">
+                                <strong>
+                                    {{ suggested_trip.experience.title }}
+                                </strong>
+                                <span>
+                                    {{ suggested_trip.experience.subtitle }} →
+                                </span>
+                            </div>
+                        </a>
+
                         {% endif %}
-                        <p class="dh-banner-note">Con registro previo</p>
-                    </div>
+
+                    {% endif %}
+
+
+                    <!-- DÓNDE DORMIR -->
+                    {% if suggested_trip.stay %}
+
+                        {% if suggested_trip.stay.external %}
+
+                        <a href="{{ suggested_trip.stay.url }}"
+                           target="_blank"
+                           rel="sponsored noopener"
+                           class="dh-trip-card"
+                           style="background-image:
+                           linear-gradient(rgba(0,0,0,.06), rgba(0,0,0,.76)),
+                           url('{{ suggested_trip.stay.image }}');">
+
+                        {% else %}
+
+                        <a href="{% url suggested_trip.stay.url_name %}"
+                           class="dh-trip-card"
+                           style="background-image:
+                           linear-gradient(rgba(0,0,0,.06), rgba(0,0,0,.76)),
+                           url('{{ suggested_trip.stay.image }}');">
+
+                        {% endif %}
+
+                            <div class="dh-trip-badge">
+                                <i class="bi bi-tree-fill"></i>
+                                Duerme
+                            </div>
+
+                            <div class="dh-trip-card-content">
+                                <strong>{{ suggested_trip.stay.title }}</strong>
+                                <span>{{ suggested_trip.stay.subtitle }} →</span>
+                            </div>
+                        </a>
+
+                    {% endif %}
+
+
+                    <!-- ALQUILER -->
+                    {% if suggested_trip.rental %}
+
+                        {% if suggested_trip.rental.external %}
+
+                        <a href="{{ suggested_trip.rental.url }}"
+                           target="_blank"
+                           rel="sponsored noopener"
+                           class="dh-trip-card"
+                           style="background-image:
+                           linear-gradient(rgba(0,0,0,.06), rgba(0,0,0,.76)),
+                           url('{{ suggested_trip.rental.image }}');">
+
+                        {% else %}
+
+                        <a href="{% url suggested_trip.rental.url_name %}"
+                           class="dh-trip-card"
+                           style="background-image:
+                           linear-gradient(rgba(0,0,0,.06), rgba(0,0,0,.76)),
+                           url('{{ suggested_trip.rental.image }}');">
+
+                        {% endif %}
+
+                            <div class="dh-trip-badge">
+                                <i class="bi bi-key-fill"></i>
+                                Viaja
+                            </div>
+
+                            <div class="dh-trip-card-content">
+                                <strong>{{ suggested_trip.rental.title }}</strong>
+                                <span>{{ suggested_trip.rental.subtitle }} →</span>
+                            </div>
+                        </a>
+
+                    {% endif %}
+
                 </div>
 
-                <!-- Alquiler externo -->
-                <div class="dh-banner alquiler">
-                    <div class="dh-banner-left">
-                        <p class="dh-banner-eyebrow">¿Quieres alquilar tu caravana?</p>
-                        <h3 class="dh-banner-title">Alquila con CamperDays</h3>
-                        <p class="dh-banner-desc">Compara opciones de alquiler de campers y autocaravanas para preparar tu próxima ruta con más flexibilidad.</p>
-                        <div class="dh-partner-row">
-                            <span class="dh-partner-label">Disponible en</span>
-                            <span class="dh-partner-pill">CamperDays</span>
-                            <span class="dh-partner-pill">Motorhome Republic</span>
-                            <span class="dh-partner-pill">+ más</span>
+
+                <!-- FERRY SOLO CUANDO CORRESPONDA -->
+                {% if suggested_trip.ferry_available %}
+                <a href="{% url 'ferries:home' %}" class="dh-trip-ferry">
+                    <span>
+                        <i class="bi bi-water"></i>
+                        Este viaje puede continuar en ferry con tu vehículo
+                    </span>
+
+                    <span>Consultar ferries →</span>
+                </a>
+                {% endif %}
+
+            </section>
+            {% endif %}
+
+            <!-- TU VIAJE EMPIEZA AQUÍ -->
+            <section class="dh-journey">
+
+                <div class="dh-journey-heading">
+                    <span class="dh-journey-kicker">
+                        CARAVANING PROJECT
+                    </span>
+
+                    <h2 class="dh-section-title">
+                        Tu viaje empieza aquí
+                    </h2>
+
+                    <p class="dh-section-sub">
+                        Inspírate, prepara tu ruta y encuentra todo lo que
+                        necesitas para disfrutar del camino.
+                    </p>
+                </div>
+
+                <div class="dh-steps">
+
+                    <!-- DESCUBRE -->
+                    <a href="{% url 'destinations:destination_list' %}"
+                       class="dh-step dh-step-link">
+
+                        <div class="dh-step-num">1</div>
+
+                        <div class="dh-step-icon">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+
+                        <div class="dh-step-title">
+                            Descubre
+                        </div>
+
+                        <div class="dh-step-desc">
+                            Encuentra destinos, rincones y rutas para
+                            inspirar tu próxima escapada en camper,
+                            autocaravana o caravana.
+                        </div>
+
+                        <span class="dh-step-action">
+                            Explorar destinos →
+                        </span>
+                    </a>
+
+
+                    <!-- PREPARA -->
+                    <a href="{% url 'camping' %}"
+                       class="dh-step dh-step-link">
+
+                        <div class="dh-step-num">2</div>
+
+                        <div class="dh-step-icon">
+                            <i class="bi bi-map"></i>
+                        </div>
+
+                        <div class="dh-step-title">
+                            Prepara
+                        </div>
+
+                        <div class="dh-step-desc">
+                            Organiza dónde dormir, qué hacer y cómo
+                            completar tu ruta con campings, alojamientos,
+                            experiencias y ferries cuando sean necesarios.
+                        </div>
+
+                        <span class="dh-step-action">
+                            Preparar la escapada →
+                        </span>
+                    </a>
+
+
+                    <!-- VIAJA -->
+                    <a href="{% url 'listings:external_rentals' %}"
+                       class="dh-step dh-step-link">
+
+                        <div class="dh-step-num">3</div>
+
+                        <div class="dh-step-icon">
+                            <i class="bi bi-truck"></i>
+                        </div>
+
+                        <div class="dh-step-title">
+                            Viaja
+                        </div>
+
+                        <div class="dh-step-desc">
+                            ¿No tienes camper? Encuentra una de alquiler
+                            y convierte la ruta que has preparado en
+                            tu próxima aventura.
+                        </div>
+
+                        <span class="dh-step-action">
+                            Buscar una camper →
+                        </span>
+                    </a>
+
+                </div>
+
+            </section>
+
+            <!-- SERVICIOS PARA TU VIAJE -->
+            <section class="dh-services">
+
+                <div class="dh-services-heading">
+                    <span class="dh-services-kicker">PREPARA TU AVENTURA</span>
+                    <h2 class="dh-section-title">Todo lo que puedes necesitar en ruta</h2>
+                    <p class="dh-section-sub">
+                        Alquiler, lugares donde dormir y opciones para continuar
+                        el viaje cuando tu ruta lo necesite.
+                    </p>
+                </div>
+
+                <div class="dh-banners">
+
+                    <!-- Alquiler CamperDays -->
+                    <div class="dh-banner alquiler">
+                        <div class="dh-banner-left">
+                            <p class="dh-banner-eyebrow">¿No tienes camper o autocaravana?</p>
+                            <h3 class="dh-banner-title">Alquila con CamperDays</h3>
+                            <p class="dh-banner-desc">
+                                Compara opciones de alquiler de campers y autocaravanas
+                                y empieza tu ruta desde distintos puntos de España.
+                            </p>
+                            <div class="dh-partner-row">
+                                <span class="dh-partner-label">Alquiler con</span>
+                                <span class="dh-partner-pill">CamperDays</span>
+                            </div>
+                        </div>
+
+                        <div class="dh-banner-right">
+                            <div class="dh-banner-icon">🔑</div>
+                            <a href="{% url 'listings:external_rentals' %}"
+                               class="dh-banner-btn">
+                                Buscar camper de alquiler
+                            </a>
+                            <p class="dh-banner-note">
+                                Encuentra el vehículo para tu próxima ruta
+                            </p>
                         </div>
                     </div>
-                    <div class="dh-banner-right">
-                        <div class="dh-banner-icon">🔑</div>
-                        <a href="{% url 'listings:external_rentals' %}" class="dh-banner-btn">Ver alquileres externos</a>
-                        <p class="dh-banner-note">Seguro incluido · Soporte 24h</p>
-                    </div>
-                </div>
 
-                <!-- Campings -->
-                <div class="dh-banner camping">
-                    <div class="dh-banner-left">
-                        <p class="dh-banner-eyebrow">Campings y parcelas</p>
-                        <h3 class="dh-banner-title">Prepara tu estancia en camping</h3>
-                        <p class="dh-banner-desc">Consulta criterios para elegir campings adaptados a autocaravanas, campers y caravanas: accesos, parcelas, servicios y planes cercanos.</p>
-                        <div class="dh-banner-badges">
-                            <span class="dh-banner-badge">Parcelas</span>
-                            <span class="dh-banner-badge">Bungalows</span>
-                            <span class="dh-banner-badge">Servicios camper</span>
+
+                    <!-- Campings -->
+                    <div class="dh-banner camping">
+                        <div class="dh-banner-left">
+                            <p class="dh-banner-eyebrow">Campings y parcelas</p>
+                            <h3 class="dh-banner-title">Encuentra dónde hacer noche</h3>
+                            <p class="dh-banner-desc">
+                                Descubre opciones para dormir durante tu ruta:
+                                campings, parcelas y servicios pensados para
+                                campers, autocaravanas y caravanas.
+                            </p>
+                            <div class="dh-banner-badges">
+                                <span class="dh-banner-badge">Parcelas</span>
+                                <span class="dh-banner-badge">Bungalows</span>
+                                <span class="dh-banner-badge">Servicios camper</span>
+                            </div>
+                        </div>
+
+                        <div class="dh-banner-right">
+                            <div class="dh-banner-icon">
+                                <i class="bi bi-tree"></i>
+                            </div>
+                            <a href="{% url 'camping' %}" class="dh-banner-btn">
+                                Explorar campings
+                            </a>
+                            <p class="dh-banner-note">
+                                Opciones para completar tu ruta
+                            </p>
                         </div>
                     </div>
-                    <div class="dh-banner-right">
-                        <div class="dh-banner-icon"><i class="bi bi-tree"></i></div>
-                        <a href="{% url 'camping' %}" class="dh-banner-btn">Ver apartado camping</a>
-                        <p class="dh-banner-note">Guías y destinos para planificar mejor</p>
+
+
+                    <!-- AlohaCamp -->
+                    <div class="dh-banner alohacamp">
+                        <div class="dh-banner-left">
+                            <p class="dh-banner-eyebrow">Una noche diferente</p>
+                            <h3 class="dh-banner-title">Descubre AlohaCamp</h3>
+                            <p class="dh-banner-desc">
+                                Deja la camper por una noche y descubre cabañas,
+                                glamping y alojamientos especiales rodeados de naturaleza.
+                            </p>
+                            <div class="dh-banner-badges">
+                                <span class="dh-banner-badge">Cabañas</span>
+                                <span class="dh-banner-badge">Glamping</span>
+                                <span class="dh-banner-badge">Naturaleza</span>
+                            </div>
+                        </div>
+
+                        <div class="dh-banner-right">
+                            <div class="dh-banner-icon">🏡</div>
+                            <a href="{% url 'alohacamp' %}" class="dh-banner-btn">
+                                Descubrir AlohaCamp
+                            </a>
+                            <p class="dh-banner-note">
+                                Escapadas especiales durante tu viaje
+                            </p>
+                        </div>
                     </div>
+
+
+                    <!-- Ferries -->
+                    <div class="dh-banner ferries">
+                        <div class="dh-banner-left">
+                            <p class="dh-banner-eyebrow">Cuando la ruta cruza el mar</p>
+                            <h3 class="dh-banner-title">Continúa tu viaje en ferry</h3>
+                            <p class="dh-banner-desc">
+                                Si tu destino lo requiere, consulta rutas para viajar
+                                en ferry con tu camper, autocaravana o caravana y
+                                continuar al otro lado con tu propio vehículo.
+                            </p>
+                            <div class="dh-banner-badges">
+                                <span class="dh-banner-badge">Baleares</span>
+                                <span class="dh-banner-badge">Cerdeña</span>
+                                <span class="dh-banner-badge">Marruecos</span>
+                            </div>
+                        </div>
+
+                        <div class="dh-banner-right">
+                            <div class="dh-banner-icon">⛴️</div>
+                            <a href="{% url 'ferries:home' %}" class="dh-banner-btn">
+                                Explorar ferries
+                            </a>
+                            <p class="dh-banner-note">
+                                Solo cuando tu viaje necesita cruzar el mar
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
 
-            </div>
+
+                <!-- COMPRAVENTA SECUNDARIA -->
+                <div class="dh-marketplace-mini">
+
+                    <div class="dh-marketplace-mini-icon">
+                        <i class="bi bi-tag"></i>
+                    </div>
+
+                    <div class="dh-marketplace-mini-copy">
+                        <span class="dh-marketplace-mini-kicker">
+                            COMPRAVENTA
+                        </span>
+
+                        <h3>
+                            Compra o vende tu camper, autocaravana o caravana
+                        </h3>
+
+                        <p>
+                            Explora vehículos anunciados en Caravaning Project
+                            o publica el tuyo gratuitamente.
+                        </p>
+                    </div>
+
+                    <div class="dh-marketplace-mini-actions">
+
+                        <a href="{% url 'listings:listing_list' %}?listing_type=SALE"
+                           class="dh-marketplace-mini-secondary">
+                            Ver vehículos
+                        </a>
+
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'listings:listing_create' %}"
+                               class="dh-marketplace-mini-primary">
+                                Publicar anuncio
+                            </a>
+                        {% else %}
+                            <a href="{% url 'users:register' %}"
+                               class="dh-marketplace-mini-primary">
+                                Publicar anuncio
+                            </a>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </section>
 
         </div>
     </div>
 </div>
-
-
 <!-- ===================================================
      MOBILE VERSION (sin cambios respecto al original)
 =================================================== -->
@@ -1031,7 +2151,7 @@
                     </div>
                     <span>Caravaning Project</span>
                 </a>
-                <a href="{% url 'listings:listing_list' %}" class="m-hero-search-btn" aria-label="Buscar">
+                <a href="{% url 'search' %}" class="m-hero-search-btn" aria-label="Buscar en Caravaning Project">
                     <i class="bi bi-search" style="color:white;font-size:15px;"></i>
                 </a>
             </div>
@@ -1044,65 +2164,169 @@
         <!-- Main content -->
         <div class="m-content">
 
-            <!-- Search bar -->
-            <a href="{% url 'listings:listing_list' %}?listing_type=SALE" class="m-search" aria-label="Buscar anuncios">
-                <i class="bi bi-search" style="font-size:15px;color:#9ca3af;"></i>
-                <span>Buscar caravanas, campings, destinos…</span>
-            </a>
+
+
+            <!-- Buscador global -->
+            <section class="m-discover-search">
+
+                <div class="m-discover-heading">
+                    <div class="m-discover-icon">
+                        <i class="bi bi-compass"></i>
+                    </div>
+
+                    <div>
+                        <h2>¿Dónde empieza tu próxima ruta?</h2>
+                        <p>Busca destinos, rutas, guías y consejos</p>
+                    </div>
+                </div>
+
+                <form action="{% url 'search' %}"
+                      method="get"
+                      class="m-discover-form">
+
+                    <i class="bi bi-search"></i>
+
+                    <input
+                        type="search"
+                        name="q"
+                        placeholder='Prueba "Asturias"'
+                        aria-label="Buscar en Caravaning Project"
+                        autocomplete="off"
+                        required>
+
+                    <button type="submit" aria-label="Buscar">
+                        <i class="bi bi-arrow-up-right"></i>
+                    </button>
+
+                </form>
+
+                <div class="m-search-suggestions">
+                    <span>Ideas:</span>
+
+                    <a href="{% url 'search' %}?q=Asturias">
+                        Asturias
+                    </a>
+
+                    <a href="{% url 'search' %}?q=Ferries">
+                        Ferries
+                    </a>
+
+                    <a href="{% url 'search' %}?q=Invierno">
+                        Invierno
+                    </a>
+                </div>
+
+            </section>
 
             <!-- Categories -->
             <p class="m-label">Explorar</p>
             <div class="m-categories">
-                <a href="{% url 'listings:listing_list' %}?listing_type=SALE" class="m-cat-card" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1563783850023-077d97825802?q=80&w=400&h=300&fit=crop');">
-                    <div class="m-cat-icon"><i class="bi bi-truck"></i></div>
-                    <p class="m-cat-title">Compra</p>
-                    <p class="m-cat-desc">En venta</p>
-                </a>
-                <a href="{% url 'listings:external_rentals' %}" class="m-cat-card" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://plus.unsplash.com/premium_photo-1676660358272-35a60b3a614d?q=80&w=400&h=300&fit=crop');">
-                    <div class="m-cat-icon"><i class="bi bi-key"></i></div>
-                    <p class="m-cat-title">Alquiler</p>
-                    <p class="m-cat-desc">CamperDays</p>
-                </a>
+
                 <a href="{% url 'destinations:destination_list' %}" class="m-cat-card" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=400&h=300&fit=crop');">
                     <div class="m-cat-icon"><i class="bi bi-geo-alt"></i></div>
                     <p class="m-cat-title">Destinos</p>
                     <p class="m-cat-desc">Lugares increíbles</p>
                 </a>
+
+                <a href="{% url 'experiences:home' %}" class="m-cat-card" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('/media/experiences/hero-experiencias.webp');">
+                    <div class="m-cat-icon"><i class="bi bi-compass"></i></div>
+                    <p class="m-cat-title">Experiencias</p>
+                    <p class="m-cat-desc">Planes para tu viaje</p>
+                </a>
+
+                <a href="{% url 'listings:external_rentals' %}" class="m-cat-card" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://plus.unsplash.com/premium_photo-1676660358272-35a60b3a614d?q=80&w=400&h=300&fit=crop');">
+                    <div class="m-cat-icon"><i class="bi bi-key"></i></div>
+                    <p class="m-cat-title">Alquiler</p>
+                    <p class="m-cat-desc">CamperDays</p>
+                </a>
+
                 <a href="{% url 'camping' %}" class="m-cat-card" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=400&h=300&fit=crop');">
                     <div class="m-cat-icon"><i class="bi bi-tree"></i></div>
                     <p class="m-cat-title">Campings</p>
                     <p class="m-cat-desc">Parcelas y rutas</p>
                 </a>
-                <a href="{% url 'shop:product_list' %}" class="m-cat-card" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://plus.unsplash.com/premium_photo-1681488262364-8aeb1b6aac56?q=80&w=400&h=300&fit=crop');">
-                    <div class="m-cat-icon"><i class="bi bi-bag"></i></div>
-                    <p class="m-cat-title">Tienda</p>
-                    <p class="m-cat-desc">Accesorios premium</p>
+
+                <a href="{% url 'alohacamp' %}" class="m-cat-card" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=400&h=300&fit=crop');">
+                    <div class="m-cat-icon"><i class="bi bi-house-heart"></i></div>
+                    <p class="m-cat-title">AlohaCamp</p>
+                    <p class="m-cat-desc">Escapadas especiales</p>
                 </a>
+
+                <a href="{% url 'ferries:home' %}" class="m-cat-card" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('{% static 'images/ferries/ferry-autocaravana.webp' %}');">
+                    <div class="m-cat-icon"><i class="bi bi-water"></i></div>
+                    <p class="m-cat-title">Ferries</p>
+                    <p class="m-cat-desc">Viaja con tu camper</p>
+                </a>
+                <!-- La Comunidad -->
+                <a href="{% url 'community:home' %}"
+                   class="m-cat-card"
+                   style="background-image:
+                   linear-gradient(
+                       rgba(0,0,0,.1),
+                       rgba(0,0,0,.6)
+                   ),
+                   url('https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&q=85&w=500');">
+                    <span class="m-cat-icon">🚐</span>
+                    <p class="m-cat-title">La Comunidad</p>
+                </a>
+
+
                 <a href="{% url 'blog:post_list' %}" class="m-cat-card" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://plus.unsplash.com/premium_photo-1726862932006-c6e2f8434266?q=80&w=400&h=300&fit=crop');">
                     <div class="m-cat-icon"><i class="bi bi-journal-text"></i></div>
                     <p class="m-cat-title">Blog</p>
                     <p class="m-cat-desc">Guías y noticias</p>
                 </a>
+
+                <a href="{% url 'shop:product_list' %}" class="m-cat-card" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://plus.unsplash.com/premium_photo-1681488262364-8aeb1b6aac56?q=80&w=400&h=300&fit=crop');">
+                    <div class="m-cat-icon"><i class="bi bi-bag"></i></div>
+                    <p class="m-cat-title">Tienda</p>
+                    <p class="m-cat-desc">Accesorios para viajar</p>
+                </a>
+
+                <a href="{% url 'listings:listing_list' %}?listing_type=SALE" class="m-cat-card" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1563783850023-077d97825802?q=80&w=400&h=300&fit=crop');">
+                    <div class="m-cat-icon"><i class="bi bi-truck"></i></div>
+                    <p class="m-cat-title">Compra</p>
+                    <p class="m-cat-desc">Campers y caravanas</p>
+                </a>
+
             </div>
 
             <!-- Quick links -->
             <p class="m-label">Accesos rápidos</p>
             <div class="m-quicklinks">
+
+                <a href="{% url 'destinations:destination_list' %}" class="m-quicklink">
+                    <i class="bi bi-geo-alt" style="color:#16a34a;"></i> Destinos
+                </a>
+
+                <a href="{% url 'experiences:home' %}" class="m-quicklink">
+                    <i class="bi bi-compass" style="color:#7c3aed;"></i> Experiencias
+                </a>
+
+                <a href="{% url 'camping' %}" class="m-quicklink">
+                    <i class="bi bi-tree" style="color:#0f766e;"></i> Campings
+                </a>
+
+                <a href="{% url 'alohacamp' %}" class="m-quicklink">
+                    <i class="bi bi-house-heart" style="color:#b45309;"></i> AlohaCamp
+                </a>
+
+                <a href="{% url 'listings:external_rentals' %}" class="m-quicklink">
+                    <i class="bi bi-key" style="color:#185fa5;"></i> Alquiler
+                </a>
+
+                <a href="{% url 'ferries:home' %}" class="m-quicklink">
+                    <i class="bi bi-water" style="color:#0284c7;"></i> Ferries
+                </a>
+
                 <a href="{% url 'blog:post_list' %}" class="m-quicklink blog">
                     <i class="bi bi-journal-text"></i> Blog
                 </a>
-                <a href="{% url 'camping' %}" class="m-quicklink" style="color:#374151;">
-                    <i class="bi bi-tree" style="color:#0f766e;"></i> Campings
+
+                <a href="{% url 'shop:product_list' %}" class="m-quicklink">
+                    <i class="bi bi-bag" style="color:#9333ea;"></i> Tienda
                 </a>
-                <a href="{% url 'listings:listing_list' %}?featured=true" class="m-quicklink featured">
-                    <i class="bi bi-star"></i> Destacados
-                </a>
-                <a href="{% url 'listings:listing_list' %}?ordering=-created_at" class="m-quicklink new">
-                    <i class="bi bi-clock"></i> Nuevos
-                </a>
-                <a href="{% url 'listings:external_rentals' %}" class="m-quicklink" style="color:#374151;">
-                    <i class="bi bi-calendar3" style="color:#185fa5;"></i> Alquiler
-                </a>
+
             </div>
 
             <!-- Sell CTA -->
@@ -1122,50 +2346,177 @@
             </div>
 
             {% if not request.user.is_authenticated %}
-            <a href="{% url 'users:login' %}" class="m-sell-btn-secondary">
+            <a href="{% url 'users:login' %}?next={{ request.get_full_path|urlencode }}"  class="m-sell-btn-secondary">
                 ¿Ya tienes cuenta? Inicia sesión →
             </a>
             {% endif %}
 
-            <!-- Featured -->
-            <p class="m-label" style="margin-top:20px;">Destacados del mes</p>
-            <div class="m-featured-grid">
-                <a href="{% url 'listings:listing_list' %}?featured=true" class="m-featured-item offers" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://plus.unsplash.com/premium_photo-1728544618993-c61624eaefa3?q=80&w=400&h=300&fit=crop');">
-                    <i class="bi bi-fire"></i>
-                    <span>Ofertas especiales</span>
-                    <small>Ver todos</small>
-                </a>
-                <a href="{% url 'destinations:destination_list' %}?popular=true" class="m-featured-item popular" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=400&h=300&fit=crop');">
-                    <i class="bi bi-map"></i>
-                    <span>Destinos populares</span>
-                    <small>Ver todos</small>
-                </a>
+            <!-- Escapada inteligente -->
+            {% if suggested_trip %}
+            <div class="m-trip-head">
+                <div>
+                    <span class="m-trip-kicker">✨ ESCAPADA SUGERIDA</span>
+                    <h3>{{ suggested_trip.destination.title }}</h3>
+                    <p>
+                        <i class="bi bi-geo-alt-fill"></i>
+                        {{ suggested_trip.destination.location }}
+                    </p>
+                </div>
+
+                <span class="m-trip-refresh" title="Nueva sugerencia">
+                    <i class="bi bi-shuffle"></i>
+                </span>
             </div>
 
-            <!-- Statistics -->
-            <p class="m-label" style="margin-top:20px;">Nuestra comunidad</p>
-            <div class="m-stats">
-                <div class="m-stat-card">
-                    <div class="m-stat-icon-bg">🚐</div>
-                    <div class="m-stat-num">{{ active_listings_count|intcomma }}+</div>
-                    <div class="m-stat-label">Anuncios</div>
-                </div>
-                <div class="m-stat-card">
-                    <div class="m-stat-icon-bg">📍</div>
-                    <div class="m-stat-num">{{ destinations_count|intcomma }}+</div>
-                    <div class="m-stat-label">Destinos</div>
-                </div>
-                <div class="m-stat-card">
-                    <div class="m-stat-icon-bg">⭐</div>
-                    <div class="m-stat-num">{{ average_rating }}/5</div>
-                    <div class="m-stat-label">Valoración</div>
-                </div>
-                <div class="m-stat-card">
-                    <div class="m-stat-icon-bg">👥</div>
-                    <div class="m-stat-num">{{ users_count|intcomma }}+</div>
-                    <div class="m-stat-label">Usuarios</div>
-                </div>
+            <div class="m-inspire-grid">
+
+                <!-- DESTINO -->
+                <a href="{{ suggested_trip.destination.get_absolute_url }}"
+                   class="m-inspire-card"
+                   {% if suggested_trip.destination.get_image_url %}
+                   style="background-image:
+                   linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.72)),
+                   url('{{ suggested_trip.destination.get_image_url }}');"
+                   {% endif %}>
+
+                    <div class="m-inspire-badge">
+                        <i class="bi bi-geo-alt-fill"></i> Descubre
+                    </div>
+
+                    <div class="m-inspire-content">
+                        <strong>{{ suggested_trip.destination.title }}</strong>
+                        <span>Conocer el destino →</span>
+                    </div>
+                </a>
+
+
+                <!-- EXPERIENCIA -->
+                {% if suggested_trip.experience %}
+                    {% if suggested_trip.experience.pending %}
+
+                    <div class="m-inspire-card"
+                         style="background-image:
+                         linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.72)),
+                         url('{{ suggested_trip.experience.image }}');">
+
+                        <div class="m-inspire-badge">
+                            <i class="bi bi-compass"></i> Vive
+                        </div>
+
+                        <div class="m-inspire-content">
+                            <strong>{{ suggested_trip.experience.title }}</strong>
+                            <span>Experiencias próximamente</span>
+                        </div>
+                    </div>
+
+                    {% else %}
+
+                    <a href="{{ suggested_trip.experience.url }}"
+                       class="m-inspire-card">
+
+                        <div class="m-inspire-badge">
+                            <i class="bi bi-compass"></i> Vive
+                        </div>
+
+                        <div class="m-inspire-content">
+                            <strong>{{ suggested_trip.experience.title }}</strong>
+                            <span>{{ suggested_trip.experience.subtitle }} →</span>
+                        </div>
+                    </a>
+
+                    {% endif %}
+                {% endif %}
+
+
+                <!-- DÓNDE DORMIR -->
+                {% if suggested_trip.stay %}
+
+                {% if suggested_trip.stay.external %}
+                <a href="{{ suggested_trip.stay.url }}"
+                   target="_blank"
+                   rel="sponsored noopener"
+                   class="m-inspire-card"
+                   style="background-image:
+                   linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.72)),
+                   url('{{ suggested_trip.stay.image }}');">
+                {% else %}
+                <a href="{% url suggested_trip.stay.url_name %}"
+                   class="m-inspire-card"
+                   style="background-image:
+                   linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.72)),
+                   url('{{ suggested_trip.stay.image }}');">
+                {% endif %}
+
+                    <div class="m-inspire-badge">
+                        <i class="bi bi-tree-fill"></i> Duerme
+                    </div>
+
+                    <div class="m-inspire-content">
+                        <strong>{{ suggested_trip.stay.title }}</strong>
+                        <span>{{ suggested_trip.stay.subtitle }} →</span>
+                    </div>
+                </a>
+
+                {% endif %}
+
+
+                <!-- ALQUILER -->
+                {% if suggested_trip.rental %}
+
+                {% if suggested_trip.rental.external %}
+                <a href="{{ suggested_trip.rental.url }}"
+                   target="_blank"
+                   rel="sponsored noopener"
+                   class="m-inspire-card"
+                   style="background-image:
+                   linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.72)),
+                   url('{{ suggested_trip.rental.image }}');">
+                {% else %}
+                <a href="{% url suggested_trip.rental.url_name %}"
+                   class="m-inspire-card"
+                   style="background-image:
+                   linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.72)),
+                   url('{{ suggested_trip.rental.image }}');">
+                {% endif %}
+
+                    <div class="m-inspire-badge">
+                        <i class="bi bi-key-fill"></i> Viaja
+                    </div>
+
+                    <div class="m-inspire-content">
+                        <strong>{{ suggested_trip.rental.title }}</strong>
+                        <span>{{ suggested_trip.rental.subtitle }} →</span>
+                    </div>
+                </a>
+
+                {% endif %}
+
+
+                <!-- FERRY: solo aparecerá cuando el motor lo considere -->
+                {% if suggested_trip.ferry_available %}
+                <a href="{% url 'ferries:home' %}"
+                   class="m-inspire-card"
+                   style="background-image:
+                   linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.72)),
+                   url('/static/images/ferries/ferry-autocaravana.webp');">
+
+                    <div class="m-inspire-badge">
+                        <i class="bi bi-water"></i> Embarca
+                    </div>
+
+                    <div class="m-inspire-content">
+                        <strong>Viaja con tu vehículo</strong>
+                        <span>Consultar ferries →</span>
+                    </div>
+                </a>
+                {% endif %}
+
             </div>
+            {% endif %}
+
+
+            <!-- Statistics -->
+            
 
         </div>
     </div>

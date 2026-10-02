@@ -1,0 +1,458 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.community-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 16px 70px;
+}
+
+.community-hero {
+    background: linear-gradient(
+        135deg,
+        #244a38,
+        #4f785b
+    );
+    color: white;
+    border-radius: 24px;
+    padding: 55px 30px;
+    text-align: center;
+    margin-bottom: 38px;
+}
+
+.community-hero h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.community-hero p {
+    max-width: 650px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+}
+
+.community-section {
+    margin: 44px 0;
+}
+
+.community-section h2 {
+    font-size: 1.8rem;
+    font-weight: 750;
+    margin-bottom: 22px;
+}
+
+.community-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.community-card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 5px 22px rgba(0,0,0,.07);
+    height: 100%;
+}
+
+.community-card img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+}
+
+.community-card-body {
+    padding: 19px;
+}
+
+.community-card h3 {
+    font-size: 1.15rem;
+    font-weight: 750;
+    margin-bottom: 8px;
+}
+
+.community-card p {
+    color: #59665e;
+    font-size: .95rem;
+}
+
+.community-stats {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: .9rem;
+    color: #59665e;
+}
+
+.community-empty {
+    background: #f2f6f1;
+    padding: 28px;
+    border-radius: 16px;
+    color: #526455;
+}
+
+.community-event {
+    padding: 20px;
+    border: 1px solid #dce6dd;
+    border-radius: 16px;
+    background: white;
+}
+
+.community-event-date {
+    color: #38704c;
+    font-weight: 700;
+}
+
+@media (max-width: 1000px) {
+    .community-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 560px) {
+    .community-page {
+        padding: 15px 12px 45px;
+    }
+
+    .community-hero {
+        padding: 38px 19px;
+        border-radius: 18px;
+    }
+
+    .community-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .community-card img {
+        height: 205px;
+    }
+
+    .community-section {
+        margin: 34px 0;
+    }
+}
+</style>
+
+<main class="community-page">
+
+    <header class="community-hero">
+        <h1>La Comunidad</h1>
+        <p>
+            Comparte tus rutas, enseña tu vehículo,
+            cuenta tus experiencias y descubre
+            próximas quedadas.
+        </p>
+    </header>
+
+    
+    <div style="
+        display:flex;
+        justify-content:center;
+        gap:12px;
+        flex-wrap:wrap;
+        margin:-12px 0 35px;
+    ">
+        <a
+            href="{% url 'community:create' %}"
+            class="btn btn-success btn-lg"
+        >
+            📸 Compartir mi aventura
+        </a>
+<a href="{% url 'community:event_create' %}"
+   class="btn btn-outline-success"
+   style="margin:6px;display:inline-block;">
+    📅 Organizar una quedada
+</a>
+
+
+        {% if user.is_authenticated %}
+        <a
+            href="{% url 'community:my_publications' %}"
+            class="btn btn-outline-success btn-lg"
+        >
+            Mis publicaciones
+        </a>
+        {% endif %}
+    </div>
+
+<section class="community-section">
+        <h2>Explora nuestra comunidad</h2>
+
+        <div class="community-grid">
+
+            <article class="community-card">
+                <img
+                    src="{% static 'images/community/rutas.webp' %}"
+                    alt="Paisaje de montaña"
+                    loading="lazy"
+                >
+                <div class="community-card-body">
+                    <h3><a href="{% url 'community:category' 'rutas' %}" style="color:inherit;text-decoration:none">🗺️ Rutas</a></h3>
+                    <p>
+                        Descubre recorridos y comparte
+                        tus lugares favoritos.
+                    </p>
+                </div>
+            </article>
+
+            <article class="community-card">
+                <img
+                    src="{% static 'images/community/vehiculos.webp' %}"
+                    alt="Vehículo de viaje"
+                    loading="lazy"
+                >
+                <div class="community-card-body">
+                    <h3><a href="{% url 'community:category' 'vehiculos' %}" style="color:inherit;text-decoration:none">🚐 Vehículos</a></h3>
+                    <p>
+                        Conoce los vehículos
+                        de otros viajeros.
+                    </p>
+                </div>
+            </article>
+
+            <article class="community-card">
+                <img
+                    src="{% static 'images/community/experiencias.webp' %}"
+                    alt="Paisaje junto a un lago"
+                    loading="lazy"
+                >
+                <div class="community-card-body">
+                    <h3><a href="{% url 'community:category' 'experiencias' %}" style="color:inherit;text-decoration:none">🌄 Experiencias</a></h3>
+                    <p>
+                        Historias y aventuras
+                        para inspirar tu próximo viaje.
+                    </p>
+                </div>
+            </article>
+
+            <article class="community-card">
+                <img
+                    src="{% static 'images/community/eventos.webp' %}"
+                    alt="Naturaleza y actividades al aire libre"
+                    loading="lazy"
+                >
+                <div class="community-card-body">
+                    <h3><a href="{% url 'community:category' 'eventos' %}" style="color:inherit;text-decoration:none">📅 Eventos</a></h3>
+                    <p>
+                        Quedadas, concentraciones,
+                        ferias y actividades.
+                    </p>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="community-section">
+        <h2>❤️ Las más populares</h2>
+
+        {% if populares %}
+        <div class="community-grid">
+
+            {% for publicacion in populares %}
+            <article class="community-card">
+
+                {% with foto=publicacion.images.first %}
+                    {% if foto and foto.image %}
+                    <img
+                        src="{{ foto.image.url }}"
+                        alt="{{ publicacion.title }}"
+                        loading="lazy"
+                    >
+                    {% endif %}
+                {% endwith %}
+
+                <div class="community-card-body">
+
+                    <small>
+                        {{ publicacion.get_publication_type_display }}
+                    </small>
+
+                    <h3><a href="{% url 'community:detail' publicacion.slug %}" style="color:inherit;text-decoration:none">{{ publicacion.title }}</a></h3>
+
+                    <p>
+                        {{ publicacion.description|truncatewords:18 }}
+                    </p>
+
+                    <div class="community-stats">
+                        <span>
+                            ❤️ {{ publicacion.total_likes }}
+                        </span>
+                        <span>
+                            💬 {{ publicacion.total_comments }}
+                        </span>
+                    </div>
+
+                </div>
+            </article>
+            {% endfor %}
+
+        </div>
+        {% else %}
+        <div class="community-empty">
+            Todavía no hay publicaciones.
+            ¡Pronto comenzaremos a compartir aventuras!
+        </div>
+        {% endif %}
+    </section>
+
+    <section class="community-section">
+        <h2>🆕 Últimas publicaciones</h2>
+
+        {% if recientes %}
+        <div class="community-grid">
+            {% for publicacion in recientes %}
+
+            <article class="community-card">
+
+                {# community-recent-image-v1 #}
+                {% with foto=publicacion.images.first %}
+                    {% if foto and foto.image %}
+                        <img
+                            src="{{ foto.image.url }}"
+                            alt="{{ publicacion.title }}"
+                            loading="lazy"
+                            style="
+                                width:100%;
+                                height:240px;
+                                object-fit:cover;
+                                display:block;
+                            "
+                        >
+                    {% endif %}
+                {% endwith %}
+
+                <div class="community-card-body">
+
+                    <small>
+                        {{ publicacion.get_publication_type_display }}
+                    </small>
+
+                    <h3><a href="{% url 'community:detail' publicacion.slug %}" style="color:inherit;text-decoration:none">{{ publicacion.title }}</a></h3>
+
+                    <p>
+                        {{ publicacion.description|truncatewords:20 }}
+                    </p>
+
+                    <div class="community-stats">
+                        <span>
+                            ❤️ {{ publicacion.total_likes }}
+                        </span>
+                        <span>
+                            💬 {{ publicacion.total_comments }}
+                        </span>
+                    </div>
+
+                </div>
+            </article>
+
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="community-empty">
+            Aún no hay publicaciones recientes.
+        </div>
+        {% endif %}
+    </section>
+
+    <section class="community-section">
+        <h2>📅 Próximos eventos y quedadas</h2>
+    <div class="text-center my-4">
+        <a
+            href="{% url 'community:event_create' %}"
+            class="btn btn-outline-success"
+        >
+            📅 Proponer una quedada
+        </a>
+    </div>
+
+
+        {% if proximos_eventos %}
+        <div class="community-grid">
+
+            {% for evento in proximos_eventos %}
+
+            <article class="community-event"
+                     style="overflow:hidden;padding:0;">
+
+                {% with photo=evento.publication.images.first %}
+                    {% if photo and photo.image %}
+                        <a href="{% url 'community:event_detail' evento.publication.slug %}">
+                            <img
+                                src="{{ photo.image.url }}"
+                                alt="{{ evento.publication.title }}"
+                                class="community-event-photo"
+                                loading="lazy"
+                                style="width:100%;height:210px;object-fit:cover;"
+                            >
+                        </a>
+                    {% else %}
+                        <div style="height:170px;background:#e5eee4;
+                                    display:flex;align-items:center;
+                                    justify-content:center;font-size:55px;">
+                            🚐
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <div style="padding:22px;">
+
+                    <div class="community-event-date">
+                        📅 {{ evento.starts_at|date:"d/m/Y" }}
+                        
+                    </div>
+
+                    <h3 style="margin-top:15px;">
+                        <a
+                            href="{% url 'community:event_detail' evento.publication.slug %}"
+                            style="color:inherit;text-decoration:none;"
+                        >
+                            {{ evento.publication.title }}
+                        </a>
+                    </h3>
+
+                    <p>📍 {{ evento.publication.location }}</p>
+
+                    <p>
+                        {{ evento.publication.description|striptags|truncatewords:20 }}
+                    </p>
+
+                    <p style="font-weight:600;">
+                        👥 {{ evento.registrations.count }} inscritos
+
+                        {% if evento.capacity %}
+                            / {{ evento.capacity }} plazas
+                        {% else %}
+                            · Sin límite de plazas
+                        {% endif %}
+                    </p>
+
+                    <a
+                        href="{% url 'community:event_detail' evento.publication.slug %}"
+                        class="btn btn-success rounded-pill w-100 mt-2"
+                    >
+                        Ver evento y apuntarme
+                    </a>
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+        {% else %}
+        <div class="community-empty">
+            Todavía no hay próximos eventos publicados.
+        </div>
+        {% endif %}
+    </section>
+
+</main>
+
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
@@ -7,19 +7,24 @@ from django.contrib.sitemaps.views import sitemap
 from django.contrib.auth import views as auth_views # Importar las vistas de autenticación de Django
 from . import views
 from .sitemaps import sitemaps
-from pages.views import CampingView
+from pages.views import CampingView, AlohaCampView
 
 urlpatterns = [
+    path('comunidad/', include('community.urls')),
     path('admin/', admin.site.urls),
     # Rutas de las aplicaciones
     path('', views.index, name='home'),
+    path('buscar/', views.search, name='search'),
     path('camping/', CampingView.as_view(), name='camping'),
+    path('alohacamp/', AlohaCampView.as_view(), name='alohacamp'),
     path('blog/', include('blog.urls', namespace='blog')),
     path('listings/', include('listings.urls', namespace='listings')),
     path('users/', include('users.urls', namespace='users')),
     path('messaging/', include('messaging.urls', namespace='messaging')),
     path('destinations/', include('destinations.urls', namespace='destinations')),
     path('shop/', include('shop.urls', namespace='shop')),
+    path('ferries/', include('ferries.urls', namespace='ferries')),
+    path('experiences/', include('experiences.urls', namespace='experiences')),
     path('info/', include('pages.urls')),
     # Ruta para cerrar sesión
     path('users/logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),

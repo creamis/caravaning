@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <title>Accediendo | Caravaning Project</title>
+</head>
+<body>
+    <p>Accediendo a Caravaning Project...</p>
+
+    {{ destination|json_script:"login-destination" }}
+
+    <script>
+        const destination = JSON.parse(
+            document.getElementById(
+                "login-destination"
+            ).textContent
+        );
+
+        window.location.replace(destination);
+    </script>
+</body>
+</html>

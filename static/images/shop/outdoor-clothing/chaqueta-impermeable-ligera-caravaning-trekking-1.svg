@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000">
+<rect width="1000" height="1000" fill="#f7f5ef"/>
+<circle cx="500" cy="455" r="300" fill="#ffffff"/>
+<path d="M330 330 L420 250 L580 250 L670 330 L635 785 L365 785 Z" fill="#24513f" stroke="#24322d" stroke-width="14" stroke-linejoin="round"/>
+<path d="M420 250 Q500 180 580 250" fill="none" stroke="#24322d" stroke-width="16" stroke-linecap="round"/>
+<path d="M440 300 L560 300 L540 735 L460 735 Z" fill="rgba(255,255,255,.18)" stroke="#ffffff" stroke-width="8"/>
+<rect x="365" y="705" width="270" height="80" rx="28" fill="rgba(0,0,0,.12)"/>
+<text x="500" y="870" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#1f2937">Chaqueta impermeable ligera</text>
+<text x="500" y="920" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#6b7280">Vista 1 de 3 · Caravaning Project</text>
+</svg>

@@ -20,6 +20,9 @@
 
                 <form method="post" id="registerForm" novalidate>
                     {% csrf_token %}
+                    {% if next %}
+                    <input type="hidden" name="next" value="{{ next }}">
+                    {% endif %}
                     
                     {% for field in form %}
                         <div class="mb-3">
@@ -50,7 +53,7 @@
 
                 <div class="text-center mt-4 pt-3 border-top">
                     <p class="text-muted small">¿Ya tienes una cuenta? 
-                        <a href="{% url 'users:login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" class="text-primary text-decoration-none fw-bold">Inicia sesión</a>
+                        <a href="{% url 'users:login' %}{% if next %}?next={{ next|urlencode }}{% endif %}" class="text-primary text-decoration-none fw-bold">Inicia sesión</a>
                     </p>
                 </div>
             </div>

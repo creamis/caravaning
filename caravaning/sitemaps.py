@@ -14,6 +14,7 @@ class StaticViewSitemap(Sitemap):
         return [
             "home",
             "camping",
+            "alohacamp",
             "blog:post_list",
             "listings:listing_list",
             "listings:external_rentals",

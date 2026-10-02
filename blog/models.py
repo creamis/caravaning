@@ -9,6 +9,13 @@ from django.utils.html import strip_tags
 from ckeditor.fields import RichTextField
 
 class Post(models.Model):
+    shop_products = models.ManyToManyField(
+        'shop.Product',
+        blank=True,
+        related_name='blog_posts',
+        verbose_name='Productos relacionados',
+    )
+
     class Status(models.TextChoices):
         DRAFT = 'DRAFT', 'Borrador'
         PUBLISHED = 'PUBLISHED', 'Publicado'
@@ -89,3 +96,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Comentario de {self.author.username} en "{self.post.title}"'
+
+# Sincronización automática con la tienda
+from . import shop_signals

@@ -1,0 +1,350 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if query %}Buscar {{ query }} | Caravaning Project{% else %}Buscar | Caravaning Project{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<style>
+.search-page {
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 34px 18px 70px;
+}
+
+.search-head {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.search-head h1 {
+    margin-bottom: 8px;
+    font-size: clamp(1.7rem, 4vw, 2.5rem);
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.search-head p {
+    color: #64748b;
+}
+
+.global-search-form {
+    max-width: 720px;
+    margin: 22px auto 0;
+    display: flex;
+    background: #fff;
+    border: 1px solid #dbe3ea;
+    border-radius: 16px;
+    padding: 6px;
+    box-shadow: 0 7px 24px rgba(15,23,42,.07);
+}
+
+.global-search-form input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    padding: 12px 14px;
+    font-size: .95rem;
+    background: transparent;
+}
+
+.global-search-form button {
+    border: 0;
+    border-radius: 11px;
+    background: #0f766e;
+    color: #fff;
+    padding: 0 20px;
+    font-weight: 700;
+}
+
+.search-group {
+    margin-top: 34px;
+}
+
+.search-group-title {
+    font-size: .78rem;
+    letter-spacing: .09em;
+    font-weight: 800;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.search-results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.search-result {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 15px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.search-result:hover {
+    color: inherit;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(15,23,42,.08);
+}
+
+.search-result-image {
+    width: 100px;
+    height: 78px;
+    flex: 0 0 100px;
+    object-fit: cover;
+    border-radius: 11px;
+    background: #e2e8f0;
+}
+
+.search-result-icon {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #ecfdf5;
+    color: #0f766e;
+    font-size: 1.2rem;
+}
+
+.search-result h2,
+.search-result h3 {
+    margin: 0 0 5px;
+    color: #0f172a;
+    font-size: .98rem;
+    font-weight: 800;
+}
+
+.search-result p {
+    margin: 0;
+    color: #64748b;
+    font-size: .78rem;
+    line-height: 1.45;
+}
+
+.search-empty {
+    margin-top: 35px;
+    padding: 35px 20px;
+    text-align: center;
+    background: #f8fafc;
+    border-radius: 18px;
+    color: #64748b;
+}
+
+@media (max-width: 767px) {
+    .search-page {
+        padding: 22px 15px 90px;
+    }
+
+    .search-results-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .global-search-form button {
+        padding: 0 14px;
+    }
+
+    .search-result-image {
+        width: 86px;
+        height: 72px;
+        flex-basis: 86px;
+    }
+}
+</style>
+
+
+<div class="search-page">
+
+    <div class="search-head">
+
+        <h1>
+            <i class="bi bi-search"></i>
+            Buscar en Caravaning Project
+        </h1>
+
+        <p>
+            Destinos, rutas, guías y recursos para preparar tu próxima aventura.
+        </p>
+
+        <form action="{% url 'search' %}"
+              method="get"
+              class="global-search-form">
+
+            <input
+                type="search"
+                name="q"
+                value="{{ query }}"
+                placeholder="Asturias, ferries, rutas, accesorios…"
+                aria-label="Buscar en Caravaning Project"
+                required>
+
+            <button type="submit">
+                Buscar
+            </button>
+
+        </form>
+
+    </div>
+
+
+    {% if query %}
+
+        {% if search_destinations %}
+
+        <section class="search-group">
+
+            <div class="search-group-title">
+                Destinos
+            </div>
+
+            <div class="search-results-grid">
+
+                {% for destination in search_destinations %}
+
+                <a href="{{ destination.get_absolute_url }}"
+                   class="search-result">
+
+                    {% if destination.get_image_url %}
+                    <img
+                        src="{{ destination.get_image_url }}"
+                        class="search-result-image"
+                        alt="{{ destination.title }}">
+                    {% else %}
+                    <div class="search-result-icon">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                    {% endif %}
+
+                    <div>
+                        <h2>{{ destination.title }}</h2>
+
+                        <p>
+                            <i class="bi bi-geo-alt"></i>
+                            {{ destination.location }}
+                        </p>
+                    </div>
+
+                </a>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+
+        {% if search_posts %}
+
+        <section class="search-group">
+
+            <div class="search-group-title">
+                Blog
+            </div>
+
+            <div class="search-results-grid">
+
+                {% for post in search_posts %}
+
+                <a href="{{ post.get_absolute_url }}"
+                   class="search-result">
+
+                    <div class="search-result-icon">
+                        <i class="bi bi-journal-text"></i>
+                    </div>
+
+                    <div>
+                        <h2>{{ post.title }}</h2>
+
+                        <p>
+                            {% if post.meta_description %}
+                                {{ post.meta_description|truncatechars:125 }}
+                            {% else %}
+                                {{ post.plain_content|truncatechars:125 }}
+                            {% endif %}
+                        </p>
+                    </div>
+
+                </a>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+
+        {% if search_sections %}
+
+        <section class="search-group">
+
+            <div class="search-group-title">
+                Secciones relacionadas
+            </div>
+
+            <div class="search-results-grid">
+
+                {% for section in search_sections %}
+
+                <a href="{{ section.url }}"
+                   class="search-result">
+
+                    <div class="search-result-icon">
+                        <i class="bi {{ section.icon }}"></i>
+                    </div>
+
+                    <div>
+                        <h3>{{ section.title }}</h3>
+                        <p>{{ section.description }}</p>
+                    </div>
+
+                </a>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+
+        {% if not search_destinations and not search_posts and not search_sections %}
+
+        <div class="search-empty">
+
+            <i class="bi bi-search"
+               style="font-size:2rem;"></i>
+
+            <h3 style="margin-top:12px;">
+                No hemos encontrado resultados
+            </h3>
+
+            <p>
+                Prueba con otro destino, una ruta, un accesorio
+                o una idea para tu viaje.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

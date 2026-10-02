@@ -1,0 +1,522 @@
+{% extends "base.html" %}
+
+{% block title %}Alojamientos en la naturaleza y glamping | AlohaCamp | Caravaning Project{% endblock %}
+
+{% block meta_description %}Descubre cabañas, glamping, casas en los árboles y alojamientos singulares en plena naturaleza con AlohaCamp. Una experiencia diferente para completar tu ruta en camper o autocaravana.{% endblock %}
+
+{% block meta_keywords %}AlohaCamp, glamping España, cabañas naturaleza, casas árbol, alojamientos naturaleza, escapadas camper, alojamientos rurales, caravaning{% endblock %}
+
+{% block og_type %}website{% endblock %}
+{% block og_title %}AlohaCamp: una noche diferente durante tu ruta{% endblock %}
+{% block og_description %}Combina tu viaje en camper, caravana o autocaravana con una estancia especial en plena naturaleza.{% endblock %}
+
+{% block canonical_url %}
+<link rel="canonical" href="https://www.caravaning-project.online/alohacamp/">
+{% endblock %}
+
+{% block content %}
+
+<style>
+.alohacamp-page {
+    padding-bottom: 48px;
+}
+
+.aloha-hero {
+    min-height: 440px;
+    border-radius: 22px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 38px;
+    background:
+        linear-gradient(90deg, rgba(20,35,25,.84) 0%, rgba(20,35,25,.55) 50%, rgba(20,35,25,.18) 100%),
+        url('https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?q=80&w=1600&auto=format&fit=crop')
+        center/cover no-repeat;
+}
+
+.aloha-hero-content {
+    max-width: 760px;
+    padding: 52px;
+    color: white;
+}
+
+.aloha-eyebrow {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: rgba(255,255,255,.78);
+    margin-bottom: 12px;
+}
+
+.aloha-title {
+    font-size: 2.75rem;
+    line-height: 1.1;
+    font-weight: 850;
+    margin-bottom: 18px;
+    color: #fff;
+    text-shadow: 0 3px 14px rgba(0,0,0,.35);
+}
+
+.aloha-lead {
+    font-size: 1.08rem;
+    line-height: 1.75;
+    color: rgba(255,255,255,.92);
+    margin-bottom: 25px;
+}
+
+.aloha-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 13px 21px;
+    border-radius: 12px;
+    font-weight: 750;
+    text-decoration: none;
+    transition: .2s ease;
+}
+
+.aloha-btn-primary {
+    background: #ffffff;
+    color: #24452f;
+    box-shadow: 0 9px 25px rgba(0,0,0,.18);
+}
+
+.aloha-btn-primary:hover {
+    color: #173420;
+    transform: translateY(-2px);
+}
+
+.aloha-intro {
+    max-width: 820px;
+    margin: 0 auto 42px;
+    text-align: center;
+}
+
+.aloha-intro h2,
+.aloha-section h2 {
+    font-weight: 800;
+    color: #17251c;
+    margin-bottom: 13px;
+}
+
+.aloha-intro p,
+.aloha-section-copy {
+    color: #667069;
+    line-height: 1.75;
+}
+
+.aloha-types {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 44px;
+}
+
+.aloha-card {
+    border-radius: 18px;
+    min-height: 220px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    text-decoration: none;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 8px 25px rgba(25,45,30,.10);
+}
+
+.aloha-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0,0,0,.70), rgba(0,0,0,.05));
+}
+
+.aloha-card-content {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+    color: white;
+}
+
+.aloha-card-content span {
+    font-size: 12px;
+    opacity: .82;
+}
+
+.aloha-card-content h3 {
+    color: white;
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin: 3px 0 0;
+}
+
+.aloha-cabin {
+    background-image: url('https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=800&auto=format&fit=crop');
+}
+
+.aloha-glamping {
+    background-image: url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=800&auto=format&fit=crop');
+}
+
+.aloha-tree {
+    background-image: url('https://images.unsplash.com/photo-1520984032042-162d526883e0?q=80&w=800&auto=format&fit=crop');
+}
+
+.aloha-tiny {
+    background-image: url('https://images.unsplash.com/photo-1523217582562-09d0def993a6?q=80&w=800&auto=format&fit=crop');
+}
+
+.aloha-section {
+    margin-bottom: 42px;
+}
+
+.aloha-route {
+    background: #f4f7f3;
+    border-radius: 22px;
+    padding: 38px;
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 34px;
+    align-items: center;
+}
+
+.aloha-route-list {
+    display: grid;
+    gap: 14px;
+}
+
+.aloha-route-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.aloha-route-icon {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    border-radius: 50%;
+    background: #dfeade;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #315b3b;
+}
+
+.aloha-route-item strong {
+    display: block;
+    color: #203126;
+    margin-bottom: 3px;
+}
+
+.aloha-route-item p {
+    color: #6a746d;
+    margin: 0;
+    font-size: .94rem;
+    line-height: 1.5;
+}
+
+.aloha-offer {
+    border-radius: 20px;
+    padding: 35px;
+    background: #203c29;
+    color: white;
+}
+
+.aloha-offer small {
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+    opacity: .72;
+    font-weight: 700;
+}
+
+.aloha-offer h3 {
+    color: white;
+    font-weight: 800;
+    font-size: 1.65rem;
+    margin: 9px 0 13px;
+}
+
+.aloha-offer p {
+    color: rgba(255,255,255,.82);
+    line-height: 1.65;
+}
+
+.aloha-offer .aloha-btn {
+    margin-top: 8px;
+}
+
+.aloha-final {
+    text-align: center;
+    border-radius: 22px;
+    padding: 46px 24px;
+    background: #eef4ed;
+}
+
+.aloha-final h2 {
+    font-weight: 850;
+    color: #1e3525;
+}
+
+.aloha-final p {
+    max-width: 680px;
+    margin: 12px auto 22px;
+    color: #657068;
+    line-height: 1.7;
+}
+
+.aloha-disclosure {
+    font-size: .78rem;
+    color: #899089;
+    margin-top: 18px;
+}
+
+@media (max-width: 992px) {
+    .aloha-types {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .aloha-route {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .aloha-hero {
+        min-height: 470px;
+    }
+
+    .aloha-hero-content {
+        padding: 30px 24px;
+    }
+
+    .aloha-title {
+        font-size: 2.05rem;
+    }
+
+    .aloha-types {
+        grid-template-columns: 1fr;
+    }
+
+    .aloha-card {
+        min-height: 200px;
+    }
+
+    .aloha-route {
+        padding: 26px 20px;
+    }
+}
+</style>
+
+
+<div class="container alohacamp-page">
+
+    <section class="aloha-hero">
+        <div class="aloha-hero-content">
+
+            <div class="aloha-eyebrow">
+                Caravaning Project · Escapadas especiales
+            </div>
+
+            <h1 class="aloha-title">
+                Aparca por una noche.<br>
+                Duerme en un lugar extraordinario.
+            </h1>
+
+            <p class="aloha-lead">
+                Viajar en camper, caravana o autocaravana también significa
+                poder improvisar. Una cabaña en el bosque, un glamping bajo
+                las estrellas o una casa entre los árboles puede convertirse
+                en una parada inolvidable dentro de tu ruta.
+            </p>
+
+            <a href="{{ alohacamp_affiliate_url }}"
+               target="_blank"
+               rel="nofollow sponsored noopener noreferrer"
+               class="aloha-btn aloha-btn-primary">
+                Explorar alojamientos en AlohaCamp
+                <i class="bi bi-arrow-up-right"></i>
+            </a>
+
+        </div>
+    </section>
+
+
+    <section class="aloha-intro">
+
+        <h2>El viaje continúa, aunque dejes la camper aparcada</h2>
+
+        <p>
+            En Caravaning Project creemos que viajar sobre ruedas no obliga
+            a dormir todas las noches dentro del vehículo. AlohaCamp permite
+            descubrir alojamientos especiales rodeados de naturaleza que
+            pueden convertirse en una experiencia más dentro del recorrido.
+        </p>
+
+    </section>
+
+
+    <section class="aloha-section">
+
+        <h2>¿Dónde te apetecería dormir esta noche?</h2>
+
+        <p class="aloha-section-copy">
+            Desde pequeños refugios hasta alojamientos sorprendentes.
+            Elige el tipo de experiencia que mejor encaje con tu ruta.
+        </p>
+
+        <div class="aloha-types">
+
+            <a href="{{ alohacamp_affiliate_url }}"
+               target="_blank"
+               rel="nofollow sponsored noopener noreferrer"
+               class="aloha-card aloha-cabin">
+                <div class="aloha-card-content">
+                    <span>Naturaleza</span>
+                    <h3>Cabañas</h3>
+                </div>
+            </a>
+
+            <a href="{{ alohacamp_affiliate_url }}"
+               target="_blank"
+               rel="nofollow sponsored noopener noreferrer"
+               class="aloha-card aloha-glamping">
+                <div class="aloha-card-content">
+                    <span>Comodidad al aire libre</span>
+                    <h3>Glamping</h3>
+                </div>
+            </a>
+
+            <a href="{{ alohacamp_affiliate_url }}"
+               target="_blank"
+               rel="nofollow sponsored noopener noreferrer"
+               class="aloha-card aloha-tree">
+                <div class="aloha-card-content">
+                    <span>Una noche diferente</span>
+                    <h3>Casas en los árboles</h3>
+                </div>
+            </a>
+
+            <a href="{{ alohacamp_affiliate_url }}"
+               target="_blank"
+               rel="nofollow sponsored noopener noreferrer"
+               class="aloha-card aloha-tiny">
+                <div class="aloha-card-content">
+                    <span>Pequeños refugios</span>
+                    <h3>Minicasas y alojamientos singulares</h3>
+                </div>
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <section class="aloha-section">
+
+        <div class="aloha-route">
+
+            <div>
+
+                <h2>Una parada especial dentro de tu ruta</h2>
+
+                <p class="aloha-section-copy">
+                    No planteamos AlohaCamp como sustituto del caravaning.
+                    Todo lo contrario: puede añadir una experiencia diferente
+                    a un viaje que ya estás haciendo sobre ruedas.
+                </p>
+
+                <div class="aloha-route-list">
+
+                    <div class="aloha-route-item">
+                        <div class="aloha-route-icon">
+                            <i class="bi bi-signpost-split"></i>
+                        </div>
+                        <div>
+                            <strong>Inclúyelo en tu recorrido</strong>
+                            <p>Busca una estancia próxima a una de las etapas de tu viaje.</p>
+                        </div>
+                    </div>
+
+                    <div class="aloha-route-item">
+                        <div class="aloha-route-icon">
+                            <i class="bi bi-moon-stars"></i>
+                        </div>
+                        <div>
+                            <strong>Cambia de escenario una noche</strong>
+                            <p>Del vehículo a una cabaña, una yurta o un glamping rodeado de naturaleza.</p>
+                        </div>
+                    </div>
+
+                    <div class="aloha-route-item">
+                        <div class="aloha-route-icon">
+                            <i class="bi bi-truck"></i>
+                        </div>
+                        <div>
+                            <strong>Y después, vuelve a la carretera</strong>
+                            <p>Al día siguiente tu camper o autocaravana sigue esperando para continuar la aventura.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="aloha-offer">
+
+                <small>Ventaja AlohaCamp</small>
+
+                <h3>20 € para tu primera reserva</h3>
+
+                <p>
+                    Al registrarte mediante nuestro enlace puedes obtener
+                    20 € de descuento en tu primera reserva en AlohaCamp
+                    cuando cumpla las condiciones del programa.
+                </p>
+
+                <a href="{{ alohacamp_affiliate_url }}"
+                   target="_blank"
+                   rel="nofollow sponsored noopener noreferrer"
+                   class="aloha-btn aloha-btn-primary">
+                    Descubrir AlohaCamp
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="aloha-final">
+
+        <h2>¿Dónde será tu próxima noche especial?</h2>
+
+        <p>
+            Explora alojamientos rodeados de naturaleza y encuentra una
+            parada diferente para añadir a tu próxima ruta.
+        </p>
+
+        <a href="{{ alohacamp_affiliate_url }}"
+           target="_blank"
+           rel="nofollow sponsored noopener noreferrer"
+           class="aloha-btn aloha-btn-primary">
+            Ver alojamientos en AlohaCamp
+            <i class="bi bi-box-arrow-up-right"></i>
+        </a>
+
+        <div class="aloha-disclosure">
+            Enlace de afiliación. Caravaning Project puede recibir una comisión
+            si realizas una reserva a través de este enlace, sin coste adicional para ti.
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

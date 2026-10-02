@@ -1,0 +1,705 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Ferries para campers y autocaravanas | Caravaning Project{% endblock %}
+
+{% block meta_description %}Encuentra rutas en ferry para viajar con camper, autocaravana o caravana. Destinos, consejos de embarque y guías para viajar con tu vehículo.{% endblock %}
+
+{% block meta_keywords %}ferry camper, ferry autocaravana, ferry caravana, viajar en ferry camper, rutas ferry autocaravana, ferry Baleares, ferry Cerdeña, ferry Marruecos{% endblock %}
+
+{% block canonical_url %}
+<link rel="canonical" href="https://www.caravaning-project.online/ferries/">
+{% endblock %}
+
+{% block og_title %}Viajar en ferry con camper o autocaravana | Caravaning Project{% endblock %}
+{% block og_description %}Descubre rutas, destinos y consejos para embarcar en ferry con tu camper, autocaravana o caravana.{% endblock %}
+{% block og_image %}{% static 'images/ferries/ferry-autocaravana.webp' %}{% endblock %}
+
+{% block content %}
+
+<style>
+.ferry-page {
+    --ferry-green: #198754;
+    --ferry-dark: #142235;
+    --ferry-blue: #0d6efd;
+    --ferry-soft: #f5f8fa;
+    --ferry-border: #e5e9ed;
+    color: var(--ferry-dark);
+}
+
+.ferry-hero {
+    min-height: 500px;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    background:
+        linear-gradient(90deg, rgba(8,22,37,.82) 0%, rgba(8,22,37,.48) 48%, rgba(8,22,37,.12) 100%),
+        url("{% static 'images/ferries/ferry-autocaravana.webp' %}") center center/cover no-repeat;
+    margin-bottom: 32px;
+}
+
+.ferry-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+    padding: 55px;
+    color: white;
+}
+
+.ferry-kicker {
+    display: inline-block;
+    padding: 7px 14px;
+    margin-bottom: 16px;
+    background: rgba(255,255,255,.94);
+    color: #163149;
+    border-radius: 999px;
+    font-size: .82rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+}
+
+.ferry-hero h1 {
+    font-size: clamp(2.1rem, 5vw, 3.6rem);
+    line-height: 1.05;
+    font-weight: 800;
+    margin-bottom: 18px;
+}
+
+.ferry-hero p {
+    font-size: 1.12rem;
+    line-height: 1.65;
+    max-width: 650px;
+    margin-bottom: 25px;
+}
+
+.ferry-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 21px;
+    border-radius: 10px;
+    background: var(--ferry-green);
+    color: white !important;
+    text-decoration: none;
+    font-weight: 700;
+    border: 0;
+}
+
+.ferry-btn:hover {
+    background: #146c43;
+}
+
+.ferry-btn-light {
+    background: white;
+    color: var(--ferry-dark) !important;
+}
+
+.ferry-section {
+    padding: 48px 0;
+}
+
+.ferry-section-title {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 32px;
+}
+
+.ferry-section-title h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.ferry-section-title p {
+    color: #667085;
+    font-size: 1.05rem;
+}
+
+.ferry-booking {
+    background: linear-gradient(135deg, #102b45, #174b69);
+    border-radius: 22px;
+    padding: 38px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.ferry-booking h2 {
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.ferry-booking p {
+    color: rgba(255,255,255,.82);
+    max-width: 700px;
+    margin-bottom: 0;
+}
+
+.ferry-note {
+    font-size: .8rem;
+    color: rgba(255,255,255,.62);
+    margin-top: 10px;
+}
+
+.ferry-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.ferry-destination {
+    position: relative;
+    min-height: 285px;
+    border: 0;
+    border-radius: 18px;
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    text-align: left;
+    overflow: hidden;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: 0 8px 28px rgba(15,23,42,.14);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.ferry-destination::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(8,22,37,.05) 20%,
+        rgba(8,22,37,.30) 55%,
+        rgba(8,22,37,.92) 100%
+    );
+    z-index: 0;
+}
+
+.ferry-destination > * {
+    position: relative;
+    z-index: 1;
+}
+
+.ferry-destination:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 34px rgba(15,23,42,.20);
+}
+
+.ferry-destination .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.92);
+    font-size: 1.65rem;
+}
+
+.ferry-destination h3 {
+    color: white;
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+    text-shadow: 0 2px 6px rgba(0,0,0,.35);
+}
+
+.ferry-destination p {
+    color: rgba(255,255,255,.92);
+    font-size: .9rem;
+    line-height: 1.45;
+    margin: 0;
+    text-shadow: 0 1px 4px rgba(0,0,0,.45);
+}
+
+.ferry-route-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.ferry-route {
+    border: 1px solid var(--ferry-border);
+    border-radius: 16px;
+    padding: 22px;
+    background: #fff;
+}
+
+.ferry-route-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.ferry-route h3 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.ferry-route span {
+    background: #edf7f1;
+    color: #167344;
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.ferry-route p {
+    color: #667085;
+    margin: 0;
+    font-size: .92rem;
+}
+
+.ferry-guide {
+    background: var(--ferry-soft);
+    border-radius: 22px;
+    padding: 40px;
+}
+
+.ferry-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.ferry-step {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+}
+
+.ferry-step-number {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--ferry-green);
+    color: white;
+    font-weight: 800;
+    margin-bottom: 14px;
+}
+
+.ferry-step h3 {
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.ferry-step p {
+    color: #667085;
+    font-size: .9rem;
+    margin-bottom: 0;
+}
+
+.ferry-two-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.ferry-info-card {
+    border: 1px solid var(--ferry-border);
+    border-radius: 18px;
+    padding: 30px;
+    background: white;
+}
+
+.ferry-info-card h3 {
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.ferry-info-card ul {
+    padding-left: 20px;
+    color: #52606d;
+    margin-bottom: 0;
+}
+
+.ferry-info-card li {
+    margin-bottom: 9px;
+}
+
+.ferry-faq details {
+    background: white;
+    border: 1px solid var(--ferry-border);
+    border-radius: 14px;
+    margin-bottom: 10px;
+    padding: 17px 20px;
+}
+
+.ferry-faq summary {
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.ferry-faq details p {
+    color: #667085;
+    margin: 12px 0 0;
+}
+
+.ferry-final {
+    background: linear-gradient(135deg, #edf8f2, #f7fbf9);
+    border: 1px solid #d9eee2;
+    border-radius: 22px;
+    padding: 45px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.ferry-final h2 {
+    font-weight: 800;
+}
+
+@media (max-width: 991px) {
+    .ferry-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .ferry-steps {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .ferry-page {
+        padding: 0 12px;
+    }
+
+    .ferry-hero {
+        min-height: 470px;
+        border-radius: 20px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .ferry-hero-content {
+        padding: 28px 22px;
+    }
+
+    .ferry-hero p {
+        font-size: 1rem;
+    }
+
+    .ferry-booking {
+        padding: 26px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .ferry-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .ferry-route-grid,
+    .ferry-two-cols {
+        grid-template-columns: 1fr;
+    }
+
+    .ferry-guide {
+        padding: 25px 18px;
+    }
+
+    .ferry-steps {
+        grid-template-columns: 1fr;
+    }
+
+    .ferry-section {
+        padding: 35px 0;
+    }
+
+    .ferry-final {
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ferry-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<div class="ferry-page">
+
+    <section class="ferry-hero">
+        <div class="ferry-hero-content">
+            <span class="ferry-kicker">Ferries · Camper · Autocaravana</span>
+            <h1>Viaja más lejos con tu casa sobre ruedas</h1>
+            <p>
+                Cruza el mar con tu camper, autocaravana o caravana y descubre
+                nuevos destinos sin renunciar a viajar con tu propio vehículo.
+            </p>
+            <a href="#buscar-ferry" class="ferry-btn">⛴️ Encontrar mi ferry</a>
+        </div>
+    </section>
+
+    <section class="ferry-section" id="buscar-ferry">
+        <div class="ferry-booking">
+            <div>
+                <h2>Encuentra tu próximo ferry</h2>
+                <p>
+                    Compara rutas, horarios y compañías para viajar con tu camper,
+                    autocaravana o caravana y encuentra la travesía que mejor encaje
+                    con tu próxima aventura.
+                </p>
+                <div class="ferry-note">
+                    Consulta disponibilidad y precios con Direct Ferries.
+                </div>
+            </div>
+            <a href="https://www.directferries.es/?dfpid=7621&amp;affid=1001&amp;rurl="
+               class="ferry-btn ferry-btn-light"
+               target="_blank"
+               rel="sponsored noopener">
+                Buscar ferries ⛴️
+            </a>
+        </div>
+    </section>
+
+    <section class="ferry-section" id="destinos-ferry">
+        <div class="ferry-section-title">
+            <h2>Destinos para continuar la aventura</h2>
+            <p>
+                El ferry convierte el mar en una carretera más. Estos son algunos
+                de los destinos que iremos desarrollando en Caravaning Project.
+            </p>
+        </div>
+
+        <div class="ferry-grid">
+            <a href="https://www.directferries.es/?dfpid=7621&amp;affid=1101&amp;rurl=islas_baleares.htm" class="ferry-destination" target="_blank" rel="sponsored noopener" style="background-image:url('https://commons.wikimedia.org/wiki/Special:Redirect/file/Mallorca%20Coast%20R01.jpg?width=1200');">
+                <div class="icon">🏝️</div>
+                <h3>Baleares</h3>
+                <p>Mallorca, Menorca e Ibiza con tu propio vehículo.</p>
+            </a>
+
+            <a href="https://www.directferries.es/?dfpid=7621&amp;affid=1102&amp;rurl=cerdena.htm" class="ferry-destination" target="_blank" rel="sponsored noopener" style="background-image:url('https://commons.wikimedia.org/wiki/Special:Redirect/file/Coast%20and%20sea%20at%20Santa%20Maria%20Navarrese%2C%20Sardinia%2C%20Italy.jpg?width=1200');">
+                <div class="icon">🇮🇹</div>
+                <h3>Cerdeña</h3>
+                <p>Playas, carreteras panorámicas y libertad sobre ruedas.</p>
+            </a>
+
+            <a href="https://www.directferries.es/?dfpid=7621&amp;affid=1103&amp;rurl=corcega.htm" class="ferry-destination" target="_blank" rel="sponsored noopener" style="background-image:url('https://commons.wikimedia.org/wiki/Special:Redirect/file/Calanques%20of%20Piana.jpg?width=1200');">
+                <div class="icon">⛰️</div>
+                <h3>Córcega</h3>
+                <p>Montaña, costa y pequeñas carreteras mediterráneas.</p>
+            </a>
+
+            <a href="https://www.directferries.es/?dfpid=7621&amp;affid=1104&amp;rurl=sicilia.htm" class="ferry-destination" target="_blank" rel="sponsored noopener" style="background-image:url('https://commons.wikimedia.org/wiki/Special:Redirect/file/Sicily%20with%20Mount%20Etna.jpg?width=1200');">
+                <div class="icon">🌋</div>
+                <h3>Sicilia</h3>
+                <p>Una gran ruta italiana al otro lado del Mediterráneo.</p>
+            </a>
+
+            <a href="https://www.directferries.es/?dfpid=7621&amp;affid=1105&amp;rurl=marruecos.htm" class="ferry-destination" target="_blank" rel="sponsored noopener" style="background-image:url('https://commons.wikimedia.org/wiki/Special:Redirect/file/Essaouira%20coast%2C%20Morocco.jpg?width=1200');">
+                <div class="icon">🌍</div>
+                <h3>Marruecos</h3>
+                <p>El salto hacia África para una aventura completamente diferente.</p>
+            </a>
+
+            <a href="https://www.directferries.es/?dfpid=7621&amp;affid=1106&amp;rurl=ceuta.htm" class="ferry-destination" target="_blank" rel="sponsored noopener" style="background-image:url('https://commons.wikimedia.org/wiki/Special:Redirect/file/Coast%20of%20Ceuta.jpg?width=1200');">
+                <div class="icon">🇪🇸</div>
+                <h3>Ceuta</h3>
+                <p>Cruza el Estrecho con tu vehículo y descubre Ceuta sobre ruedas.</p>
+            </a>
+
+            <a href="https://www.directferries.es/?dfpid=7621&amp;affid=1107&amp;rurl=melilla.htm" class="ferry-destination" target="_blank" rel="sponsored noopener" style="background-image:url('https://commons.wikimedia.org/wiki/Special:Redirect/file/Coast%20of%20Melilla%20spain.jpg?width=1200');">
+                <div class="icon">⚓</div>
+                <h3>Melilla</h3>
+                <p>Una puerta mediterránea perfecta para continuar viajando con tu camper.</p>
+            </a>
+
+            <a href="https://www.directferries.es/?dfpid=7621&amp;affid=1108&amp;rurl=islas_canarias.htm" class="ferry-destination" target="_blank" rel="sponsored noopener" style="background-image:url('https://commons.wikimedia.org/wiki/Special:Redirect/file/Tenerife%20Coast%20R01.jpg?width=1200');">
+                <div class="icon">🌋</div>
+                <h3>Canarias</h3>
+                <p>Islas, volcanes y carreteras únicas para recorrer con tu propio vehículo.</p>
+            </a>
+        </div>
+    </section>
+
+    <section class="ferry-section">
+        <div class="ferry-section-title">
+            <h2>Rutas que merece la pena tener en el radar</h2>
+            <p>
+                Algunas conexiones especialmente interesantes para quienes parten
+                desde España con camper, autocaravana o caravana.
+            </p>
+        </div>
+
+        <div class="ferry-route-grid">
+            <div class="ferry-route">
+                <div class="ferry-route-top">
+                    <h3>Barcelona → Mallorca</h3>
+                    <span>Baleares</span>
+                </div>
+                <p>Una forma cómoda de llevar tu vehículo a la isla y recorrerla a tu ritmo.</p>
+            </div>
+
+            <div class="ferry-route">
+                <div class="ferry-route-top">
+                    <h3>Barcelona → Cerdeña</h3>
+                    <span>Italia</span>
+                </div>
+                <p>Una puerta de entrada excelente para descubrir Cerdeña sobre ruedas.</p>
+            </div>
+
+            <div class="ferry-route">
+                <div class="ferry-route-top">
+                    <h3>Barcelona → Italia</h3>
+                    <span>Mediterráneo</span>
+                </div>
+                <p>Una alternativa al largo recorrido por carretera para comenzar una ruta italiana.</p>
+            </div>
+
+            <div class="ferry-route">
+                <div class="ferry-route-top">
+                    <h3>Sur de España → Marruecos</h3>
+                    <span>África</span>
+                </div>
+                <p>Conexiones ideales para continuar el viaje por carretera al otro lado del Estrecho.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="ferry-section">
+        <div class="ferry-guide">
+            <div class="ferry-section-title">
+                <h2>¿Cómo viajar en ferry con tu camper o autocaravana?</h2>
+                <p>
+                    Reservar un vehículo vivienda es sencillo, pero conviene tener
+                    algunos datos preparados antes de comprar el billete.
+                </p>
+            </div>
+
+            <div class="ferry-steps">
+                <div class="ferry-step">
+                    <div class="ferry-step-number">1</div>
+                    <h3>Mide tu vehículo</h3>
+                    <p>Comprueba longitud y altura reales, incluyendo accesorios instalados.</p>
+                </div>
+
+                <div class="ferry-step">
+                    <div class="ferry-step-number">2</div>
+                    <h3>Indica el tipo correcto</h3>
+                    <p>Selecciona camper, autocaravana o coche con caravana según corresponda.</p>
+                </div>
+
+                <div class="ferry-step">
+                    <div class="ferry-step-number">3</div>
+                    <h3>Revisa las condiciones</h3>
+                    <p>Consulta las normas de la compañía sobre gas, combustible y acceso al garaje.</p>
+                </div>
+
+                <div class="ferry-step">
+                    <div class="ferry-step-number">4</div>
+                    <h3>Llega con antelación</h3>
+                    <p>Los vehículos necesitan tiempo para realizar el check-in y organizar el embarque.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ferry-section">
+        <div class="ferry-two-cols">
+
+            <div class="ferry-info-card">
+                <h3>🚐 Antes de embarcar</h3>
+                <ul>
+                    <li>Comprueba la documentación personal y del vehículo.</li>
+                    <li>Revisa las medidas incluidas en la reserva.</li>
+                    <li>Asegura bicicletas, toldos y otros accesorios exteriores.</li>
+                    <li>Consulta las normas específicas para bombonas de gas.</li>
+                    <li>Lleva contigo lo necesario durante la travesía.</li>
+                </ul>
+            </div>
+
+            <div class="ferry-info-card">
+                <h3>🛏️ ¿Butaca o camarote?</h3>
+                <p>
+                    En trayectos cortos una butaca puede ser suficiente. Para travesías
+                    largas o nocturnas, un camarote puede convertir el viaje en una
+                    noche de descanso y permitirte continuar la ruta con más comodidad.
+                </p>
+                <p class="mb-0">
+                    Recuerda que normalmente no podrás permanecer en el vehículo
+                    durante la navegación, salvo servicios específicos que indiquen lo contrario.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="ferry-section ferry-faq">
+        <div class="ferry-section-title">
+            <h2>Preguntas frecuentes</h2>
+            <p>Las dudas que suelen aparecer antes de embarcar con una casa sobre ruedas.</p>
+        </div>
+
+        <details>
+            <summary>¿Puedo llevar una autocaravana en un ferry?</summary>
+            <p>
+                Sí. Muchas rutas admiten autocaravanas, campers y caravanas.
+                Debes seleccionar correctamente el tipo de vehículo y declarar sus medidas.
+            </p>
+        </details>
+
+        <details>
+            <summary>¿Tengo que indicar la altura y longitud?</summary>
+            <p>
+                Sí. Las dimensiones son importantes para asignar correctamente
+                el espacio del vehículo en el garaje del ferry.
+            </p>
+        </details>
+
+        <details>
+            <summary>¿Puedo quedarme dentro de la autocaravana durante el viaje?</summary>
+            <p>
+                Normalmente las cubiertas de vehículos permanecen cerradas durante
+                la navegación. Algunas rutas o compañías pueden ofrecer modalidades
+                especiales, por lo que conviene comprobar las condiciones concretas.
+            </p>
+        </details>
+
+        <details>
+            <summary>¿Qué ocurre con las bombonas de gas?</summary>
+            <p>
+                Las normas dependen del operador y de la ruta. Comprueba siempre
+                las condiciones de transporte de GLP o bombonas antes del embarque.
+            </p>
+        </details>
+
+        <details>
+            <summary>¿Cuándo debería llegar al puerto?</summary>
+            <p>
+                El tiempo de presentación varía según compañía, puerto, destino y
+                tipo de vehículo. Consulta el horario de check-in indicado en tu reserva.
+            </p>
+        </details>
+    </section>
+
+    <section class="ferry-final">
+        <h2>Tu próxima carretera puede empezar en el mar</h2>
+        <p class="text-muted">
+            Estamos preparando nuevas guías de rutas en ferry pensadas específicamente
+            para campers, autocaravanas y caravanas.
+        </p>
+        <a href="#destinos-ferry" class="ferry-btn">Explorar destinos ⛴️</a>
+    </section>
+
+</div>
+
+{% endblock %}

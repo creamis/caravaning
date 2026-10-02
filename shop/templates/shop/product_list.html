@@ -110,6 +110,16 @@
         {% endif %}
     </form>
 
+    
+    <!-- AVISO VISTA PREVIA PRIVADA -->
+    {% if is_preview %}
+    <div class="alert alert-warning rounded-4 mb-4"
+         role="status">
+        <strong>Vista previa privada</strong><br>
+        Estos productos siguen inactivos y no aparecen
+        en la tienda pública.
+    </div>
+    {% endif %}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         {% for product in products %}
             <div class="col">
@@ -421,6 +431,62 @@
             height: 190px;
         }
     }
+
+    /* AJUSTE RESPONSIVE TIENDA 2026 */
+
+    /* Escritorio y tablet */
+    .product-card-image {
+        height: 185px;
+        padding: 0.75rem;
+        object-fit: contain;
+    }
+
+    .product-card .card-body {
+        padding: 1.1rem !important;
+    }
+
+    .product-card-description {
+        min-height: 0;
+    }
+
+    .product-best-for {
+        min-height: 0;
+    }
+
+    .product-reason {
+        min-height: 0;
+    }
+
+    /* Móvil */
+    @media (max-width: 768px) {
+        .product-card-image {
+            height: 165px;
+            padding: 0.5rem;
+        }
+
+        .product-card .card-body {
+            padding: 1rem !important;
+        }
+
+        .product-card-title {
+            min-height: 0;
+        }
+
+        .product-card-description {
+            -webkit-line-clamp: 2;
+            margin-bottom: 0.75rem !important;
+        }
+
+        .product-reason {
+            padding: 0.55rem 0.7rem;
+            margin-bottom: 0.75rem !important;
+        }
+
+        .product-price-row {
+            margin-bottom: 0.75rem !important;
+        }
+    }
+    
 </style>
 
 {% endblock %}
