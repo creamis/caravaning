@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{ destination.title|default:"Desierto de Gorafe" }} · Caravaning Project · Prueba V3</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#1f6b49; --green-d:#16513a; --green-l:#e6f1ea;
+  --ink:#16251f; --muted:#5d6b64; --line:#e4e8e3;
+  --bg:#f4f5f1; --card:#ffffff; --blue:#1d6fb8; --orange:#e5611b; --sun:#f5a712;
+  --hdr:#ffffff;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --green:#3c9a70; --green-d:#2f7f5b; --green-l:#1d3329;
+    --ink:#eef2ee; --muted:#a2b0a8; --line:#2b3a33;
+    --bg:#101815; --card:#18231e; --hdr:#18231e; --blue:#5aa8ea; --orange:#ff8a4d;
+  }
+}
+:root[data-theme="dark"]{
+  --green:#3c9a70; --green-d:#2f7f5b; --green-l:#1d3329;
+  --ink:#eef2ee; --muted:#a2b0a8; --line:#2b3a33;
+  --bg:#101815; --card:#18231e; --hdr:#18231e; --blue:#5aa8ea; --orange:#ff8a4d;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);color-scheme:light dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15px;line-height:1.4;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px;border-radius:6px}
+svg{display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+
+/* ---------- Header ---------- */
+.hdr{background:var(--hdr);position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line)}
+.hdr .wrap{display:flex;align-items:center;gap:28px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;line-height:1.05;font-size:15px}
+.logo svg{width:44px;height:38px}
+.nav{display:flex;gap:26px;font-weight:600;font-size:14px;margin-left:34px}
+.nav a:hover{color:var(--green)}
+.hdr .sp{flex:1}
+.icon-btn{background:none;border:0;padding:8px;color:var(--ink);display:grid;place-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--green);color:#fff;border:0;border-radius:9px;font-weight:700;padding:12px 18px;transition:background .15s}
+.btn:hover{background:var(--green-d)}
+.btn-sm{padding:10px 18px;font-size:14px}
+.burger{display:none}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;color:#fff;overflow:hidden;min-height:286px;display:flex;align-items:flex-end;
+  background:linear-gradient(180deg,#8fb7c9 0%,#e9c9a0 38%,#c9803f 62%,#7a4a24 100%)}
+.hero svg.land{position:absolute;inset:0;width:100%;height:100%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,12,6,.62) 0%,rgba(20,12,6,.18) 55%,rgba(20,12,6,0) 100%),linear-gradient(0deg,rgba(20,12,6,.55),rgba(20,12,6,0) 55%)}
+.hero .in{position:relative;z-index:2;width:100%;max-width:1180px;margin:0 auto;padding:0 18px 26px}
+.crumb{display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:7px;padding:3px 10px;font-size:13px;font-weight:600;background:rgba(0,0,0,.18);backdrop-filter:blur(3px)}
+.hero h1{font-size:40px;line-height:1.1;margin:10px 0 4px;font-weight:800;letter-spacing:-.01em}
+.hero p.lead{margin:0 0 16px;font-size:19px;opacity:.95}
+.chips{display:flex;flex-wrap:wrap;gap:8px 22px;font-weight:600;font-size:14px;align-items:center}
+.chips span{display:inline-flex;align-items:center;gap:7px}
+.chips svg{width:20px;height:20px}
+.hero-actions{margin-left:auto;display:flex;gap:10px}
+.ghost{display:inline-flex;align-items:center;gap:8px;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.75);color:#fff;border-radius:10px;padding:9px 16px;font-weight:600;font-size:14px;backdrop-filter:blur(3px)}
+.ghost.round{padding:0;width:42px;height:42px;justify-content:center;border-radius:50%}
+.ghost:hover{background:rgba(0,0,0,.45)}
+.hero-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+
+/* ---------- Tabs ---------- */
+.tabs{background:var(--bg);border-bottom:1px solid var(--line)}
+.tabs .wrap{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.tabs a{display:flex;align-items:center;gap:8px;padding:16px 16px 14px;font-weight:600;font-size:14px;color:var(--muted);white-space:nowrap;border-bottom:3px solid transparent}
+.tabs a svg{width:18px;height:18px}
+.tabs a.on{color:var(--ink);border-color:var(--green)}
+.tabs a.on svg{color:var(--green)}
+.tabs a:hover{color:var(--ink)}
+
+/* ---------- Cards / sections ---------- */
+.panel{background:var(--card);border-radius:16px;box-shadow:0 1px 2px rgba(20,40,30,.06),0 6px 20px rgba(20,40,30,.05);padding:20px}
+.panel h2{margin:0;font-size:19px;font-weight:800}
+.sub{color:var(--muted);margin:2px 0 0;font-size:15px}
+main{padding:20px 0 40px}
+.stack{display:grid;gap:18px}
+
+.prep h2{font-size:27px;letter-spacing:-.01em}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:14px}
+.stat{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--card)}
+.stat svg{width:38px;height:38px;flex:none}
+.stat b{font-size:22px;line-height:1;display:block;font-weight:800}
+.stat small{display:block;color:var(--muted);font-size:12.5px;line-height:1.2;margin-top:3px}
+.stat .ok{color:var(--green);font-weight:700}
+
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
+.act{background:var(--card);border-radius:14px;box-shadow:0 1px 3px rgba(20,40,30,.1),0 6px 18px rgba(20,40,30,.06);overflow:hidden;display:flex;flex-direction:column}
+.photo{height:82px;position:relative;background-size:cover}
+.badge{position:absolute;left:14px;bottom:-22px;width:46px;height:46px;border-radius:50%;background:#fff;border:3px solid #fff;display:grid;place-items:center;color:var(--green);box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.badge svg{width:24px;height:24px}
+.act .body{padding:28px 14px 14px;display:flex;flex-direction:column;flex:1}
+.act h3{margin:0 0 4px;font-size:17px;font-weight:800}
+.act p{margin:0 0 12px;color:var(--muted);font-size:14px;flex:1}
+.act .btn{width:100%;padding:11px}
+
+/* photo placeholders */
+.p-camp{background:linear-gradient(180deg,#9cc4de 0,#bcd9e4 28%,#5d8a3c 29%,#7da24c 55%,#c7b27a 100%)}
+.p-camper{background:linear-gradient(180deg,#d9e6ec 0,#e9eef0 45%,#9aa09a 46%,#6d726d 100%)}
+.p-hike{background:linear-gradient(180deg,#a9cde0 0,#d9c9a8 35%,#b4783f 36%,#8a5a30 100%)}
+.p-serv{background:linear-gradient(180deg,#c3dbe8 0,#e3ecef 45%,#8e9a8e 46%,#b9b6a8 100%)}
+.p-gorafe{background:linear-gradient(180deg,#9dbdd0 0,#d8b88c 40%,#b8743a 41%,#7a4a24 100%)}
+.p-town{background:linear-gradient(180deg,#a8c8dc 0,#d7e3ea 35%,#cdb99a 36%,#a88a64 100%)}
+.p-sierra{background:linear-gradient(180deg,#b0d0e2 0,#d4e4ea 25%,#4e7a3f 26%,#2f5a2d 100%)}
+.p-camper2{background:linear-gradient(180deg,#cfdde5 0,#e5ecee 50%,#8f958f 51%,#5b605b 100%)}
+
+.grid2{display:grid;grid-template-columns:1fr 1.05fr;gap:18px}
+.head-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.link{color:var(--green);font-weight:700;font-size:13.5px}
+.link:hover{text-decoration:underline}
+
+/* weather */
+.days{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px}
+.day{border:1px solid var(--line);border-radius:12px;text-align:center;padding:10px 4px;font-size:13px}
+.day b{display:block;font-weight:700;font-size:13.5px}
+.day svg{width:36px;height:36px;margin:8px auto}
+.day span{font-weight:600}
+.wfoot{display:flex;justify-content:space-between;margin-top:14px;font-size:12.5px;color:var(--muted)}
+
+/* map */
+.map{position:relative;border-radius:12px;overflow:hidden;margin-top:12px;height:146px;background:#dfeadb}
+.map svg.bg{position:absolute;inset:0;width:100%;height:100%}
+.pin{position:absolute;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);transform:translate(-50%,-50%)}
+.pin.g{background:var(--green)}.pin.b{background:var(--blue)}.pin.o{background:var(--orange)}.pin.p{background:#2b6be0}
+.zoom{position:absolute;right:10px;top:10px;background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.25);display:grid;color:#222}
+.zoom button{background:none;border:0;width:28px;height:28px;font-size:18px;line-height:1;color:#222}
+.zoom button+button{border-top:1px solid #ddd}
+.map .btn{position:absolute;right:10px;bottom:10px;background:#1b4d38;font-size:13px;padding:8px 14px;border-radius:8px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:12px;font-weight:600}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{width:16px;height:16px;border-radius:50%;display:inline-block}
+
+/* nearby + tips */
+.near{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.near .ph{height:68px;border-radius:8px}
+.near b{display:block;font-size:13px;margin-top:6px}
+.near small{color:var(--muted);font-size:12.5px}
+.tips{display:grid;grid-template-columns:1fr 1fr;gap:18px 22px;margin-top:16px}
+.tip{display:flex;gap:12px;align-items:flex-start}
+.tip svg{width:28px;height:28px;flex:none;margin-top:2px}
+.tip b{display:block;font-size:14.5px}
+.tip small{color:var(--muted);font-size:13px;line-height:1.3;display:block}
+
+/* ---------- Mobile-only parts ---------- */
+.m-only{display:none}
+.m-cta{display:none}
+.m-weather{display:none}
+.m-list{display:none}
+
+/* ---------- Mobile ---------- */
+@media (max-width:820px){
+  body{font-size:14px}
+  .nav,.hdr .btn,.d-only{display:none !important}
+  .m-only{display:block}
+  .burger{display:grid}
+  .hdr .wrap{height:56px;gap:6px;padding:0 14px}
+  .hdr .sp{flex:1}
+  .logo svg{width:38px;height:32px}
+  .hero{min-height:0;display:block;padding-bottom:0}
+  .hero .in{padding:76px 16px 14px}
+  .hero{min-height:226px;align-items:flex-end;display:flex}
+  .hero h1{font-size:29px}
+  .hero p.lead{font-size:15px;margin-bottom:10px}
+  .chips{gap:6px 14px;font-size:12px}
+  .chips svg{width:16px;height:16px}
+  .hero-actions{display:none}
+  .hero .fav{position:absolute;top:14px;right:14px;z-index:3}
+  .tabs{display:none}
+  main{padding:12px 0 30px}
+  .wrap{padding:0 12px}
+  .prep{display:none}
+  .m-cta{display:block;margin-bottom:12px}
+  .m-cta .btn{width:100%;font-size:16px;padding:14px;border-radius:12px;box-shadow:0 4px 12px rgba(31,107,73,.3)}
+  .m-weather{display:block;padding:14px}
+  .mw-top{display:flex;gap:12px;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--line)}
+  .mw-top svg{width:44px;height:44px}
+  .mw-top b{font-size:26px;line-height:1;display:block}
+  .mw-top small{color:var(--muted);display:block;font-size:12px}
+  .mw-top .ok{color:var(--green);font-weight:700}
+  .mw-stats{display:grid;grid-template-columns:repeat(4,1fr);padding-top:12px;text-align:center;gap:4px}
+  .mw-stats div{border-left:1px solid var(--line);padding:0 2px}
+  .mw-stats div:first-child{border:0}
+  .mw-stats b{display:flex;align-items:center;justify-content:center;gap:5px;font-size:17px}
+  .mw-stats svg{width:22px;height:22px}
+  .mw-stats small{display:block;color:var(--muted);font-size:11px;line-height:1.15;margin-top:2px}
+  .m-list{display:grid;gap:8px;padding:8px}
+  .m-item{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:10px;padding:0 12px 0 0;overflow:hidden;border:1px solid var(--line)}
+  .m-item .ph{width:62px;height:54px;flex:none}
+  .m-item div{flex:1}
+  .m-item b{display:block;font-size:15px}
+  .m-item small{color:var(--muted);font-size:12.5px}
+  .m-item svg{width:18px;height:18px;color:var(--ink)}
+  .actions-wrap,.stats-wrap{display:none}
+  .grid2{grid-template-columns:1fr;gap:12px}
+  .stack{gap:12px}
+  .panel{padding:14px;border-radius:14px}
+  .panel h2{font-size:16px}
+  .days{grid-template-columns:repeat(4,1fr);gap:8px}
+  .days .day:nth-child(5){display:none}
+  .wfoot{display:none}
+  .map{height:140px}
+  .legend,.zoom,.d-pin{display:none}
+  .near .ph{height:62px}
+  .tips-panel{display:none}
+  .near-panel{order:5}
+}
+@media (min-width:821px) and (max-width:1060px){
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .actions{grid-template-columns:repeat(2,1fr)}
+  .nav{gap:16px;margin-left:10px}
+  .grid2{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}}
+</style>
+</head>
+<body>
+
+<!-- SVG sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-tent" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3 1.5 20h5.2l5.3-8.6L17.3 20h5.2L12 3Zm0 11.2L9.4 20h5.2L12 14.2Z"/></symbol>
+    <symbol id="i-van" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6h12.5a3 3 0 0 1 2.3 1.1l2.6 3.2c.4.5.6 1 .6 1.7V17h-1.8a2.6 2.6 0 0 0-5.2 0H9.2a2.6 2.6 0 0 0-5.2 0H3V6Zm2 2v4h5V8H5Zm7 0v4h4.8l-2.2-2.8A1 1 0 0 0 13.8 8H12Zm-4.8 11.4a1.4 1.4 0 1 0 0-2.8 1.4 1.4 0 0 0 0 2.8Zm9.2 0a1.4 1.4 0 1 0 0-2.8 1.4 1.4 0 0 0 0 2.8Z"/></symbol>
+    <symbol id="i-pump" viewBox="0 0 24 24"><path fill="currentColor" d="M5 3h8a1.5 1.5 0 0 1 1.5 1.5V12H16a2 2 0 0 1 2 2v3.2a1 1 0 0 0 2 0V9.5l-1.7-1.7 1.2-1.2 2.5 2.5V17a3 3 0 0 1-6 0v-3h-1.5v7H4V4.5A1.5 1.5 0 0 1 5 3Zm1 2v5h7V5H6Z"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.5S5 10.2 5 14.7A7 7 0 0 0 19 14.7C19 10.2 12 2.5 12 2.5Zm-2.4 12a.9.9 0 0 1 1.7-.4 1.6 1.6 0 0 0 1.6 1.1.9.9 0 1 1 0 1.8 3.5 3.5 0 0 1-3.3-2.5Z"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.500a2.5 2.5 0 0 1 0 5Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 48 48"><g fill="#f5a712" stroke="#f5a712" stroke-width="3" stroke-linecap="round"><circle cx="24" cy="24" r="9" stroke="none"/><path d="M24 5v5M24 38v5M5 24h5M38 24h5M10.5 10.5l3.5 3.5M34 34l3.5 3.5M10.5 37.500 14 34M34 14l3.500-3.500"/></g></symbol>
+    <symbol id="i-partly" viewBox="0 0 48 48"><g fill="#f5a712" stroke="#f5a712" stroke-width="3" stroke-linecap="round"><circle cx="19" cy="19" r="8" stroke="none"/><path d="M19 5v4M5 19h4M9 9l3 3M33 9l-3 3"/></g><path d="M16 38a7 7 0 0 1 1.500-13.800A9 9 0 0 1 35 26a6 6 0 0 1 0 12H16Z" fill="#e9eef2" stroke="#b7c3cc" stroke-width="1.500"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 48 48"><path d="M13 36a8 8 0 0 1 1.500-15.800A11 11 0 0 1 36 22a7 7 0 0 1 0 14H13Z" fill="#e9eef2" stroke="#9aa9b4" stroke-width="2"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 8.500V13l3 2M9 2.500h6"/></g></symbol>
+    <symbol id="i-mount" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="m2 20 7-13 4 7 2.500-4L22 20H2Z"/></symbol>
+    <symbol id="i-img" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><circle cx="8" cy="8" r="2.500"/><path d="M2 20l6-6 4 4 3-3 7 5"/></g></symbol>
+    <symbol id="i-hike" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4.500" r="1.800"/><path d="m9 21 2.500-6-2-2.500 1.500-5 3.500 1.500 2 3.500M6 11l3-3M16.500 11l2 10"/></g></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></g></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M12 20s-8-5-8-11a4.500 4.500 0 0 1 8-2.700A4.500 4.500 0 0 1 20 9c0 6-8 11-8 11Z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="m10 8.500 5 3.500-5 3.500v-7Z" fill="currentColor"/></g></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round" d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2V6Zm6-2v14m6-12v14"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.500v.1"/></g></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12s3.500-6 9-6 9 6 9 6-3.500 6-9 6-9-6-9-6Z"/><circle cx="12" cy="12" r="2.500"/></g></symbol>
+    <symbol id="i-bed" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M3 18V7m0 7h18v4m0-4v-2a3 3 0 0 0-3-3h-7v5M7 11.500a1.500 1.500 0 1 0 0-.1"/></symbol>
+    <symbol id="i-tree" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 6 10h3l-4 6h5v6h4v-6h5l-4-6h3L12 2Z"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path fill="none" stroke="#e8a317" stroke-width="2" stroke-linejoin="round" d="M20 14.500A8.500 8.500 0 1 1 9.500 4a7 7 0 0 0 10.500 10.500Z"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="#c97a17" stroke-width="1.800" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></g></symbol>
+    <symbol id="i-svc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.500"/><rect x="14" y="3" width="7" height="7" rx="1.500"/><rect x="3" y="14" width="7" height="7" rx="1.500"/><path d="M14 17.500h7M17.500 14v7"/></g></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  </defs>
+</svg>
+
+<!-- ================= HEADER ================= -->
+<header class="hdr">
+  <div class="wrap">
+    <a href="#" class="logo" aria-label="Caravaning Project">
+      <svg viewBox="0 0 44 38" aria-hidden="true"><path d="M22 1 1 33h42L22 1Z" fill="#1f6b49"/><path d="M22 1 14 13l4 3 4-5 4 5 4-3L22 1Z" fill="#16513a"/><rect x="11" y="23" width="22" height="9" rx="2" fill="#fff"/><circle cx="16" cy="33" r="2.800" fill="#16513a" stroke="#fff" stroke-width="1"/><circle cx="28" cy="33" r="2.800" fill="#16513a" stroke="#fff" stroke-width="1"/></svg>
+      <span>Caravaning<br>Project</span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#">Lugares Geniales</a><a href="#">Destinos</a><a href="#">Blog</a><a href="#">Comunidad</a><a href="#">Tienda</a>
+    </nav>
+    <span class="sp"></span>
+    <button class="icon-btn" aria-label="Buscar"><svg width="22" height="22"><use href="#i-search"/></svg></button>
+    <a href="#" class="btn btn-sm">Planifica tu escapada</a>
+    <button class="icon-btn burger" aria-label="Menú"><svg width="24" height="24"><use href="#i-list"/></svg></button>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <svg class="land" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2a560"/><stop offset="1" stop-color="#8a4f26"/></linearGradient>
+      <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c47a3b"/><stop offset="1" stop-color="#5e3719"/></linearGradient>
+    </defs>
+    <path d="M0 150 L120 110 L260 135 L420 80 L560 120 L700 95 L860 130 L1020 85 L1200 125 V300 H0Z" fill="#a8784f" opacity=".75"/>
+    <path d="M520 190 L610 150 L650 90 L690 60 L735 85 L760 150 L840 175 L900 230 V300 H480Z" fill="url(#g1)"/>
+    <path d="M0 200 L90 170 L190 205 L310 165 L430 215 L560 200 L700 250 V300 H0Z" fill="url(#g2)"/>
+    <path d="M700 250 L850 205 L1000 235 L1120 190 L1200 215 V300 H700Z" fill="#6f4222"/>
+    <g stroke="#5e3719" stroke-width="2" opacity=".4" fill="none"><path d="M640 100l10 70M690 70l-10 90M720 100l5 60"/></g>
+  </svg>
+  <button class="ghost round fav m-only" aria-label="Guardar en favoritos"><svg width="20" height="20"><use href="#i-heart"/></svg></button>
+  <div class="in">
+    <span class="crumb">España{% if destination.region %} · {{ destination.region }}{% endif %}</span>
+    <h1>{{ destination.title|default:"Desierto de Gorafe" }}</h1>
+    <p class="lead">Paisajes únicos, naturaleza y cielos infinitos.</p>
+    <div class="hero-row">
+      <div class="chips">
+        <span><svg><use href="#i-clock"/></svg>2-3 días</span>
+        <span><svg><use href="#i-mount"/></svg>Naturaleza</span>
+        <span><svg><use href="#i-img"/></svg>Paisaje</span>
+        <span><svg><use href="#i-van"/></svg>Camper</span>
+        <span class="d-only"><svg><use href="#i-hike"/></svg>Senderismo</span>
+      </div>
+      <div class="hero-actions d-only">
+        <button class="ghost"><svg width="18" height="18"><use href="#i-play"/></svg>Ver galería</button>
+        <button class="ghost round" aria-label="Guardar en favoritos"><svg width="20" height="20"><use href="#i-heart"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TABS (escritorio) ================= -->
+<nav class="tabs" aria-label="Secciones del destino">
+  <div class="wrap">
+    <a href="#" class="on"><svg><use href="#i-bag"/></svg>Resumen</a>
+    <a href="#"><svg><use href="#i-eye"/></svg>Qué ver</a>
+    <a href="#"><svg><use href="#i-svc"/></svg>Prepara tu viaje</a>
+    <a href="#"><svg><use href="#i-svc"/></svg>Servicios</a>
+    <a href="#"><svg><use href="#i-map"/></svg>Mapa</a>
+    <a href="#"><svg><use href="#i-hike"/></svg>Qué hacer</a>
+    <a href="#"><svg><use href="#i-pin"/></svg>Cerca de aquí</a>
+    <a href="#"><svg><use href="#i-info"/></svg>Consejos</a>
+  </div>
+</nav>
+
+<main>
+<div class="wrap stack">
+
+  <!-- CTA móvil -->
+  <div class="m-cta"><a href="#" class="btn">Prepara tu escapada <svg width="18" height="18"><use href="#i-arrow"/></svg></a></div>
+
+  <!-- Tiempo + stats (móvil) -->
+  <section class="panel m-weather" aria-label="Resumen rápido">
+    <div class="mw-top">
+      <svg><use href="#i-sun"/></svg>
+      <div><b>24°</b><small>Máx. 24° / Mín. 12°</small><small class="ok">Buen tiempo</small></div>
+    </div>
+    <div class="mw-stats">
+      <div><b style="color:var(--green)"><svg><use href="#i-tent"/></svg>5</b><small>Campings</small></div>
+      <div><b style="color:var(--blue)"><svg><use href="#i-van"/></svg>3</b><small>Áreas camper</small></div>
+      <div><b style="color:var(--orange)"><svg><use href="#i-pump"/></svg>6</b><small>Gasolineras (GLP)</small></div>
+      <div><b style="color:var(--blue)"><svg><use href="#i-drop"/></svg>3</b><small>Servicios (agua/vaciado)</small></div>
+    </div>
+  </section>
+
+  <!-- Lista móvil -->
+  <section class="panel m-list" aria-label="Accesos rápidos">
+    <a href="#" class="m-item"><div class="ph p-camp" style="width:62px;height:54px;flex:none"></div><div><b>Dónde dormir</b><small>Campings, áreas y alojamientos</small></div><svg><use href="#i-chev"/></svg></a>
+    <a href="#" class="m-item"><div class="ph p-camper" style="width:62px;height:54px;flex:none"></div><div><b>Alquila tu camper</b><small>Mejores opciones de alquiler</small></div><svg><use href="#i-chev"/></svg></a>
+    <a href="#" class="m-item"><div class="ph p-hike" style="width:62px;height:54px;flex:none"></div><div><b>Qué hacer</b><small>Senderismo y experiencias</small></div><svg><use href="#i-chev"/></svg></a>
+    <a href="#" class="m-item"><div class="ph p-serv" style="width:62px;height:54px;flex:none"></div><div><b>Servicios cerca de ti</b><small>Gasolineras, agua, vaciado, parkings</small></div><svg><use href="#i-chev"/></svg></a>
+  </section>
+
+  <!-- ===== Prepara tu viaje (escritorio) ===== -->
+  <section class="panel prep" id="resumen">
+    <h2>Prepara tu viaje a {{ destination.title|default:"Gorafe" }}</h2>
+    <p class="sub">Toda la información que necesitas para organizar tu escapada en camper.</p>
+
+    <div class="stats">
+      <div class="stat"><svg><use href="#i-sun"/></svg><div><b>24°</b><small>Máx. 24° / Mín. 12°</small><small class="ok">Buen tiempo</small></div></div>
+      <div class="stat"><svg style="color:var(--green)"><use href="#i-tent"/></svg><div><b>5</b><small>Campings<br>cercanos</small></div></div>
+      <div class="stat"><svg style="color:var(--blue)"><use href="#i-van"/></svg><div><b>3</b><small>Áreas camper</small></div></div>
+      <div class="stat"><svg style="color:var(--orange)"><use href="#i-pump"/></svg><div><b>6</b><small>Gasolineras<br>(GLP disponible)</small></div></div>
+      <div class="stat"><svg style="color:var(--blue)"><use href="#i-drop"/></svg><div><b>3</b><small>Puntos de servicio<br>(agua y vaciado)</small></div></div>
+    </div>
+
+    <div class="actions">
+      <article class="act">
+        <div class="photo p-camp"><span class="badge"><svg><use href="#i-tent"/></svg></span></div>
+        <div class="body"><h3>Dónde dormir</h3><p>Campings, áreas camper y alojamientos en naturaleza.</p><a href="#" class="btn">Ver opciones <svg width="16" height="16"><use href="#i-arrow"/></svg></a></div>
+      </article>
+      <article class="act">
+        <div class="photo p-camper"><span class="badge" style="color:var(--blue)"><svg><use href="#i-van"/></svg></span></div>
+        <div class="body"><h3>Alquila tu camper</h3><p>Las mejores opciones para tu escapada.</p><a href="#" class="btn">Ver alquiler <svg width="16" height="16"><use href="#i-arrow"/></svg></a></div>
+      </article>
+      <article class="act">
+        <div class="photo p-hike"><span class="badge"><svg><use href="#i-hike"/></svg></span></div>
+        <div class="body"><h3>Qué hacer</h3><p>Senderismo, miradores y experiencias outdoor.</p><a href="#" class="btn">Ver experiencias <svg width="16" height="16"><use href="#i-arrow"/></svg></a></div>
+      </article>
+      <article class="act">
+        <div class="photo p-serv"><span class="badge"><svg><use href="#i-pin"/></svg></span></div>
+        <div class="body"><h3>Servicios cerca de ti</h3><p>Gasolineras, áreas camper, agua, vaciado, parkings…</p><a href="#" class="btn">Ver en el mapa <svg width="16" height="16"><use href="#i-arrow"/></svg></a></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== Tiempo + Mapa ===== -->
+  <div class="grid2">
+    <section class="panel" id="tiempo">
+      <div class="head-row"><h2>El tiempo en {{ destination.title|default:"Gorafe" }}</h2><a href="#" class="link m-only">Ver más →</a></div>
+      <div class="days">
+        <div class="day"><b>Hoy</b><svg><use href="#i-sun"/></svg><span>24° / 12°</span></div>
+        <div class="day"><b>Mañana</b><svg><use href="#i-partly"/></svg><span>22° / 11°</span></div>
+        <div class="day"><b>Dom</b><svg><use href="#i-sun"/></svg><span>23° / 10°</span></div>
+        <div class="day"><b>Lun</b><svg><use href="#i-cloud"/></svg><span>20° / 11°</span></div>
+        <div class="day"><b>Mar</b><svg><use href="#i-sun"/></svg><span>21° / 10°</span></div>
+      </div>
+      <div class="wfoot"><a href="#" class="link">Ver previsión completa →</a><span>Open-Meteo</span></div>
+    </section>
+
+    <section class="panel" id="mapa">
+      <h2>Servicios en el mapa</h2>
+      <div class="map" role="img" aria-label="Mapa con campings, áreas camper, gasolineras, puntos de agua y parkings">
+        <svg class="bg" viewBox="0 0 400 146" preserveAspectRatio="none" aria-hidden="true">
+          <rect width="400" height="146" fill="#e0ebd9"/>
+          <path d="M0 110 C60 80 110 120 170 90 S290 60 400 95 V146 H0Z" fill="#cfe0c4"/>
+          <path d="M0 40 C80 20 130 60 210 35 S330 20 400 45 V0 H0Z" fill="#ead9b5" opacity=".7"/>
+          <path d="M0 78 C70 60 120 95 190 70 S320 82 400 60" stroke="#fff" stroke-width="5" fill="none"/>
+          <path d="M120 0 C140 40 175 60 190 146" stroke="#fff" stroke-width="4" fill="none"/>
+          <path d="M250 0 C260 50 300 80 330 146" stroke="#fff" stroke-width="3" fill="none"/>
+          <path d="M60 146 C90 100 100 70 80 0" stroke="#b9d6e6" stroke-width="5" fill="none"/>
+        </svg>
+        <span class="pin g" style="left:14%;top:22%"><svg width="14" height="14"><use href="#i-tent"/></svg></span>
+        <span class="pin o" style="left:36%;top:26%"><svg width="14" height="14"><use href="#i-pump"/></svg></span>
+        <span class="pin g" style="left:56%;top:24%"><svg width="14" height="14"><use href="#i-tent"/></svg></span>
+        <span class="pin p" style="left:74%;top:20%">P</span>
+        <span class="pin b" style="left:20%;top:52%"><svg width="14" height="14"><use href="#i-van"/></svg></span>
+        <span class="pin b" style="left:31%;top:62%"><svg width="14" height="14"><use href="#i-drop"/></svg></span>
+        <span class="pin p d-pin" style="left:50%;top:66%">P</span>
+        <span class="pin g" style="left:66%;top:46%"><svg width="14" height="14"><use href="#i-van"/></svg></span>
+        <span class="pin p" style="left:76%;top:68%">P</span>
+        <div class="zoom d-only"><button aria-label="Acercar">+</button><button aria-label="Alejar">−</button></div>
+        <a href="#" class="btn"><svg width="16" height="16"><use href="#i-map"/></svg><span>Abrir mapa<span class="d-only"> completo</span></span> <svg width="14" height="14" class="d-only"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="legend d-only">
+        <span><i style="background:var(--green)"></i>Campings</span>
+        <span><i style="background:var(--blue)"></i>Áreas camper</span>
+        <span><i style="background:var(--orange)"></i>Gasolineras</span>
+        <span><i style="background:#3a8fd6"></i>Agua/Vaciado</span>
+        <span><i style="background:#2b6be0"></i>Parkings</span>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== Cercanos + Consejos ===== -->
+  <div class="grid2" style="grid-template-columns:1fr 1.05fr">
+    <section class="panel near-panel" id="cerca">
+      <div class="head-row"><h2>Lugares cercanos</h2><a href="#" class="link">Ver más<span class="d-only"> destinos</span> →</a></div>
+      <p class="sub d-only" style="font-size:13.5px">Amplía tu ruta con estos destinos.</p>
+      <div class="near">
+        <a href="#"><div class="ph p-gorafe"></div><b>Cárcavas de Marchal</b><small>a 28 km</small></a>
+        <a href="#"><div class="ph p-town"></div><b>Guadix</b><small>a 45 km</small></a>
+        <a href="#"><div class="ph p-sierra"></div><b>Sierra de Baza</b><small>a 68 km</small></a>
+      </div>
+    </section>
+
+    <section class="panel tips-panel" id="consejos">
+      <h2>Consejos y recomendaciones</h2>
+      <div class="tips">
+        <div class="tip"><svg style="color:#c97a17"><use href="#i-cal"/></svg><div><b>Mejor época</b><small>Primavera y otoño.</small></div></div>
+        <div class="tip"><svg style="color:var(--blue)"><use href="#i-drop"/></svg><div><b>Lleva agua</b><small>Zonas con pocos servicios.</small></div></div>
+        <div class="tip"><svg style="color:var(--green)"><use href="#i-tree"/></svg><div><b>Respeta el entorno</b><small>Espacio natural protegido.</small></div></div>
+        <div class="tip"><svg><use href="#i-moon"/></svg><div><b>Cielo nocturno</b><small>Ideal para observación.</small></div></div>
+      </div>
+    </section>
+  </div>
+
+</div>
+</main>
+</body>
+</html>
