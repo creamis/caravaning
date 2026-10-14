@@ -6,6 +6,7 @@ from django.views.generic import TemplateView
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.auth import views as auth_views # Importar las vistas de autenticación de Django
 from . import views
+from .destination_v3_preview import destino_v3_preview
 from .sitemaps import sitemaps
 from pages.views import CampingView, AlohaCampView
 
@@ -15,6 +16,8 @@ urlpatterns = [
     # Rutas de las aplicaciones
     path('', views.index, name='home'),
     path('buscar/', views.search, name='search'),
+    # Laboratorio V3 independiente, sin alterar V2 ni fichas públicas
+    path('preview/destino-v3/torrevieja/', destino_v3_preview, name='destino_v3_preview'),
     path('camping/', CampingView.as_view(), name='camping'),
     path('alohacamp/', AlohaCampView.as_view(), name='alohacamp'),
     path('blog/', include('blog.urls', namespace='blog')),
